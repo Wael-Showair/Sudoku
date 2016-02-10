@@ -6,22 +6,22 @@
 //  Copyright © 2016 Algonquin College. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "SudokuViewController.h"
 
-@interface ViewController ()
+@interface SudokuViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *sudokuCollectionView;
 
 @end
 
-@implementation ViewController
+@implementation SudokuViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+  
 }
 
 @end
