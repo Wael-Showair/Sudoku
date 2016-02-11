@@ -51,68 +51,77 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iFr-Up-z5x"/>
                                 </connections>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iKw-qU-6f5">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iKw-qU-6f5">
+                                <rect key="frame" x="0.0" y="0.0" width="225" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
-                                        <rect key="frame" x="20" y="20" width="36" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="30"/>
                                         <state key="normal" title="Clear"/>
+                                        <connections>
+                                            <action selector="onTapClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pQi-2t-icU"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
-                                        <rect key="frame" x="281" y="20" width="38" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
+                                        <rect key="frame" x="75" y="0.0" width="75" height="30"/>
                                         <state key="normal" title="Solve"/>
+                                        <connections>
+                                            <action selector="onTapSave:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1jl-dl-Tx0"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
-                                        <rect key="frame" x="455" y="20" width="125" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
+                                        <rect key="frame" x="150" y="0.0" width="75" height="30"/>
                                         <state key="normal" title="New Game"/>
+                                        <connections>
+                                            <action selector="onTapNewGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hZq-Ij-b9f"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zzC-bY-hQG">
-                                <rect key="frame" x="0.0" y="642" width="105" height="85"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zzC-bY-hQG">
+                                <rect key="frame" x="0.0" y="642" width="270" height="45"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Em-Xk-NzO">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Em-Xk-NzO">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="1"/>
                                     </button>
-                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgD-ji-aWh">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgD-ji-aWh">
+                                        <rect key="frame" x="30" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="2"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-im-rXx">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-im-rXx">
+                                        <rect key="frame" x="60" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="3"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2o-Qf-4Qm">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2o-Qf-4Qm">
+                                        <rect key="frame" x="90" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="4"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Peh-wm-d1m">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Peh-wm-d1m">
+                                        <rect key="frame" x="120" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="5"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VS4-pm-5ZL">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VS4-pm-5ZL">
+                                        <rect key="frame" x="150" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="6"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBL-4y-slb">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBL-4y-slb">
+                                        <rect key="frame" x="180" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="7"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-5F-34L">
-                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-5F-34L">
+                                        <rect key="frame" x="210" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="8"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-fW-IQB">
-                                        <rect key="frame" x="21" y="20" width="64" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-fW-IQB">
+                                        <rect key="frame" x="240" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="9"/>
                                     </button>
@@ -141,10 +150,10 @@
                                 <exclude reference="ftf-73-gVm"/>
                                 <exclude reference="q3l-6M-lXj"/>
                                 <exclude reference="qmL-U3-7qh"/>
+                                <exclude reference="rsB-Nb-ris"/>
                                 <exclude reference="2R6-4r-47L"/>
                                 <exclude reference="JZg-0n-rOc"/>
                                 <exclude reference="pVx-Iy-ej6"/>
-                                <exclude reference="rsB-Nb-ris"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -155,15 +164,18 @@
                                 <include reference="ftf-73-gVm"/>
                                 <include reference="q3l-6M-lXj"/>
                                 <include reference="qmL-U3-7qh"/>
+                                <include reference="rsB-Nb-ris"/>
                                 <include reference="2R6-4r-47L"/>
                                 <include reference="JZg-0n-rOc"/>
                                 <include reference="pVx-Iy-ej6"/>
-                                <include reference="rsB-Nb-ris"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="hbK-P8-zhp"/>
                     <connections>
+                        <outlet property="clearBtn" destination="ys5-Ro-nqF" id="tDF-xI-9Ue"/>
+                        <outlet property="gameNewDoneBtn" destination="WXo-4C-nRZ" id="141-Nr-3o8"/>
+                        <outlet property="solveBtn" destination="bvK-qx-s26" id="Ft7-3N-Zky"/>
                         <outlet property="sudokuCollectionView" destination="EpJ-g4-ClV" id="xxM-Gl-qLE"/>
                     </connections>
                 </viewController>

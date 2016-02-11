@@ -12,4 +12,5 @@
 
 @interface SudokuBoard : UICollectionView
 @property CGSize microCellSize;
+@property BOOL shouldCreateNewGame;
 @end
