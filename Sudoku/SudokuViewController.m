@@ -9,9 +9,10 @@
 #import "SudokuViewController.h"
 #import "SudokuDataSource.h"
 #import "LabelCell.h"
+#import "SudokuBoard.h"
 
 @interface SudokuViewController ()
-@property (weak, nonatomic) IBOutlet UICollectionView *sudokuCollectionView;
+@property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
 @property (strong,nonatomic) SudokuDataSource* dataSource;
 @end
 
@@ -43,8 +44,8 @@
 #pragma Collection View Flow Layout
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-  CGFloat cellWidth  = self.sudokuCollectionView.bounds.size.width/3;
-  CGFloat cellHeight = self.sudokuCollectionView.bounds.size.height/3;
+  CGFloat cellWidth  = self.sudokuCollectionView.bounds.size.width/NUM_OF_MACRO_CELLS;
+  CGFloat cellHeight = self.sudokuCollectionView.bounds.size.height/NUM_OF_MACRO_CELLS;
   
   return CGSizeMake(cellWidth, cellHeight);
 }

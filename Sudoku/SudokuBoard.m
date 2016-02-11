@@ -28,42 +28,76 @@
 }
 
 - (void)drawRect:(CGRect)bounds {
-  CGFloat width = CGRectGetWidth(bounds);
-  CGFloat height = CGRectGetMaxY(bounds);
   
   /* Draw bezier path with the bounds of the view bounds. */
   UIBezierPath* rootPath = [UIBezierPath bezierPathWithRect:bounds];
 
-  /* Draw bezier path for the vertical lines. */
-  UIBezierPath* linePath = [[UIBezierPath alloc] init];
+  /* Draw lines for grid */
+  UIBezierPath* linePaths = [self drawGridLinesForRect:bounds withLineWidth:GRID_BORDER_WIDTH];
 
   /* Append the vertical line path to the root path. */
-  [rootPath appendPath:linePath];
+  [rootPath appendPath:linePaths];
   
   /* Set the stroke of the lines. */
   [GRID_BORDER_COLOR setStroke];
-  [linePath stroke];
-  linePath.lineWidth = GRID_BORDER_WIDTH;
+  [linePaths stroke];
   
-  /* Draw the first vertical line path. */
-  [linePath moveToPoint   :CGPointMake(width/3, CGRectGetMinY(bounds))];
-  [linePath addLineToPoint:CGPointMake(width/3, CGRectGetMaxY(bounds))];
+  
+  CGFloat macroGridWidth  = CGRectGetWidth(bounds);
+  CGFloat macroGridHeight = CGRectGetMaxY(bounds);
 
-  /* Draw the second vertical line path. */
-  [linePath moveToPoint   :CGPointMake(2*width/3, CGRectGetMinY(bounds))];
-  [linePath addLineToPoint:CGPointMake(2*width/3, CGRectGetMaxY(bounds))];
+  /* Set the size of the micro cell. */
+  self.microCellSize = CGSizeMake(macroGridWidth/9, macroGridHeight/9);
   
-  /* Draw the first horizontal line path */
-  [linePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), height/3)];
-  [linePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), height/3)];
   
-  /* Draw the second horizontal line path */
-  [linePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), 2*height/3)];
-  [linePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), 2*height/3)];
-  
-  /* Apply the stroke color to all paths.*/
-  [linePath stroke];
+  /* For each super grid cell, draw the internal lines.
+   * TODO: Note that this can be take less processing power by drawing long 12 lines instead
+   * of 9 * 4 lines = 36 lines. */
+  for (unsigned short col=0; col<3; col++) {
+    
+    CGFloat x = col * macroGridWidth/3;
+    
+    for (unsigned short row=0; row<3; row++) {
+    
+      CGFloat y = row * macroGridHeight/3;
+      
+      CGRect rect = CGRectMake(x, y, macroGridWidth/3, macroGridHeight/3);
+      UIBezierPath* gridPaths = [self drawGridLinesForRect:rect withLineWidth:0.3];
+      [rootPath appendPath:gridPaths];
+      [gridPaths stroke];
+      
+    }
+  }
 }
 
+-(UIBezierPath*) drawGridLinesForRect: (CGRect) bounds withLineWidth: (CGFloat) lineWidth{
+
+  CGFloat width  = CGRectGetWidth(bounds);
+  CGFloat height = CGRectGetHeight(bounds);
+  
+  /* Draw bezier path for the vertical lines. */
+  UIBezierPath* linePaths = [[UIBezierPath alloc] init];
+  
+  linePaths.lineWidth = lineWidth;
+  
+  /* Draw the first vertical line path. */
+  [linePaths moveToPoint   :CGPointMake(CGRectGetMinX(bounds) + width/3, CGRectGetMinY(bounds))];
+  [linePaths addLineToPoint:CGPointMake(CGRectGetMinX(bounds) + width/3, CGRectGetMaxY(bounds))];
+  
+  /* Draw the second vertical line path. */
+  [linePaths moveToPoint   :CGPointMake(CGRectGetMinX(bounds) + 2*width/3, CGRectGetMinY(bounds))];
+  [linePaths addLineToPoint:CGPointMake(CGRectGetMinX(bounds) + 2*width/3, CGRectGetMaxY(bounds))];
+  
+  /* Draw the first horizontal line path */
+  [linePaths moveToPoint   :CGPointMake(CGRectGetMinX(bounds), CGRectGetMinY(bounds)+ height/3)];
+  [linePaths addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMinY(bounds)+ height/3)];
+  
+  /* Draw the second horizontal line path */
+  [linePaths moveToPoint   :CGPointMake(CGRectGetMinX(bounds), CGRectGetMinY(bounds)+ 2*height/3)];
+  [linePaths addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), CGRectGetMinY(bounds)+ 2*height/3)];
+  
+  return linePaths;
+
+}
 
 @end

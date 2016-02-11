@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SudokuBoard : UICollectionView
+#define NUM_OF_MACRO_CELLS      9
 
+@interface SudokuBoard : UICollectionView
+@property CGSize microCellSize;
 @end
