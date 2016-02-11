@@ -7,18 +7,24 @@
 //
 
 #import "SudokuBoard.h"
+#import "LabelCell.h"
 
 #define GRID_BORDER_WIDTH   2.0
 #define GRID_BORDER_COLOR   [UIColor blackColor]
+#define LABEL_CELL_NIB      @"LabelCell"
 
 @interface SudokuBoard ()
-@property (strong, nonatomic) NSMutableArray* paths;
+@property (strong, nonatomic) UIBezierPath* linePaths;
 @end
 @implementation SudokuBoard
 
 - (void)awakeFromNib{
   self.layer.borderColor = GRID_BORDER_COLOR.CGColor;
   self.layer.borderWidth = GRID_BORDER_WIDTH;
+  
+  /* Register NIB file of the label cell with the current collection view. */
+  UINib* nibFile = [UINib nibWithNibName:LABEL_CELL_NIB bundle:nil];
+  [self registerNib:nibFile forCellWithReuseIdentifier:CELL_IDENTIFIER];
 }
 
 - (void)drawRect:(CGRect)bounds {
@@ -29,34 +35,34 @@
   UIBezierPath* rootPath = [UIBezierPath bezierPathWithRect:bounds];
 
   /* Draw bezier path for the vertical lines. */
-  UIBezierPath* verticalLinePath = [[UIBezierPath alloc] init];
+  UIBezierPath* linePath = [[UIBezierPath alloc] init];
 
   /* Append the vertical line path to the root path. */
-  [rootPath appendPath:verticalLinePath];
+  [rootPath appendPath:linePath];
   
   /* Set the stroke of the lines. */
   [GRID_BORDER_COLOR setStroke];
-  [verticalLinePath stroke];
-  verticalLinePath.lineWidth = GRID_BORDER_WIDTH;
+  [linePath stroke];
+  linePath.lineWidth = GRID_BORDER_WIDTH;
   
   /* Draw the first vertical line path. */
-  [verticalLinePath moveToPoint   :CGPointMake(width/3, CGRectGetMinY(bounds))];
-  [verticalLinePath addLineToPoint:CGPointMake(width/3, CGRectGetMaxY(bounds))];
+  [linePath moveToPoint   :CGPointMake(width/3, CGRectGetMinY(bounds))];
+  [linePath addLineToPoint:CGPointMake(width/3, CGRectGetMaxY(bounds))];
 
   /* Draw the second vertical line path. */
-  [verticalLinePath moveToPoint   :CGPointMake(2*width/3, CGRectGetMinY(bounds))];
-  [verticalLinePath addLineToPoint:CGPointMake(2*width/3, CGRectGetMaxY(bounds))];
+  [linePath moveToPoint   :CGPointMake(2*width/3, CGRectGetMinY(bounds))];
+  [linePath addLineToPoint:CGPointMake(2*width/3, CGRectGetMaxY(bounds))];
   
   /* Draw the first horizontal line path */
-  [verticalLinePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), height/3)];
-  [verticalLinePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), height/3)];
+  [linePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), height/3)];
+  [linePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), height/3)];
   
-  /* Draw the first horizontal line path */
-  [verticalLinePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), 2*height/3)];
-  [verticalLinePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), 2*height/3)];
+  /* Draw the second horizontal line path */
+  [linePath moveToPoint:CGPointMake(CGRectGetMinX(bounds), 2*height/3)];
+  [linePath addLineToPoint:CGPointMake(CGRectGetMaxX(bounds), 2*height/3)];
   
   /* Apply the stroke color to all paths.*/
-  [verticalLinePath stroke];
+  [linePath stroke];
 }
 
 

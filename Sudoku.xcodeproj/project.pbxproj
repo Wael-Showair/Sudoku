@@ -16,6 +16,9 @@
 		DA3AC2981C6BDD83006FA76D /* SudokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2971C6BDD83006FA76D /* SudokuTests.m */; };
 		DA3AC2A31C6BDD83006FA76D /* SudokuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2A21C6BDD83006FA76D /* SudokuUITests.m */; };
 		DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */; };
+		DA3AC2B71C6C04B9006FA76D /* SudokuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */; };
+		DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B91C6C087C006FA76D /* LabelCell.m */; };
+		DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,11 @@
 		DA3AC2A41C6BDD83006FA76D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA3AC2B01C6BF079006FA76D /* SudokuBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SudokuBoard.h; sourceTree = "<group>"; };
 		DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SudokuBoard.m; sourceTree = "<group>"; };
+		DA3AC2B51C6C04B9006FA76D /* SudokuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SudokuDataSource.h; sourceTree = "<group>"; };
+		DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SudokuDataSource.m; sourceTree = "<group>"; };
+		DA3AC2B81C6C087C006FA76D /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
+		DA3AC2B91C6C087C006FA76D /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
+		DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,12 +112,15 @@
 		DA3AC27C1C6BDD83006FA76D /* Sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				DA3AC2BB1C6C088B006FA76D /* cells */,
 				DA3AC2801C6BDD83006FA76D /* AppDelegate.h */,
 				DA3AC2811C6BDD83006FA76D /* AppDelegate.m */,
 				DA3AC2831C6BDD83006FA76D /* SudokuViewController.h */,
 				DA3AC2841C6BDD83006FA76D /* SudokuViewController.m */,
 				DA3AC2B01C6BF079006FA76D /* SudokuBoard.h */,
 				DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */,
+				DA3AC2B51C6C04B9006FA76D /* SudokuDataSource.h */,
+				DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */,
 				DA3AC2861C6BDD83006FA76D /* Main.storyboard */,
 				DA3AC2891C6BDD83006FA76D /* Assets.xcassets */,
 				DA3AC28B1C6BDD83006FA76D /* LaunchScreen.storyboard */,
@@ -143,6 +154,16 @@
 				DA3AC2A41C6BDD83006FA76D /* Info.plist */,
 			);
 			path = SudokuUITests;
+			sourceTree = "<group>";
+		};
+		DA3AC2BB1C6C088B006FA76D /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				DA3AC2B81C6C087C006FA76D /* LabelCell.h */,
+				DA3AC2B91C6C087C006FA76D /* LabelCell.m */,
+				DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */,
+			);
+			name = cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +274,7 @@
 			files = (
 				DA3AC28D1C6BDD83006FA76D /* LaunchScreen.storyboard in Resources */,
 				DA3AC28A1C6BDD83006FA76D /* Assets.xcassets in Resources */,
+				DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */,
 				DA3AC2881C6BDD83006FA76D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA3AC2851C6BDD83006FA76D /* SudokuViewController.m in Sources */,
+				DA3AC2B71C6C04B9006FA76D /* SudokuDataSource.m in Sources */,
+				DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */,
 				DA3AC2821C6BDD83006FA76D /* AppDelegate.m in Sources */,
 				DA3AC27F1C6BDD83006FA76D /* main.m in Sources */,
 				DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */,

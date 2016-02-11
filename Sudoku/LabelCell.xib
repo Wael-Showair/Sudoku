@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="label-cell" id="lvC-ff-O7B" customClass="LabelCell">
+            <rect key="frame" x="0.0" y="0.0" width="164" height="109"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="164" height="109"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7h8-q3-JIF">
+                        <rect key="frame" x="61" y="44" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="7h8-q3-JIF" firstAttribute="top" secondItem="lvC-ff-O7B" secondAttribute="top" constant="44" id="3SC-2F-73M"/>
+                <constraint firstItem="7h8-q3-JIF" firstAttribute="centerX" secondItem="lvC-ff-O7B" secondAttribute="centerX" id="4bM-k4-o0f"/>
+                <constraint firstItem="7h8-q3-JIF" firstAttribute="centerY" secondItem="lvC-ff-O7B" secondAttribute="centerY" id="Qs2-y5-f6v"/>
+            </constraints>
+            <size key="customSize" width="164" height="109"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="3SC-2F-73M"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="textLabel" destination="7h8-q3-JIF" id="A1D-xR-rfD"/>
+            </connections>
+            <point key="canvasLocation" x="112" y="254.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

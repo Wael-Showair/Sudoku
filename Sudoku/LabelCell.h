@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  LabelCell.h
 //  Sudoku
 //
 //  Created by Wael Showair on 2016-02-10.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SudokuViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+#define CELL_IDENTIFIER @"label-cell"
+@interface LabelCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
 @end
-

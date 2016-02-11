@@ -7,16 +7,23 @@
 //
 
 #import "SudokuViewController.h"
+#import "SudokuDataSource.h"
+#import "LabelCell.h"
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *sudokuCollectionView;
-
+@property (strong,nonatomic) SudokuDataSource* dataSource;
 @end
 
 @implementation SudokuViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  /* Set the data source of the collection view. */
+  SudokuDataSource* dataSource = [[SudokuDataSource alloc] init];
+  self.dataSource = dataSource;
+  self.sudokuCollectionView.dataSource = dataSource;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,4 +31,21 @@
   
 }
 
+#pragma Collection View Delegate
+-(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
+
+  if ([CELL_IDENTIFIER isEqualToString:[cell reuseIdentifier]]) {
+    LabelCell* myCell = (LabelCell*) cell;
+    myCell.textLabel.text = [self.dataSource getLabelAtIndexPath:indexPath];
+  }
+}
+
+#pragma Collection View Flow Layout
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+  CGFloat cellWidth  = self.sudokuCollectionView.bounds.size.width/3;
+  CGFloat cellHeight = self.sudokuCollectionView.bounds.size.height/3;
+  
+  return CGSizeMake(cellWidth, cellHeight);
+}
 @end
