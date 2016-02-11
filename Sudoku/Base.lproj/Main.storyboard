@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Sudoku View Controller-->
@@ -17,9 +19,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EpJ-g4-ClV" customClass="SudokuBoard">
-                                <rect key="frame" x="8" y="28" width="584" height="564"/>
-                                <color key="backgroundColor" red="0.98893652229999995" green="1" blue="0.25936630129999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EpJ-g4-ClV" customClass="SudokuBoard">
+                                <rect key="frame" x="8" y="72" width="584" height="584"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="EpJ-g4-ClV" secondAttribute="height" multiplier="584:583" id="1uH-4b-ORs"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="AnF-fL-mj8">
                                     <size key="itemSize" width="107" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -37,18 +42,125 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <exclude reference="1uH-4b-ORs"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iFr-Up-z5x"/>
                                 </connections>
                             </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iKw-qU-6f5">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
+                                        <rect key="frame" x="20" y="20" width="36" height="30"/>
+                                        <state key="normal" title="Clear"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
+                                        <rect key="frame" x="281" y="20" width="38" height="30"/>
+                                        <state key="normal" title="Solve"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
+                                        <rect key="frame" x="455" y="20" width="125" height="30"/>
+                                        <state key="normal" title="New Game"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zzC-bY-hQG">
+                                <rect key="frame" x="0.0" y="642" width="105" height="85"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Em-Xk-NzO">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="1"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgD-ji-aWh">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="2"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-im-rXx">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="3"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2o-Qf-4Qm">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="4"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Peh-wm-d1m">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="5"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VS4-pm-5ZL">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="6"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBL-4y-slb">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="7"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-5F-34L">
+                                        <rect key="frame" x="20" y="20" width="64.5" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="8"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-fW-IQB">
+                                        <rect key="frame" x="21" y="20" width="64" height="45"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="9"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.38039215686274508" green="0.65098039215686276" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="EpJ-g4-ClV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="0Gm-0h-oP0"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EpJ-g4-ClV" secondAttribute="bottom" constant="8" symbolic="YES" id="csU-1p-2BX"/>
-                            <constraint firstItem="EpJ-g4-ClV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="rQq-jk-yXx"/>
-                            <constraint firstAttribute="trailing" secondItem="EpJ-g4-ClV" secondAttribute="trailing" constant="8" id="vEs-DR-PKd"/>
+                            <constraint firstItem="zzC-bY-hQG" firstAttribute="top" secondItem="EpJ-g4-ClV" secondAttribute="bottom" constant="20" id="2R6-4r-47L"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zzC-bY-hQG" secondAttribute="trailing" id="JZg-0n-rOc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iKw-qU-6f5" secondAttribute="trailing" id="Vfc-4y-2HL"/>
+                            <constraint firstItem="iKw-qU-6f5" firstAttribute="leading" secondItem="EpJ-g4-ClV" secondAttribute="leading" id="bbc-MK-avi"/>
+                            <constraint firstItem="iKw-qU-6f5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eCm-Rk-FWV"/>
+                            <constraint firstItem="iKw-qU-6f5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ftf-73-gVm"/>
+                            <constraint firstItem="zzC-bY-hQG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="pVx-Iy-ej6"/>
+                            <constraint firstItem="EpJ-g4-ClV" firstAttribute="top" secondItem="iKw-qU-6f5" secondAttribute="bottom" constant="8" symbolic="YES" id="q3l-6M-lXj"/>
+                            <constraint firstItem="EpJ-g4-ClV" firstAttribute="trailing" secondItem="iKw-qU-6f5" secondAttribute="trailing" id="qmL-U3-7qh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zzC-bY-hQG" secondAttribute="bottom" constant="93" id="rsB-Nb-ris"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Vfc-4y-2HL"/>
+                                <exclude reference="bbc-MK-avi"/>
+                                <exclude reference="eCm-Rk-FWV"/>
+                                <exclude reference="ftf-73-gVm"/>
+                                <exclude reference="q3l-6M-lXj"/>
+                                <exclude reference="qmL-U3-7qh"/>
+                                <exclude reference="2R6-4r-47L"/>
+                                <exclude reference="JZg-0n-rOc"/>
+                                <exclude reference="pVx-Iy-ej6"/>
+                                <exclude reference="rsB-Nb-ris"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="constraints">
+                                <include reference="Vfc-4y-2HL"/>
+                                <include reference="bbc-MK-avi"/>
+                                <include reference="eCm-Rk-FWV"/>
+                                <include reference="ftf-73-gVm"/>
+                                <include reference="q3l-6M-lXj"/>
+                                <include reference="qmL-U3-7qh"/>
+                                <include reference="2R6-4r-47L"/>
+                                <include reference="JZg-0n-rOc"/>
+                                <include reference="pVx-Iy-ej6"/>
+                                <include reference="rsB-Nb-ris"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="hbK-P8-zhp"/>
                     <connections>
@@ -57,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1192" y="337"/>
+            <point key="canvasLocation" x="1192" y="336.75"/>
         </scene>
     </scenes>
 </document>

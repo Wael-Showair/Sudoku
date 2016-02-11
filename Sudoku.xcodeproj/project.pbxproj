@@ -112,15 +112,12 @@
 		DA3AC27C1C6BDD83006FA76D /* Sudoku */ = {
 			isa = PBXGroup;
 			children = (
-				DA3AC2BB1C6C088B006FA76D /* cells */,
 				DA3AC2801C6BDD83006FA76D /* AppDelegate.h */,
 				DA3AC2811C6BDD83006FA76D /* AppDelegate.m */,
+				DA3AC2C01C6C4BE4006FA76D /* sudoku grid */,
+				DA3AC2BB1C6C088B006FA76D /* cells */,
 				DA3AC2831C6BDD83006FA76D /* SudokuViewController.h */,
 				DA3AC2841C6BDD83006FA76D /* SudokuViewController.m */,
-				DA3AC2B01C6BF079006FA76D /* SudokuBoard.h */,
-				DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */,
-				DA3AC2B51C6C04B9006FA76D /* SudokuDataSource.h */,
-				DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */,
 				DA3AC2861C6BDD83006FA76D /* Main.storyboard */,
 				DA3AC2891C6BDD83006FA76D /* Assets.xcassets */,
 				DA3AC28B1C6BDD83006FA76D /* LaunchScreen.storyboard */,
@@ -164,6 +161,17 @@
 				DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */,
 			);
 			name = cells;
+			sourceTree = "<group>";
+		};
+		DA3AC2C01C6C4BE4006FA76D /* sudoku grid */ = {
+			isa = PBXGroup;
+			children = (
+				DA3AC2B01C6BF079006FA76D /* SudokuBoard.h */,
+				DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */,
+				DA3AC2B51C6C04B9006FA76D /* SudokuDataSource.h */,
+				DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */,
+			);
+			name = "sudoku grid";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
