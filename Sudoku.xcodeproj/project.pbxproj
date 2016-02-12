@@ -13,12 +13,16 @@
 		DA3AC2881C6BDD83006FA76D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC2861C6BDD83006FA76D /* Main.storyboard */; };
 		DA3AC28A1C6BDD83006FA76D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC2891C6BDD83006FA76D /* Assets.xcassets */; };
 		DA3AC28D1C6BDD83006FA76D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC28B1C6BDD83006FA76D /* LaunchScreen.storyboard */; };
-		DA3AC2981C6BDD83006FA76D /* SudokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2971C6BDD83006FA76D /* SudokuTests.m */; };
+		DA3AC2981C6BDD83006FA76D /* SudokuCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */; };
 		DA3AC2A31C6BDD83006FA76D /* SudokuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2A21C6BDD83006FA76D /* SudokuUITests.m */; };
 		DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */; };
 		DA3AC2B71C6C04B9006FA76D /* SudokuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */; };
 		DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B91C6C087C006FA76D /* LabelCell.m */; };
 		DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */; };
+		DA44F0241C6DB33D00D966EA /* RowColPair.c in Sources */ = {isa = PBXBuildFile; fileRef = DA44F0221C6DB33D00D966EA /* RowColPair.c */; };
+		DA7F7E241C6CFBDD009908D8 /* MicroGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */; };
+		DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */; };
+		DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +54,7 @@
 		DA3AC28C1C6BDD83006FA76D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA3AC28E1C6BDD83006FA76D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA3AC2931C6BDD83006FA76D /* SudokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SudokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA3AC2971C6BDD83006FA76D /* SudokuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SudokuTests.m; sourceTree = "<group>"; };
+		DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SudokuCellTests.m; sourceTree = "<group>"; };
 		DA3AC2991C6BDD83006FA76D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA3AC29E1C6BDD83006FA76D /* SudokuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SudokuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3AC2A21C6BDD83006FA76D /* SudokuUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SudokuUITests.m; sourceTree = "<group>"; };
@@ -62,6 +66,13 @@
 		DA3AC2B81C6C087C006FA76D /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
 		DA3AC2B91C6C087C006FA76D /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
 		DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
+		DA44F0221C6DB33D00D966EA /* RowColPair.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RowColPair.c; path = Sudoku/RowColPair.c; sourceTree = "<group>"; };
+		DA44F0231C6DB33D00D966EA /* RowColPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RowColPair.h; path = Sudoku/RowColPair.h; sourceTree = "<group>"; };
+		DA7F7E221C6CFBDD009908D8 /* MicroGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MicroGrid.h; path = Sudoku/MicroGrid.h; sourceTree = "<group>"; };
+		DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MicroGrid.m; path = Sudoku/MicroGrid.m; sourceTree = "<group>"; };
+		DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SudokuCell.h; path = Sudoku/SudokuCell.h; sourceTree = "<group>"; };
+		DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SudokuCell.m; path = Sudoku/SudokuCell.m; sourceTree = "<group>"; };
+		DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MicroGridTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +125,8 @@
 			children = (
 				DA3AC2801C6BDD83006FA76D /* AppDelegate.h */,
 				DA3AC2811C6BDD83006FA76D /* AppDelegate.m */,
+				DA7F7E211C6CFB4E009908D8 /* Model */,
 				DA3AC2C01C6C4BE4006FA76D /* sudoku grid */,
-				DA3AC2BB1C6C088B006FA76D /* cells */,
 				DA3AC2831C6BDD83006FA76D /* SudokuViewController.h */,
 				DA3AC2841C6BDD83006FA76D /* SudokuViewController.m */,
 				DA3AC2861C6BDD83006FA76D /* Main.storyboard */,
@@ -138,7 +149,8 @@
 		DA3AC2961C6BDD83006FA76D /* SudokuTests */ = {
 			isa = PBXGroup;
 			children = (
-				DA3AC2971C6BDD83006FA76D /* SudokuTests.m */,
+				DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */,
+				DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
 			);
 			path = SudokuTests;
@@ -170,8 +182,23 @@
 				DA3AC2B11C6BF079006FA76D /* SudokuBoard.m */,
 				DA3AC2B51C6C04B9006FA76D /* SudokuDataSource.h */,
 				DA3AC2B61C6C04B9006FA76D /* SudokuDataSource.m */,
+				DA3AC2BB1C6C088B006FA76D /* cells */,
 			);
 			name = "sudoku grid";
+			sourceTree = "<group>";
+		};
+		DA7F7E211C6CFB4E009908D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA7F7E221C6CFBDD009908D8 /* MicroGrid.h */,
+				DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */,
+				DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */,
+				DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */,
+				DA44F0221C6DB33D00D966EA /* RowColPair.c */,
+				DA44F0231C6DB33D00D966EA /* RowColPair.h */,
+			);
+			name = Model;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,9 +336,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA3AC2851C6BDD83006FA76D /* SudokuViewController.m in Sources */,
+				DA7F7E241C6CFBDD009908D8 /* MicroGrid.m in Sources */,
+				DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */,
 				DA3AC2B71C6C04B9006FA76D /* SudokuDataSource.m in Sources */,
 				DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */,
 				DA3AC2821C6BDD83006FA76D /* AppDelegate.m in Sources */,
+				DA44F0241C6DB33D00D966EA /* RowColPair.c in Sources */,
 				DA3AC27F1C6BDD83006FA76D /* main.m in Sources */,
 				DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */,
 			);
@@ -321,7 +351,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA3AC2981C6BDD83006FA76D /* SudokuTests.m in Sources */,
+				DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */,
+				DA3AC2981C6BDD83006FA76D /* SudokuCellTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +572,7 @@
 				DA3AC2A91C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA3AC2AA1C6BDD83006FA76D /* Build configuration list for PBXNativeTarget "SudokuTests" */ = {
 			isa = XCConfigurationList;
@@ -549,6 +581,7 @@
 				DA3AC2AC1C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA3AC2AD1C6BDD83006FA76D /* Build configuration list for PBXNativeTarget "SudokuUITests" */ = {
 			isa = XCConfigurationList;
@@ -557,6 +590,7 @@
 				DA3AC2AF1C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
