@@ -51,16 +51,8 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
   
-  /* Get the exact cell view that was selected by user. */
-  UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-  
-  /* Change border color and width of for the cell. */
-  cell.layer.borderColor = QLIK_LOGO_COLOR.CGColor;
-  cell.layer.borderWidth = 1.5;
-  
-  /* Add inner drop shadow to the cell. */
-  cell.layer.shadowColor = QLIK_LOGO_COLOR.CGColor;
-  cell.layer.shadowOpacity = 0.8;
+  /* Display feedback visual effect for the selected cell. */
+  [self displayVisualEffectForSelectedCellAtIndexPath:indexPath];
   
   /* update last selected index path. */
   self.lastSelectedIndexPath = indexPath;
@@ -68,7 +60,16 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
   
-  [self clearSelectionAtIndexPath:indexPath];
+  /* Get the exact cell view that was selected by user. */
+  UICollectionViewCell* cell = [self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
+  
+  /* Reset border width to zero so it should be removed and the content of the cell already
+   * consists of UIBezier path, that is why default thin black border around every cell still
+   * exists even after reseting the border here to zero. */
+  cell.layer.borderWidth = 0;
+  
+  /* Hide the drop shadow of the deselected cell.*/
+  cell.layer.shadowOpacity = 0;
 }
 
 #pragma Collection View Flow Layout
@@ -126,21 +127,31 @@
   /* Reload the cell of the collection view at the given indexPath. */
   [self.sudokuCollectionView reloadItemsAtIndexPaths:@[self.lastSelectedIndexPath]];
   
-  [self clearSelectionAtIndexPath:self.lastSelectedIndexPath];
+  /* After reloading the collection view cell, it seems that the collection view is not longer
+   * saving that the cell was selected.
+   * As per Apple documentation, the following method does not cause any selection-related delegate 
+   * methods to be called.
+   */
+  [self.sudokuCollectionView selectItemAtIndexPath:self.lastSelectedIndexPath
+                                          animated:NO
+                                    scrollPosition:UICollectionViewScrollPositionNone];
+
+  /* Make sure to keep the same visual effect for the reloaded selected cell.*/
+  [self displayVisualEffectForSelectedCellAtIndexPath:self.lastSelectedIndexPath];
 }
 
 #pragma internal methods
-- (void) clearSelectionAtIndexPath: (NSIndexPath*) indexPath{
+- (void) displayVisualEffectForSelectedCellAtIndexPath: (NSIndexPath*) indexPath{
   
   /* Get the exact cell view that was selected by user. */
   UICollectionViewCell* cell = [self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
   
-  /* Reset border width to zero so it should be removed and the content of the cell already
-   * consists of UIBezier path, that is why default thin black border around every cell still
-   * exists even after reseting the border here to zero. */
-  cell.layer.borderWidth = 0;
+  /* Change border color and width of for the cell. */
+  cell.layer.borderColor = QLIK_LOGO_COLOR.CGColor;
+  cell.layer.borderWidth = 1.5;
   
-  /* Hide the drop shadow of the deselected cell.*/
-  cell.layer.shadowOpacity = 0;
+  /* Add inner drop shadow to the cell. */
+  cell.layer.shadowColor = QLIK_LOGO_COLOR.CGColor;
+  cell.layer.shadowOpacity = 0.8;
 }
 @end
