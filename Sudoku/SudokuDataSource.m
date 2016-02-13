@@ -8,21 +8,24 @@
 
 #import "SudokuDataSource.h"
 #import "LabelCell.h"
+#import "MacroGrid.h"
 
+#define NUM_OF_CELLS_PER_ROW        9
 
 @interface SudokuDataSource ()
-@property NSArray* dummy;
+@property MacroGrid* grid;
 @end
+
 @implementation SudokuDataSource
 
 -(instancetype)init{
   self = [super init];
-  self.dummy = @[@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9",@"1", @"2", @"3", @"4", @"5",@"6",@"7",@"8",@"9"];
+  self.grid = [[MacroGrid alloc] init];
   return self;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-  return  self.dummy.count;
+  return  [self.grid numOfCells];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -33,6 +36,20 @@
 
 
 -(NSString*) getLabelAtIndexPath: (NSIndexPath*) indexPath{
- return [self.dummy objectAtIndex:indexPath.row];
+
+  /* Note that I can change the method signature to take the index of the flattened array directly
+   * But for now, for the sake of code readability, converting index =>RowColPair structure => index
+   * does not harm the performance.
+   */
+  
+  /* Get the row index as well as the column index of the cell. */
+  NSUInteger rowIndex    = indexPath.row / NUM_OF_CELLS_PER_ROW;
+  NSUInteger columnIndex = indexPath.row % NUM_OF_CELLS_PER_ROW;
+  
+  /* Get the sudoku cell from the given row and column. */
+  SudokuCell* sudokuCell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(rowIndex, columnIndex)];
+  
+  /* Display the value as string in the grid. */
+  return [NSString stringWithFormat:@"%ld",sudokuCell.value];
 }
 @end
