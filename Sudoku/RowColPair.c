@@ -12,5 +12,15 @@ RowColPair makeRowColPair (unsigned long row, unsigned long column){
   
   RowColPair pair = {row, column};
   return pair;
+}
+
+inline unsigned long convertPairToIndex(RowColPair pair){
+  return pair.row * 9 + pair.column;
+}
+
+inline RowColPair convertIndexToPair(unsigned long index){
+  unsigned long row    = index / 9;
+  unsigned long column = index % 9;
   
+  return  makeRowColPair(row, column);
 }

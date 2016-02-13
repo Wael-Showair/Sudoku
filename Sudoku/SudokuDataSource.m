@@ -52,8 +52,13 @@
   /* Get the sudoku cell from the given row and column. */
   SudokuCell* sudokuCell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(rowIndex, columnIndex)];
   
-  /* Display the value as string in the grid. */
-  return [NSString stringWithFormat:@"%ld",sudokuCell.value];
+  if (INVALID_VALUE == sudokuCell.value) {
+    /* Display empty value as string in the grid. */
+    return @"";
+  } else {
+    /* Display the value as string in the grid. */
+    return [NSString stringWithFormat:@"%ld",sudokuCell.value];
+  }
 }
 
 -(void)setValueOfSudokuCellAtIndexPath:(NSIndexPath *)indexPath WithValue: (NSString*) value{

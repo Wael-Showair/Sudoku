@@ -18,8 +18,17 @@
 @implementation MacroGridTests
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
+  
+  /* Since the launces before running the test, and it already must have initialize the MacroGrid which
+   * in turn calls intialize micro grid 9 times. Hence the starting value of the cells accumulate
+   * over the previous value (which is multiples of 81). So need to reset the static counter
+   * in the micro grid such that any test starts running after the the app launch still starts
+   * from 1.
+   */
+  [MicroGrid resetCount];
+  
   self.grid = [[MacroGrid alloc] init];
 }
 
@@ -131,4 +140,14 @@
   XCTAssertNil(cellsOfColumn);
 }
 
+-(void) testGetIndexOfSudokuCell{
+  /* Get cell at row 4, column 7. */
+  RowColPair pair = makeRowColPair(3, 6); /* maps to index 3*9+6 = 33 */
+  SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
+  XCTAssertNotNil(cell);
+  XCTAssertEqual(34, cell.value);
+  
+  NSUInteger index = [self.grid indexOfSudokuCell:cell];
+  XCTAssertEqual(33, index);
+}
 @end

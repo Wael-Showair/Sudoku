@@ -25,6 +25,8 @@
 		DA7F7E241C6CFBDD009908D8 /* MicroGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */; };
 		DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */; };
 		DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */; };
+		DAF4AB091C6F917600FFA28F /* ConstraintPropagation.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF4AB081C6F917600FFA28F /* ConstraintPropagation.m */; };
+		DAF4AB0B1C6F9E1600FFA28F /* ConstraintPropagationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF4AB0A1C6F9E1600FFA28F /* ConstraintPropagationTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,9 @@
 		DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SudokuCell.h; path = Sudoku/SudokuCell.h; sourceTree = "<group>"; };
 		DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SudokuCell.m; path = Sudoku/SudokuCell.m; sourceTree = "<group>"; };
 		DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MicroGridTests.m; sourceTree = "<group>"; };
+		DAF4AB071C6F917600FFA28F /* ConstraintPropagation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstraintPropagation.h; sourceTree = "<group>"; };
+		DAF4AB081C6F917600FFA28F /* ConstraintPropagation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstraintPropagation.m; sourceTree = "<group>"; };
+		DAF4AB0A1C6F9E1600FFA28F /* ConstraintPropagationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstraintPropagationTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +136,7 @@
 				DA3AC2801C6BDD83006FA76D /* AppDelegate.h */,
 				DA3AC2811C6BDD83006FA76D /* AppDelegate.m */,
 				DA7F7E211C6CFB4E009908D8 /* Model */,
+				DAF4AB061C6F90FB00FFA28F /* Algorithm */,
 				DA3AC2C01C6C4BE4006FA76D /* sudoku grid */,
 				DA3AC2831C6BDD83006FA76D /* SudokuViewController.h */,
 				DA3AC2841C6BDD83006FA76D /* SudokuViewController.m */,
@@ -157,6 +163,7 @@
 				DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */,
 				DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */,
 				DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */,
+				DAF4AB0A1C6F9E1600FFA28F /* ConstraintPropagationTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
 			);
 			path = SudokuTests;
@@ -207,6 +214,15 @@
 			);
 			name = Model;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		DAF4AB061C6F90FB00FFA28F /* Algorithm */ = {
+			isa = PBXGroup;
+			children = (
+				DAF4AB071C6F917600FFA28F /* ConstraintPropagation.h */,
+				DAF4AB081C6F917600FFA28F /* ConstraintPropagation.m */,
+			);
+			name = Algorithm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +367,7 @@
 				DA3AC2821C6BDD83006FA76D /* AppDelegate.m in Sources */,
 				DA44F0271C6DC07800D966EA /* MacroGrid.m in Sources */,
 				DA44F0241C6DB33D00D966EA /* RowColPair.c in Sources */,
+				DAF4AB091C6F917600FFA28F /* ConstraintPropagation.m in Sources */,
 				DA3AC27F1C6BDD83006FA76D /* main.m in Sources */,
 				DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */,
 			);
@@ -363,6 +380,7 @@
 				DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */,
 				DA7DF9161C6EBFF80041A1D1 /* MacroGridTests.m in Sources */,
 				DA3AC2981C6BDD83006FA76D /* SudokuCellTests.m in Sources */,
+				DAF4AB0B1C6F9E1600FFA28F /* ConstraintPropagationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
