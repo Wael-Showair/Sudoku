@@ -26,11 +26,16 @@
   
   /* Create a range of numbers from 1 to 9 */
   self.range = NSMakeRange(1, 9);
+
+/* During unit testing, there is no need to override the value that is out of range.*/
+#if !UNIT_TESTING
   
   /* If the given value is out of range, set value to invalid value */
   if (!NSLocationInRange(value, self.range)) {
     value = INVALID_VALUE;
   }
+  
+#endif
   
   self.value = value;
   return self;

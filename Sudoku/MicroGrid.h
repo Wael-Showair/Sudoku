@@ -25,6 +25,7 @@
 @interface MicroGrid : NSObject
 
 -(NSUInteger) numOfCells;
+-(id) getFlattenedCells;
 
 /* Retrieve row from micro grid */
 -(NSArray<SudokuCell*>*) getRowAtIndex: (NSUInteger) index;
@@ -34,6 +35,10 @@
 
 /* Methods to retrieve specific cell from micro grid */
 -(SudokuCell*) getSudokuCellAtRowColumn:(RowColPair) pair;
-/* Methods to check whether a number can be placed at specific row/colum. */
-/* Methods to retrieve indeces (as row,column pairs) of the empty cells. */
+
+/* TODO: Methods to check whether a number can be placed at specific row/colum. */
+
+#if UNIT_TESTING
++(void) resetCount;
+#endif
 @end

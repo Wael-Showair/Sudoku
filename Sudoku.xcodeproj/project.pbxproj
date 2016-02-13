@@ -20,6 +20,8 @@
 		DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3AC2B91C6C087C006FA76D /* LabelCell.m */; };
 		DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */; };
 		DA44F0241C6DB33D00D966EA /* RowColPair.c in Sources */ = {isa = PBXBuildFile; fileRef = DA44F0221C6DB33D00D966EA /* RowColPair.c */; };
+		DA44F0271C6DC07800D966EA /* MacroGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA44F0261C6DC07800D966EA /* MacroGrid.m */; };
+		DA7DF9161C6EBFF80041A1D1 /* MacroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */; };
 		DA7F7E241C6CFBDD009908D8 /* MicroGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */; };
 		DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */; };
 		DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */; };
@@ -68,6 +70,9 @@
 		DA3AC2BE1C6C12B4006FA76D /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
 		DA44F0221C6DB33D00D966EA /* RowColPair.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RowColPair.c; path = Sudoku/RowColPair.c; sourceTree = "<group>"; };
 		DA44F0231C6DB33D00D966EA /* RowColPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RowColPair.h; path = Sudoku/RowColPair.h; sourceTree = "<group>"; };
+		DA44F0251C6DC07800D966EA /* MacroGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacroGrid.h; path = Sudoku/MacroGrid.h; sourceTree = "<group>"; };
+		DA44F0261C6DC07800D966EA /* MacroGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MacroGrid.m; path = Sudoku/MacroGrid.m; sourceTree = "<group>"; };
+		DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroGridTests.m; sourceTree = "<group>"; };
 		DA7F7E221C6CFBDD009908D8 /* MicroGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MicroGrid.h; path = Sudoku/MicroGrid.h; sourceTree = "<group>"; };
 		DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MicroGrid.m; path = Sudoku/MicroGrid.m; sourceTree = "<group>"; };
 		DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SudokuCell.h; path = Sudoku/SudokuCell.h; sourceTree = "<group>"; };
@@ -149,8 +154,9 @@
 		DA3AC2961C6BDD83006FA76D /* SudokuTests */ = {
 			isa = PBXGroup;
 			children = (
-				DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */,
+				DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */,
 				DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */,
+				DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
 			);
 			path = SudokuTests;
@@ -190,6 +196,8 @@
 		DA7F7E211C6CFB4E009908D8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DA44F0251C6DC07800D966EA /* MacroGrid.h */,
+				DA44F0261C6DC07800D966EA /* MacroGrid.m */,
 				DA7F7E221C6CFBDD009908D8 /* MicroGrid.h */,
 				DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */,
 				DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */,
@@ -341,6 +349,7 @@
 				DA3AC2B71C6C04B9006FA76D /* SudokuDataSource.m in Sources */,
 				DA3AC2BA1C6C087C006FA76D /* LabelCell.m in Sources */,
 				DA3AC2821C6BDD83006FA76D /* AppDelegate.m in Sources */,
+				DA44F0271C6DC07800D966EA /* MacroGrid.m in Sources */,
 				DA44F0241C6DB33D00D966EA /* RowColPair.c in Sources */,
 				DA3AC27F1C6BDD83006FA76D /* main.m in Sources */,
 				DA3AC2B21C6BF079006FA76D /* SudokuBoard.m in Sources */,
@@ -352,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */,
+				DA7DF9161C6EBFF80041A1D1 /* MacroGridTests.m in Sources */,
 				DA3AC2981C6BDD83006FA76D /* SudokuCellTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +448,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -475,6 +486,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -509,6 +521,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"UNIT_TESTING=1",
+				);
 				INFOPLIST_FILE = SudokuTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.SudokuTests;
@@ -553,6 +570,93 @@
 			};
 			name = Release;
 		};
+		DA7DF91B1C6EE3790041A1D1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"UNIT_TESTING=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Testing;
+		};
+		DA7DF91C1C6EE3790041A1D1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Sudoku/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.Sudoku;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Testing;
+		};
+		DA7DF91D1C6EE3790041A1D1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"UNIT_TESTING=1",
+				);
+				INFOPLIST_FILE = SudokuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.SudokuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sudoku.app/Sudoku";
+			};
+			name = Testing;
+		};
+		DA7DF91E1C6EE3790041A1D1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SudokuUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.SudokuUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Sudoku;
+				USES_XCTRUNNER = YES;
+			};
+			name = Testing;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -560,6 +664,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA3AC2A51C6BDD83006FA76D /* Debug */,
+				DA7DF91B1C6EE3790041A1D1 /* Testing */,
 				DA3AC2A61C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -569,6 +674,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA3AC2A81C6BDD83006FA76D /* Debug */,
+				DA7DF91C1C6EE3790041A1D1 /* Testing */,
 				DA3AC2A91C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -578,6 +684,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA3AC2AB1C6BDD83006FA76D /* Debug */,
+				DA7DF91D1C6EE3790041A1D1 /* Testing */,
 				DA3AC2AC1C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -587,6 +694,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA3AC2AE1C6BDD83006FA76D /* Debug */,
+				DA7DF91E1C6EE3790041A1D1 /* Testing */,
 				DA3AC2AF1C6BDD83006FA76D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

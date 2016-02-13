@@ -14,6 +14,16 @@
 #define NUM_OF_CELLS_PER_COL          3
 #define ONE_CELL                      1
 
+#if UNIT_TESTING
+
+/* This variable is only used to initialize all cells of the 9 micro grids with distinct values
+ * to be checked on testInitMacroGrid method. It must be static such that it is not destoroyed
+ * outside the scope of init method.
+ */
+static int count = 1;
+
+#endif
+
 @interface MicroGrid ()
 
 /* Note that cells property is private so that the interface of the class with outside world stays
@@ -21,9 +31,12 @@
  * property.
  */
 @property NSMutableOrderedSet* cells;
+
 @end
 
 @implementation MicroGrid
+
+
 
 #pragma initialization
 
@@ -32,8 +45,17 @@
   self = [super init];
   
   NSMutableArray* arrayOfSudokuCells = [[NSMutableArray alloc] init];
+  
+  /* Create cells of the micro grid. */
   for (int i=0; i< NUM_OF_CELLS_PER_MICRO_GRID; i++) {
+    
+#if UNIT_TESTING
+    SudokuCell* cell = [[SudokuCell alloc] initWithValue:count];
+    count ++;
+#else
     SudokuCell* cell = [[SudokuCell alloc] init];
+#endif
+    
     [arrayOfSudokuCells addObject:cell];
   }
   /* Although number of Sudoku cells is fixed in any micro grid but according to Apple documentation
@@ -45,6 +67,10 @@
 
 -(NSUInteger) numOfCells{
   return self.cells.count;
+}
+
+-(id) getFlattenedCells{
+  return self.cells;
 }
 
 #pragma Row/Column Operations
@@ -60,7 +86,7 @@
      */
     
     /* Create set of indexes of the cells that construct the row by creating a NSRange. */
-    NSRange range = NSMakeRange(index, NUM_OF_CELLS_PER_ROW);
+    NSRange range = NSMakeRange(index*NUM_OF_CELLS_PER_ROW, NUM_OF_CELLS_PER_ROW);
     NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:range];
 
     /* Return the cells of the given indexes. */
@@ -104,8 +130,7 @@
 
 -(SudokuCell*)getSudokuCellAtRowColumn:(RowColPair)pair{
   
-  if (NUM_OF_CELLS_PER_MICRO_GRID > pair.row  &&
-      NUM_OF_CELLS_PER_MICRO_GRID > pair.column) {
+  if (NUM_OF_CELLS_PER_MICRO_GRID > pair.row  && NUM_OF_CELLS_PER_MICRO_GRID > pair.column) {
 
     /* Since the cells of any micro grid are represented by flattened data structure,
      * Requesting cell at row n & column m, means that the cell is actually is at index = n*3+m
@@ -119,4 +144,11 @@
   }
 }
 
+#if UNIT_TESTING
+
++(void) resetCount{
+  count = 1;
+}
+
+#endif
 @end
