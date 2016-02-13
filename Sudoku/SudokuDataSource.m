@@ -24,6 +24,8 @@
   return self;
 }
 
+#pragma Collection View Data Source
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
   return  [self.grid numOfCells];
 }
@@ -34,8 +36,9 @@
   return cell;
 }
 
+#pragma Sudoku Cell Connection with IndexPath
 
--(NSString*) getLabelAtIndexPath: (NSIndexPath*) indexPath{
+-(NSString*) getValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath{
 
   /* Note that I can change the method signature to take the index of the flattened array directly
    * But for now, for the sake of code readability, converting index =>RowColPair structure => index
@@ -51,5 +54,22 @@
   
   /* Display the value as string in the grid. */
   return [NSString stringWithFormat:@"%ld",sudokuCell.value];
+}
+
+-(void)setValueOfSudokuCellAtIndexPath:(NSIndexPath *)indexPath WithValue: (NSString*) value{
+  
+  /* Note that I can change the method signature to take the index of the flattened array directly
+   * But for now, for the sake of code readability, converting index =>RowColPair structure => index
+   * does not harm the performance.
+   */
+  
+  /* Get the row index as well as the column index of the cell. */
+  NSUInteger rowIndex    = indexPath.row / NUM_OF_CELLS_PER_ROW;
+  NSUInteger columnIndex = indexPath.row % NUM_OF_CELLS_PER_ROW;
+  
+  /* Get the sudoku cell from the given row and column. */
+  SudokuCell* sudokuCell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(rowIndex, columnIndex)];
+  
+  sudokuCell.value = value.intValue;
 }
 @end

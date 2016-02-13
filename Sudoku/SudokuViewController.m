@@ -12,7 +12,8 @@
 #import "SudokuBoard.h"
 
 #define SETUP_GAME_BTN_TITLE    @"Setup Game"
-#define DONE_BTN_TITLE        @"Done"
+#define DONE_BTN_TITLE          @"Done"
+#define QLIK_LOGO_COLOR         [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:1]
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *solveBtn;
 @property (weak, nonatomic) IBOutlet UIButton *setupGameDoneBtn;
 @property (strong,nonatomic) SudokuDataSource* dataSource;
+@property (strong, nonatomic) NSIndexPath* lastSelectedIndexPath;
 @end
 
 @implementation SudokuViewController
@@ -43,8 +45,30 @@
 
   if ([CELL_IDENTIFIER isEqualToString:[cell reuseIdentifier]]) {
     LabelCell* myCell = (LabelCell*) cell;
-    myCell.textLabel.text = [self.dataSource getLabelAtIndexPath:indexPath];
+    myCell.textLabel.text = [self.dataSource getValueOfSudokuCellAtIndexPath:indexPath];
   }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+  
+  /* Get the exact cell view that was selected by user. */
+  UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+  
+  /* Change border color and width of for the cell. */
+  cell.layer.borderColor = QLIK_LOGO_COLOR.CGColor;
+  cell.layer.borderWidth = 1.5;
+  
+  /* Add inner drop shadow to the cell. */
+  cell.layer.shadowColor = QLIK_LOGO_COLOR.CGColor;
+  cell.layer.shadowOpacity = 0.8;
+  
+  /* update last selected index path. */
+  self.lastSelectedIndexPath = indexPath;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+  
+  [self clearSelectionAtIndexPath:indexPath];
 }
 
 #pragma Collection View Flow Layout
@@ -58,12 +82,12 @@
 
 #pragma actions
 
-- (IBAction)onTapNewGame:(UIButton*)newGameDoneBtn {
+- (IBAction)onTapSetupGameDone:(UIButton*)setupGameDoneBtn {
 
-  if ([newGameDoneBtn.titleLabel.text isEqualToString:SETUP_GAME_BTN_TITLE]) {
+  if ([setupGameDoneBtn.titleLabel.text isEqualToString:SETUP_GAME_BTN_TITLE]) {
     
     /* Set the mode of the grid to new game creation */
-    self.sudokuCollectionView.shouldCreateNewGame = YES;
+    self.sudokuCollectionView.shouldSetupNewGame = YES;
     
     /* Change the title of the button*/
     [self.setupGameDoneBtn setTitle:DONE_BTN_TITLE forState:UIControlStateNormal] ;
@@ -75,7 +99,7 @@
   }else{
     
     /* Set the mode of the grid to play mode */
-    self.sudokuCollectionView.shouldCreateNewGame = NO;
+    self.sudokuCollectionView.shouldSetupNewGame = NO;
     
     /* Change the title of the button*/
     [self.setupGameDoneBtn setTitle:SETUP_GAME_BTN_TITLE forState:UIControlStateNormal];
@@ -94,4 +118,29 @@
 - (IBAction)onTapClear:(id)sender {
 }
 
+-(IBAction)onTapNuemricBtn:(UIButton*)numericBtn{
+  
+  /* Update the Data source with the numeric value of the button. */
+  [self.dataSource setValueOfSudokuCellAtIndexPath:self.lastSelectedIndexPath WithValue:numericBtn.titleLabel.text];
+  
+  /* Reload the cell of the collection view at the given indexPath. */
+  [self.sudokuCollectionView reloadItemsAtIndexPaths:@[self.lastSelectedIndexPath]];
+  
+  [self clearSelectionAtIndexPath:self.lastSelectedIndexPath];
+}
+
+#pragma internal methods
+- (void) clearSelectionAtIndexPath: (NSIndexPath*) indexPath{
+  
+  /* Get the exact cell view that was selected by user. */
+  UICollectionViewCell* cell = [self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
+  
+  /* Reset border width to zero so it should be removed and the content of the cell already
+   * consists of UIBezier path, that is why default thin black border around every cell still
+   * exists even after reseting the border here to zero. */
+  cell.layer.borderWidth = 0;
+  
+  /* Hide the drop shadow of the deselected cell.*/
+  cell.layer.shadowOpacity = 0;
+}
 @end

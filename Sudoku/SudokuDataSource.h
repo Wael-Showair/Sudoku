@@ -11,6 +11,7 @@
 
 @interface SudokuDataSource : NSObject <UICollectionViewDataSource>
 
--(NSString*) getLabelAtIndexPath: (NSIndexPath*) indexPath;
+-(NSString*) getValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath;
+-(void)      setValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath WithValue:(NSString*) value;
 
 @end
