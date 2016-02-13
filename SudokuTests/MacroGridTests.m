@@ -115,8 +115,8 @@
 }
 
 -(void) testGetColumnForCellAtValidIndex{
-  /* Get column for cell at row 3, col 4 which maps to index 2*9+4 = 22. */
-  NSArray<SudokuCell*>* cellsOfColumns = [self.grid getColumnForCellAtIndex:22];
+  /* Get column for cell at row 3, col 4 (indexes: 2,3) which maps to index 2*9+3 = 21. */
+  NSArray<SudokuCell*>* cellsOfColumns = [self.grid getColumnForCellAtIndex:21];
   XCTAssertNotNil(cellsOfColumns);
   NSUInteger expectedCellValue = 4;
   for (int i=0; i<9; i++) {

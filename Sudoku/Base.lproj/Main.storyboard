@@ -70,7 +70,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
                                         <rect key="frame" x="150" y="0.0" width="75" height="30"/>
-                                        <state key="normal" title="New Game"/>
+                                        <state key="normal" title="Setup Game"/>
                                         <connections>
                                             <action selector="onTapNewGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hZq-Ij-b9f"/>
                                         </connections>
@@ -174,7 +174,7 @@
                     <navigationItem key="navigationItem" id="hbK-P8-zhp"/>
                     <connections>
                         <outlet property="clearBtn" destination="ys5-Ro-nqF" id="tDF-xI-9Ue"/>
-                        <outlet property="gameNewDoneBtn" destination="WXo-4C-nRZ" id="141-Nr-3o8"/>
+                        <outlet property="setupGameDoneBtn" destination="WXo-4C-nRZ" id="QSB-HW-bIZ"/>
                         <outlet property="solveBtn" destination="bvK-qx-s26" id="Ft7-3N-Zky"/>
                         <outlet property="sudokuCollectionView" destination="EpJ-g4-ClV" id="xxM-Gl-qLE"/>
                     </connections>

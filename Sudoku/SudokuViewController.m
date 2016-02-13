@@ -11,14 +11,14 @@
 #import "LabelCell.h"
 #import "SudokuBoard.h"
 
-#define NEW_GAME_BTN_TITLE    @"New Game"
+#define SETUP_GAME_BTN_TITLE    @"Setup Game"
 #define DONE_BTN_TITLE        @"Done"
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *clearBtn;
 @property (weak, nonatomic) IBOutlet UIButton *solveBtn;
-@property (weak, nonatomic) IBOutlet UIButton *gameNewDoneBtn;
+@property (weak, nonatomic) IBOutlet UIButton *setupGameDoneBtn;
 @property (strong,nonatomic) SudokuDataSource* dataSource;
 @end
 
@@ -60,13 +60,13 @@
 
 - (IBAction)onTapNewGame:(UIButton*)newGameDoneBtn {
 
-  if ([newGameDoneBtn.titleLabel.text isEqualToString:NEW_GAME_BTN_TITLE]) {
+  if ([newGameDoneBtn.titleLabel.text isEqualToString:SETUP_GAME_BTN_TITLE]) {
     
     /* Set the mode of the grid to new game creation */
     self.sudokuCollectionView.shouldCreateNewGame = YES;
     
     /* Change the title of the button*/
-    [self.gameNewDoneBtn setTitle:DONE_BTN_TITLE forState:UIControlStateNormal] ;
+    [self.setupGameDoneBtn setTitle:DONE_BTN_TITLE forState:UIControlStateNormal] ;
     
     /* Disbale other buttons in the stack view. */
     self.clearBtn.enabled = NO;
@@ -78,7 +78,7 @@
     self.sudokuCollectionView.shouldCreateNewGame = NO;
     
     /* Change the title of the button*/
-    [self.gameNewDoneBtn setTitle:NEW_GAME_BTN_TITLE forState:UIControlStateNormal];
+    [self.setupGameDoneBtn setTitle:SETUP_GAME_BTN_TITLE forState:UIControlStateNormal];
     
     /* Disbale other buttons in the stack view. */
     self.clearBtn.enabled = YES;

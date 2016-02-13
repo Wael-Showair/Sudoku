@@ -63,9 +63,9 @@
   if (NUM_OF_CELLS_IN_MACRO_GRID > index) {
 
     /* Colum number is calculated by getting the remainder of dividing given index by
-     * number of cells per colum. According Column index = ColNum -1 since it is zero-based array.
+     * number of cells per colum.
      */
-    NSUInteger columnIndex = (index % NUM_OF_CELLS_PER_COL) - 1 ;
+    NSUInteger columnIndex = (index % NUM_OF_CELLS_PER_COL);
     
     /* return the column at the relative index. */
     return [self getColumnAtIndex:columnIndex];
