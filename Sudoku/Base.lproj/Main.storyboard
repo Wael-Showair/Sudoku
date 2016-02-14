@@ -51,25 +51,25 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iFr-Up-z5x"/>
                                 </connections>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iKw-qU-6f5">
-                                <rect key="frame" x="0.0" y="0.0" width="225" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iKw-qU-6f5">
+                                <rect key="frame" x="0.0" y="0.0" width="255" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
+                                        <rect key="frame" x="0.0" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Clear"/>
                                         <connections>
                                             <action selector="onTapClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pQi-2t-icU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
-                                        <rect key="frame" x="75" y="0.0" width="75" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
+                                        <rect key="frame" x="85" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Solve"/>
                                         <connections>
                                             <action selector="onTapSave:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1jl-dl-Tx0"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
-                                        <rect key="frame" x="150" y="0.0" width="75" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
+                                        <rect key="frame" x="170" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Setup Game"/>
                                         <connections>
                                             <action selector="onTapSetupGameDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GPz-RG-w04"/>

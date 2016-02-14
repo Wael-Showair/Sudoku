@@ -13,7 +13,7 @@
 #define NUM_OF_CELLS_PER_ROW        9
 
 @interface SudokuDataSource ()
-@property MacroGrid* grid;
+@property (strong,nonatomic,readwrite) MacroGrid* grid;
 @end
 
 @implementation SudokuDataSource
@@ -40,17 +40,8 @@
 
 -(NSString*) getValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath{
 
-  /* Note that I can change the method signature to take the index of the flattened array directly
-   * But for now, for the sake of code readability, converting index =>RowColPair structure => index
-   * does not harm the performance.
-   */
-  
-  /* Get the row index as well as the column index of the cell. */
-  NSUInteger rowIndex    = indexPath.row / NUM_OF_CELLS_PER_ROW;
-  NSUInteger columnIndex = indexPath.row % NUM_OF_CELLS_PER_ROW;
-  
-  /* Get the sudoku cell from the given row and column. */
-  SudokuCell* sudokuCell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(rowIndex, columnIndex)];
+  /* Get the sudoku cell from the given index path. */
+  SudokuCell* sudokuCell = [self sudokuCellAtIndexPath:indexPath];
   
   if (INVALID_VALUE == sudokuCell.value) {
     /* Display empty value as string in the grid. */
@@ -63,18 +54,27 @@
 
 -(void)setValueOfSudokuCellAtIndexPath:(NSIndexPath *)indexPath WithValue: (NSString*) value{
   
+  SudokuCell* sudokuCell = [self sudokuCellAtIndexPath:indexPath];
+  sudokuCell.value = value.intValue;
+}
+
+-(SudokuCell*) sudokuCellAtIndexPath: (NSIndexPath*) indexPath{
+ 
   /* Note that I can change the method signature to take the index of the flattened array directly
    * But for now, for the sake of code readability, converting index =>RowColPair structure => index
    * does not harm the performance.
    */
   
-  /* Get the row index as well as the column index of the cell. */
-  NSUInteger rowIndex    = indexPath.row / NUM_OF_CELLS_PER_ROW;
-  NSUInteger columnIndex = indexPath.row % NUM_OF_CELLS_PER_ROW;
+  if (nil == indexPath) {
+    return nil;
+  }
+  
+  /* Convert index path to row/column pair structure. */
+  RowColPair pair =  convertIndexToPair(indexPath.row);
   
   /* Get the sudoku cell from the given row and column. */
-  SudokuCell* sudokuCell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(rowIndex, columnIndex)];
-  
-  sudokuCell.value = value.intValue;
+  return [self.grid getSudokuCellAtRowColumn:pair];
+
 }
+
 @end

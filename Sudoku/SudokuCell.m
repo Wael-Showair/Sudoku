@@ -48,10 +48,17 @@
     /* Set the potential solution set of the cell */
     self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
 
-  }else{
-    /* No need to initialize the solution set. */
-    self.potentialSolutionSet = nil;
   }
+#if UNIT_TESTING
+  else{
+    /* Since initial value for testing environment is not invalied value, instead it is 1->81*/
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
+  }
+#endif
+  //else{
+    /* No need to initialize the solution set. */
+    //self.potentialSolutionSet = nil;
+  //}
   _value = value;
 }
 
@@ -87,12 +94,16 @@
   return [self isEqualToSudokuCell:cell];
 }
 
+#if 0
+/* My implementation of the hash method prevents the data structure that constructs the grid cells
+ * from retrieving the index of a given cell.
+ */
 -(NSUInteger)hash{
   
   /* hash implementations might be improved by bit-shifting or rotating composite values that may overlap.*/
   return self.value ^ [self.potentialSolutionSet hash];
 }
-
+#endif
 #pragma actions
 
 -(void)eliminateNumberFromSolutionSet:(NSUInteger)number{

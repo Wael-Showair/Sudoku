@@ -7,13 +7,13 @@
 //
 
 #import "SudokuViewController.h"
-#import "SudokuDataSource.h"
-#import "LabelCell.h"
-#import "SudokuBoard.h"
+
 
 #define SETUP_GAME_BTN_TITLE    @"Setup Game"
 #define DONE_BTN_TITLE          @"Done"
 #define QLIK_LOGO_COLOR         [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:1]
+#define RED_COLOR               [UIColor redColor]
+#define NO_COLOR                [UIColor clearColor]
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *setupGameDoneBtn;
 @property (strong,nonatomic) SudokuDataSource* dataSource;
 @property (strong, nonatomic) NSIndexPath* lastSelectedIndexPath;
+@property (strong, nonatomic) SudokuSolution* solution;
 @end
 
 @implementation SudokuViewController
@@ -33,6 +34,8 @@
   SudokuDataSource* dataSource = [[SudokuDataSource alloc] init];
   self.dataSource = dataSource;
   self.sudokuCollectionView.dataSource = dataSource;
+  self.solution = [[SudokuSolution alloc] init];
+  self.solution.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,23 +126,54 @@
 
 -(IBAction)onTapNuemricBtn:(UIButton*)numericBtn{
   
-  /* Update the Data source with the numeric value of the button. */
-  [self.dataSource setValueOfSudokuCellAtIndexPath:self.lastSelectedIndexPath WithValue:numericBtn.titleLabel.text];
+  SudokuCell* cell = [self.dataSource sudokuCellAtIndexPath:self.lastSelectedIndexPath];
   
+  if (nil == cell) {
+    return;
+  }
+  
+  [self.solution updateSudokuCell:cell inMacroGrid:self.dataSource.grid withValue:numericBtn.titleLabel.text.integerValue];
+
+}
+
+#pragma Solution Delegate
+
+- (void) reloadCollectionViewCell{
   /* Reload the cell of the collection view at the given indexPath. */
   [self.sudokuCollectionView reloadItemsAtIndexPaths:@[self.lastSelectedIndexPath]];
   
   /* After reloading the collection view cell, it seems that the collection view is not longer
    * saving that the cell was selected.
-   * As per Apple documentation, the following method does not cause any selection-related delegate 
+   * As per Apple documentation, the following method does not cause any selection-related delegate
    * methods to be called.
    */
   [self.sudokuCollectionView selectItemAtIndexPath:self.lastSelectedIndexPath
                                           animated:NO
                                     scrollPosition:UICollectionViewScrollPositionNone];
+  
+}
 
+- (void)didFinishUpdateValueOfSudokuCell:(SudokuCell *)cell{
+  
+  [self reloadCollectionViewCell];
+  
   /* Make sure to keep the same visual effect for the reloaded selected cell.*/
   [self displayVisualEffectForSelectedCellAtIndexPath:self.lastSelectedIndexPath];
+}
+
+-(void)didFailToInsertValueOfSudokuCell:(SudokuCell *)cell{
+
+  [self reloadCollectionViewCell];
+  
+  /* Get reference to the last selected cell. */
+  UICollectionViewCell* selectedCell = [self.sudokuCollectionView cellForItemAtIndexPath:self.lastSelectedIndexPath];
+  
+  /* Highlight its borders and shadow color to red. */
+  selectedCell.layer.shadowColor = RED_COLOR.CGColor;
+  selectedCell.layer.borderColor = RED_COLOR.CGColor;
+  
+  /* Set the bakcgroundColor to transparent red color. */
+  selectedCell.backgroundColor = [RED_COLOR colorWithAlphaComponent:0.3];
 }
 
 #pragma internal methods
@@ -155,5 +189,7 @@
   /* Add inner drop shadow to the cell. */
   cell.layer.shadowColor = QLIK_LOGO_COLOR.CGColor;
   cell.layer.shadowOpacity = 0.8;
+  
+  cell.backgroundColor = NO_COLOR;
 }
 @end

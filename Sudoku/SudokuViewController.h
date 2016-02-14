@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SudokuDataSource.h"
+#import "LabelCell.h"
+#import "SudokuBoard.h"
+#import "SudokuSolution.h"
 
-@interface SudokuViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface SudokuViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SudokuSolutionDelegate>
 
 
 @end
