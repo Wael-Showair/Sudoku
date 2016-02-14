@@ -22,6 +22,8 @@
  * the same and independent on the actual implementation of the data structure type of the cells
  * property.
  */
+@property NSMutableOrderedSet* cellsOfMicroGrids;
+
 @property NSMutableOrderedSet* cells;
 @end
 
@@ -31,7 +33,8 @@
   
   self = [super init];
   
-  self.cells = [[NSMutableOrderedSet alloc] init];
+  self.cellsOfMicroGrids = [[NSMutableOrderedSet alloc] init];
+  self.cells             = [[NSMutableOrderedSet alloc] init];
   
   /* Create 9 micro grids per the macro grid. */
   for (int i=0; i< NUM_OF_MICRO_GRIDS ; i++) {
@@ -42,9 +45,19 @@
     NSMutableOrderedSet* cellsOfMicroGrid = [microGrid getFlattenedCells];
     
     /* add the micro grid cells into cells of the macro grid. */
-    [self.cells unionOrderedSet:cellsOfMicroGrid];
+    [self.cellsOfMicroGrids unionOrderedSet:cellsOfMicroGrid];
   }
   
+  /* Reorder cells of macro grid to be easily integerated with Collection View Data soure. */
+  for (int n=0, i=0; n<NUM_OF_MICRO_GRIDS; n++) {
+    NSMutableIndexSet* setOfIndexes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(i, 3)];
+    [setOfIndexes addIndexesInRange:NSMakeRange(i+9, 3)];
+    [setOfIndexes addIndexesInRange:NSMakeRange(i+18, 3)];
+    
+    NSArray* macroRow = [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
+    [self.cells addObjectsFromArray:macroRow];
+    i += ((2 == n%3)? 21:3);
+  }
   return self;
 }
 
@@ -151,46 +164,59 @@
 
 -(NSArray<SudokuCell *> *)superSetOfSudokuCell:(SudokuCell *)cell{
   
-#warning To be tested
-  
   /* Get index of the sudoku cell in the macro grid. */
   NSUInteger index = [self indexOfSudokuCell:cell];
 
-  /* Convert the index into row/column pair structure.*/
-  RowColPair pair = convertIndexToPair(index);
-
-  NSArray* cellsOfRow       = [self getRowAtIndex:pair.row];
-  NSArray* cellsOfColumn    = [self getColumnAtIndex:pair.column];
-  NSArray* cellsOfMicroGrid = [self getMicroGridForSudokuCellAtIndex: pair.row];
-  
-  /* Construct a set of all obtained cells. */
-  NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, NUM_OF_CELLS_PER_ROW)];
-
-  /* TODO: What about returning NSSet for each of the previous getters methods. */
-  NSOrderedSet* superSet = [NSOrderedSet orderedSetWithObjects:
-                              [cellsOfRow objectsAtIndexes:setOfIndexes],
-                              [cellsOfColumn objectsAtIndexes:setOfIndexes],
-                              [cellsOfMicroGrid objectsAtIndexes:setOfIndexes],
-                              nil];
-  return superSet.array;
-  
+  if (NUM_OF_CELLS_IN_MACRO_GRID > index) {
+    /* Convert the index into row/column pair structure.*/
+    RowColPair pair = convertIndexToPair(index);
+    
+    NSArray* cellsOfRow       = [self getRowAtIndex:pair.row];
+    NSArray* cellsOfColumn    = [self getColumnAtIndex:pair.column];
+    NSArray* cellsOfMicroGrid = [self getMicroGridForSudokuCell:cell];
+    
+    /* Construct a set of all obtained cells. */
+    
+    /* TODO: What about returning NSSet for each of the previous getters methods. */
+    NSMutableOrderedSet* superSet = [NSMutableOrderedSet orderedSetWithArray:cellsOfRow];
+    [superSet addObjectsFromArray:cellsOfColumn];
+    [superSet addObjectsFromArray:cellsOfMicroGrid];
+    return superSet.array;
+  }else{
+    return nil;
+  }
 }
 
 -(NSArray<SudokuCell *> *)peersOfSudokuCell:(SudokuCell *)cell{
-#warning To be impmeneted and tested
-  return nil;
+
+  /* Get the super set of the cell, then remove the cell from its super set. */
+  NSArray* superSet = [self superSetOfSudokuCell:cell];
+  if(nil != superSet){
+    NSMutableArray* peers = [NSMutableArray arrayWithArray:superSet];
+    [peers removeObject:cell];
+    
+    return peers;
+  }else{
+    return nil;
+  }
 }
 
--(NSArray<SudokuCell*>*) getMicroGridForSudokuCellAtIndex: (NSUInteger) index{
+-(NSArray<SudokuCell*>*) getMicroGridForSudokuCell: (SudokuCell*) cell{
   
-  if ((NUM_OF_CELLS_IN_MACRO_GRID > index) && (0 == index%NUM_OF_CELLS_PER_ROW)) {
+  /* Get index of the cell in the micro grid cells. */
+  NSUInteger index = [self.cellsOfMicroGrids indexOfObject:cell];
+  
+  if ((NUM_OF_CELLS_IN_MACRO_GRID > index) ) {
+    
+    /* Divide index by number of micro grids to get the actual index of the micro grid.*/
+    index /= NUM_OF_MICRO_GRIDS;
     
     /* Create set of indexes of the cells that construct the row by creating a NSRange. */
     NSRange range = NSMakeRange(index * NUM_OF_CELLS_PER_ROW,  NUM_OF_CELLS_PER_ROW);
     NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:range];
     
     /* Return the cells of the given indexes. */
-    return [self.cells objectsAtIndexes:setOfIndexes];
+    return [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
   }else{
     return nil;
   }

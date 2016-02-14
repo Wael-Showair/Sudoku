@@ -42,17 +42,30 @@
 }
 
 - (void)testInitMacroGrid {
+
+  /* Make sure that all values of the cells are set properly. */
+  int expectedResults[81]={
+    1,2,3,10,11,12,19,20,21,
+    4,5,6,13,14,15,22,23,24,
+    7,8,9,16,17,18,25,26,27,
+    28,29,30,37,38,39,46,47,48,
+    31,32,33,40,41,42,49,50,51,
+    34,35,36,43,44,45,52,53,54,
+    55,56,57,64,65,66,73,74,75,
+    58,59,60,67,68,69,76,77,78,
+    61,62,63,70,71,72,79,80,81
+  };
   
   XCTAssertEqual(81, [self.grid numOfCells]);
 
-  /* Make sure that all values of the cells are set properly. */
-  NSUInteger expectedCellValue = 1;
+  
+  int k=0;
   for (int i=0; i< 9; i++) {
     for (int j=0; j<9; j++) {
       
       SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(i, j)];
-      XCTAssertEqual(expectedCellValue, cell.value);
-      expectedCellValue ++;
+      XCTAssertEqual(expectedResults[k], cell.value);
+      k++;
     }
   }
 }
@@ -76,10 +89,9 @@
 -(void) testGetRowAtValidIndex{
   /* Get an index for 8th row that has index 7. */
   NSArray<SudokuCell*>* cellsOfRow = [self.grid getRowAtIndex:7];
-  NSUInteger expectedCellValue = 64;
+  NSUInteger expectedResult [9] = {58,59,60,67,68,69,76,77,78};
   for (int i=0; i<9; i++) {
-    XCTAssertEqual(expectedCellValue, cellsOfRow[i].value);
-    expectedCellValue++;
+    XCTAssertEqual(expectedResult[i], cellsOfRow[i].value);
   }
 }
 
@@ -92,11 +104,10 @@
 -(void) testGetColumnAtValidIndex{
   /* Get an index for 8th column that has index 7. */
   NSArray<SudokuCell*>* cellsOfColumn = [self.grid getColumnAtIndex:7];
-  NSUInteger expectedCellValue = 8;
+  int expectedResults [9] = {20,23,26,47,50,53,74,77,80};
   
   for (int i=0; i<9; i++) {
-    XCTAssertEqual(expectedCellValue, cellsOfColumn[i].value);
-    expectedCellValue +=9;
+    XCTAssertEqual(expectedResults[i], cellsOfColumn[i].value);
   }
 }
 
@@ -110,10 +121,9 @@
   /* Get row for cell at row 3, col 4 which maps to index 2*9+4 = 22. */
   NSArray<SudokuCell*>* cellsOfRow = [self.grid getRowForCellAtIndex:22];
   XCTAssertNotNil(cellsOfRow);
-  NSUInteger expectedCellValue = 19;
+  int expectedResults[9] = {7,8,9,16,17,18,25,26,27};
   for (int i=0; i<9; i++) {
-    XCTAssertEqual(expectedCellValue, cellsOfRow[i].value);
-    expectedCellValue++;
+    XCTAssertEqual(expectedResults[i], cellsOfRow[i].value);
   }
 }
 
@@ -127,10 +137,9 @@
   /* Get column for cell at row 3, col 4 (indexes: 2,3) which maps to index 2*9+3 = 21. */
   NSArray<SudokuCell*>* cellsOfColumns = [self.grid getColumnForCellAtIndex:21];
   XCTAssertNotNil(cellsOfColumns);
-  NSUInteger expectedCellValue = 4;
+  int expectedResults[9] = {10,13,16,37,40,43,64,67,70};
   for (int i=0; i<9; i++) {
-    XCTAssertEqual(expectedCellValue, cellsOfColumns[i].value);
-    expectedCellValue +=9;
+    XCTAssertEqual(expectedResults[i], cellsOfColumns[i].value);
   }
 }
 
@@ -145,9 +154,97 @@
   RowColPair pair = makeRowColPair(3, 6); /* maps to index 3*9+6 = 33 */
   SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
   XCTAssertNotNil(cell);
-  XCTAssertEqual(34, cell.value);
+  XCTAssertEqual(46, cell.value);
   
   NSUInteger index = [self.grid indexOfSudokuCell:cell];
   XCTAssertEqual(33, index);
 }
+
+
+-(void) testSuperSetOfValidSudokuCellInMacroGrid{
+  
+  /* Get cell at row 5, column 9 which maps to cell whose value = 51 */
+  RowColPair pair = makeRowColPair(4, 8);
+  
+  /* Rows, then columns then Micro grid. */
+  int expectedResults [21] = {
+    31,32,33,40,41,42,49,50,51, //row
+    21,24,27,48,54,75,78,81, //column without 51
+    46,47,52,53 //rest of micro grid without 49,50,51,48,54
+  };
+
+  /* Get the cell from the macro grid. */
+  SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* superSetCells = [self.grid superSetOfSudokuCell:cell];
+  
+  /* Make sure that the length of the super set is always 21 */
+  XCTAssertEqual(21, superSetCells.count);
+  
+  for (int i=0; i<21; i++) {
+    XCTAssertEqual(expectedResults[i], superSetCells[i].value);
+  }
+}
+
+-(void) testSuperSetOfValidSudokuCellNotInMacroGrid{
+  SudokuCell* cell = [[SudokuCell alloc] init];
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* superSetCells = [self.grid superSetOfSudokuCell:cell];
+  
+  XCTAssertNil(superSetCells);
+}
+
+-(void) testSuperSetOfInvalidSudokuCell{
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* superSetCells = [self.grid superSetOfSudokuCell:nil];
+  
+  XCTAssertNil(superSetCells);
+}
+
+-(void) testPeersOfValidSudokuCellInMacroGrid{
+  
+  /* Get cell at row 5, column 9 which maps to cell whose value = 51 */
+  RowColPair pair = makeRowColPair(4, 8);
+  
+  /* Rows, then columns then Micro grid. */
+  int expectedResults [21] = {
+    31,32,33,40,41,42,49,50, //row without 51
+    21,24,27,48,54,75,78,81, //column without 51
+    46,47,52,53 //rest of micro grid without 49,50,51,48,54
+  };
+  
+  /* Get the cell from the macro grid. */
+  SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
+  
+  /* Make sure that the length of the super set is always 21 */
+  XCTAssertEqual(20, peers.count);
+  
+  for (int i=0; i<20; i++) {
+    XCTAssertEqual(expectedResults[i], peers[i].value);
+  }
+}
+
+-(void) testPeersOfValidSudokuCellNotInMacroGrid{
+  SudokuCell* cell = [[SudokuCell alloc] init];
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
+  
+  XCTAssertNil(peers);
+}
+
+-(void) testPeersOfInvalidSudokuCell{
+  
+  /* Get the super set of the cell. */
+  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:nil];
+  
+  XCTAssertNil(peers);
+}
+
 @end

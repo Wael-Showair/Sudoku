@@ -17,9 +17,18 @@
 @implementation MicroGridTests
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.grid = [[MicroGrid alloc] init];
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
+  
+  /* Since the launces before running the test, and it already must have initialize the MacroGrid which
+   * in turn calls intialize micro grid 9 times. Hence the starting value of the cells accumulate
+   * over the previous value (which is multiples of 81). So need to reset the static counter
+   * in the micro grid such that any test starts running after the the app launch still starts
+   * from 1.
+   */
+  [MicroGrid resetCount];
+  
+  self.grid = [[MicroGrid alloc] init];
 }
 
 - (void)tearDown {

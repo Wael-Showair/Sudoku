@@ -52,7 +52,7 @@
 
 /* Get super set of cells for the given cell. The super set should include all the elements that
  * include the cell macro row, column & micro grid. The super set will include the cell itself.
- * Typically, the number of elements for any super set must be 9+8+8 = 25 sudoku cells
+ * Typically, the number of elements for any super set must be 9+8+4 = 21 sudoku cells
  */
 -(NSArray<SudokuCell*>*) superSetOfSudokuCell: (SudokuCell*) cell;
 
