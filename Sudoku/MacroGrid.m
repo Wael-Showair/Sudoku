@@ -9,10 +9,10 @@
 #import "MacroGrid.h"
 #import "MicroGrid.h"
 
+#define NUM_OF_CELLS_IN_MACRO_GRID  81
 #define NUM_OF_MICRO_GRIDS          9
 #define NUM_OF_CELLS_PER_ROW        9
 #define NUM_OF_CELLS_PER_COL        9
-#define NUM_OF_CELLS_IN_MACRO_GRID  81
 
 #define ConvertIndexInto
 
@@ -31,23 +31,38 @@
 
 -(instancetype)init{
   
-  self = [super init];
+  NSMutableArray<SudokuCell*>* cellsOfMicroGrids = [[NSMutableArray alloc] init];
   
-  self.cellsOfMicroGrids = [[NSMutableOrderedSet alloc] init];
-  self.cells             = [[NSMutableOrderedSet alloc] init];
-  
-  /* Create 9 micro grids per the macro grid. */
+  /* Create 9 micro grids in the macro grid. */
   for (int i=0; i< NUM_OF_MICRO_GRIDS ; i++) {
     
     MicroGrid* microGrid = [[MicroGrid alloc] init];
     
     /* Get flattened cells of the micro grid. */
-    NSMutableOrderedSet* cellsOfMicroGrid = [microGrid getFlattenedCells];
+    NSArray<SudokuCell*>* flattenedCells = [microGrid getFlattenedCellsArray];
     
     /* add the micro grid cells into cells of the macro grid. */
-    [self.cellsOfMicroGrids unionOrderedSet:cellsOfMicroGrid];
+    [cellsOfMicroGrids addObjectsFromArray:flattenedCells];
   }
   
+  return [self initWithMicroGrids:cellsOfMicroGrids];
+}
+
+-(instancetype)initWithMicroGrids:(NSArray<SudokuCell *> *)cellsOfMicroGrids{
+  
+  if (nil == cellsOfMicroGrids) {
+    return nil;
+  }
+  
+  if (NUM_OF_CELLS_IN_MACRO_GRID != cellsOfMicroGrids.count) {
+    return nil;
+  }
+  
+  self = [super init];
+  
+  self.cellsOfMicroGrids = [NSMutableOrderedSet orderedSetWithArray:cellsOfMicroGrids];
+  self.cells             = [[NSMutableOrderedSet alloc] init];
+
   /* Reorder cells of macro grid to be easily integerated with Collection View Data soure. */
   for (int n=0, i=0; n<NUM_OF_MICRO_GRIDS; n++) {
     NSMutableIndexSet* setOfIndexes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(i, 3)];
@@ -58,6 +73,7 @@
     [self.cells addObjectsFromArray:macroRow];
     i += ((2 == n%3)? 21:3);
   }
+  
   return self;
 }
 
@@ -225,4 +241,12 @@
 -(NSUInteger)numOfCells{
   return self.cells.count;
 }
+
+#if UNIT_TESTING
+-(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray{
+  NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, NUM_OF_CELLS_IN_MACRO_GRID)];
+  return [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
+}
+#endif
+
 @end

@@ -28,6 +28,7 @@
 
 @interface MacroGrid : NSObject
 
+-(instancetype) initWithMicroGrids: (NSArray<SudokuCell*>*) cellsOfMicroGrids;
 -(NSUInteger) numOfCells;
 
 /* Retrieve row from macro grid. This wil be using so much during the runtime to eliminate numbers
@@ -60,4 +61,9 @@
  * the peers set must be 8+8+4 = 20 elements.
  */
 -(NSArray<SudokuCell*>*) peersOfSudokuCell: (SudokuCell*) cell;
+
+#if UNIT_TESTING
+-(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray;
+#endif
+
 @end

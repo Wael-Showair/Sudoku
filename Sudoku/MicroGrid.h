@@ -24,8 +24,13 @@
  */
 @interface MicroGrid : NSObject
 
+/* Typically, this method will be called from the parser so there is no need to check on values
+ * of the cells again since the parse has already did this check for us.
+ */
+-(instancetype) initWithSudokuCells:(NSArray<SudokuCell*>*)cells;
+
 -(NSUInteger) numOfCells;
--(id) getFlattenedCells;
+-(NSArray<SudokuCell*>*) getFlattenedCellsArray;
 
 /* Retrieve row from micro grid */
 -(NSArray<SudokuCell*>*) getRowAtIndex: (NSUInteger) index;

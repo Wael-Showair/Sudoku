@@ -8,6 +8,8 @@
 
 #import "SudokuCell.h"
 
+#define DOES_POSSIBLE_SOLUTION_SET_HAVE_SINGLE_VALUE  (1==self.potentialSolutionSet.count)
+
 @implementation SudokuCell
 
 #pragma initalization
@@ -27,15 +29,32 @@
   /* Create a range of numbers from 1 to 9 */
   self.range = NSMakeRange(1, 9);
 
-/* During unit testing, there is no need to override the value that is out of range.*/
-#if !UNIT_TESTING
   
   /* If the given value is out of range, set value to invalid value */
   if (!NSLocationInRange(value, self.range)) {
+
+    
+#if UNIT_TESTING
+    /* During unit testing, there is no need to override the value that is out of range.*/
+    
+    /* Since initial value for testing environment is not invalied value, instead it is 1->81.
+     * Potential solution set must include only the given value so that setting cell value
+     * would pass successfully.
+     */
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndex:value];
+#else
+    /* During normal running, set the out of range value to invalid value. */
     value = INVALID_VALUE;
-  }
-  
+    
+    /* Set the potential solution set of the cell to all possible values. */
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
+    
 #endif
+    
+  }else{
+    /* Set the potential solution set of the cell to include only the given value. */
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndex:value];
+  }
   
   self.value = value;
   return self;
@@ -48,17 +67,16 @@
     /* Set the potential solution set of the cell */
     self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
 
+  } else{
+    
+    /* make sure that solution set contains only one value which will be set to the cell. */
+    NSAssert(DOES_POSSIBLE_SOLUTION_SET_HAVE_SINGLE_VALUE,
+              @"Cell Value Set Error: Trying to set cell value where its Potential Solution Set contains more than one possible value");
+
+    /* make sure that the desired value belongs to the possible solution set of the cell. */
+    NSAssert([self.potentialSolutionSet containsIndex:value], @"Cell Value Set Error: Potential Solution Set does not contain the value that will be set to the cell");
   }
-#if UNIT_TESTING
-  else{
-    /* Since initial value for testing environment is not invalied value, instead it is 1->81*/
-    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
-  }
-#endif
-  //else{
-    /* No need to initialize the solution set. */
-    //self.potentialSolutionSet = nil;
-  //}
+  
   _value = value;
 }
 
@@ -95,6 +113,7 @@
 }
 
 #if 0
+
 /* My implementation of the hash method prevents the data structure that constructs the grid cells
  * from retrieving the index of a given cell.
  */
@@ -104,6 +123,7 @@
   return self.value ^ [self.potentialSolutionSet hash];
 }
 #endif
+
 #pragma actions
 
 -(void)eliminateNumberFromSolutionSet:(NSUInteger)number{

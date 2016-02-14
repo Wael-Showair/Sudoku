@@ -70,6 +70,20 @@
   }
 }
 
+-(void) testInitMacroGridWithInvalidMicroGridsNil{
+  MacroGrid* grid = [[MacroGrid alloc] initWithMicroGrids:nil];
+  XCTAssertNil(grid);
+}
+
+-(void) testInitMacroGridWithInvalidMicroGridsIncorrectCount{
+  SudokuCell* cell = [[SudokuCell alloc] init];
+  /* Length of the Array must be 81 but I send it with only one object to achieve the test target.*/
+  NSArray<SudokuCell*>* cellsOfMicroGrid = [NSArray arrayWithObject:cell];
+  
+  MacroGrid* grid = [[MacroGrid alloc]initWithMicroGrids:cellsOfMicroGrid];
+  XCTAssertNil(grid);
+}
+
 -(void) testGetSudokuCellAtRowColumn{
   /* Get element at 5th row , 4th column*/
   RowColPair pair = makeRowColPair(4, 3);

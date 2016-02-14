@@ -41,8 +41,6 @@ static int count = 1;
 #pragma initialization
 
 -(instancetype) init{
-
-  self = [super init];
   
   NSMutableArray* arrayOfSudokuCells = [[NSMutableArray alloc] init];
   
@@ -58,19 +56,34 @@ static int count = 1;
     
     [arrayOfSudokuCells addObject:cell];
   }
+  
+  return [self initWithSudokuCells:arrayOfSudokuCells];
+}
+
+/* Typically, this method will be called from the parser so there is no need to check on values 
+ * of the cells again since the parse has already did this check for us.
+ * TODO: You still might want to double check the values.
+ */
+-(instancetype)initWithSudokuCells:(NSArray<SudokuCell *> *)cells{
+
+  self = [super init];
+
   /* Although number of Sudoku cells is fixed in any micro grid but according to Apple documentation
    * It is not recommended to edit the mutable contents of immutable set.
    */
-  self.cells = [NSMutableOrderedSet orderedSetWithArray:arrayOfSudokuCells];
+  self.cells = [NSMutableOrderedSet orderedSetWithArray:cells];
+
   return self;
 }
+
 
 -(NSUInteger) numOfCells{
   return self.cells.count;
 }
 
--(id) getFlattenedCells{
-  return self.cells;
+-(NSArray<SudokuCell*>*) getFlattenedCellsArray{
+  NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.cells.count)];
+  return [self.cells objectsAtIndexes:setOfIndexes];
 }
 
 #pragma Row/Column Operations
