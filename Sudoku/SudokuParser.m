@@ -43,12 +43,27 @@
   /* Create an array to hold cells of the micro grid in it.*/
   NSMutableArray<SudokuCell*>* cellsOfMicroGrids = [[NSMutableArray alloc] initWithCapacity:NUM_OF_CELLS_IN_MACRO_GRID];
   
+#if UNIT_TESTING
+  /* An NSBundle object represents a location in the file system that groups code and resources that
+   * can be used in a program.
+   * During Sudoku (default normal target) is running, the bundle is simply the main bundle. However,
+   * when SudokuTests (unit testing target) is running SudokuUnitTest has different bundle from the main
+   * bundle.
+   * This helps me also to place the resource files under SudokuTests logical group provided that
+   * I added to both targets (Sudoku & SudokuTests).
+   */
+  NSBundle* bundle = [NSBundle bundleForClass:[self class]];
+#else
+  NSBundle* bundle = [NSBundle mainBundle];
+#endif
+  
   /* Get path of the property list file.*/
-  NSString* pathOfPListFile = [[NSBundle mainBundle] pathForResource:plistFileName ofType:PROPERTY_LIST_FILE_EXTENSION];
+  NSString* pathOfPListFile = [bundle pathForResource:plistFileName ofType:PROPERTY_LIST_FILE_EXTENSION];
   
   if (nil == pathOfPListFile) {
     return nil;
   }
+  
   /* Load the dictionary from the property list file. */
   NSDictionary* inputMacroGrid = [NSDictionary dictionaryWithContentsOfFile:pathOfPListFile];
   NSArray* dictionaryKeys = inputMacroGrid.allKeys;

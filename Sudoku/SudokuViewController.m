@@ -135,7 +135,7 @@
     return;
   }
   
-  [self.solution updateSudokuCell:cell inMacroGrid:self.dataSource.grid withValue:numericBtn.titleLabel.text.integerValue];
+  //[self.solution updateSudokuCell:cell inMacroGrid:self.dataSource.grid withValue:numericBtn.titleLabel.text.integerValue];
 
 }
 

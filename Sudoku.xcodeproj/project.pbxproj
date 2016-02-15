@@ -26,6 +26,7 @@
 		DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */; };
 		DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */; };
 		DAB3E4051C72496700F2C649 /* sudoku_grid_invalid_values.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */; };
+		DAB3E4061C72500000F2C649 /* sudoku_grid_invalid_values.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */; };
 		DADDCE0E1C70F1C6007D9C13 /* SudokuParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DADDCE0D1C70F1C6007D9C13 /* SudokuParser.m */; };
 		DADDCE101C70F21E007D9C13 /* sudoku_grid.plist in Resources */ = {isa = PBXBuildFile; fileRef = DADDCE0F1C70F21E007D9C13 /* sudoku_grid.plist */; };
 		DADDCE121C70FB0C007D9C13 /* SudokuParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DADDCE111C70FB0C007D9C13 /* SudokuParserTests.m */; };
@@ -349,6 +350,7 @@
 				DA3AC28A1C6BDD83006FA76D /* Assets.xcassets in Resources */,
 				DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */,
 				DADDCE101C70F21E007D9C13 /* sudoku_grid.plist in Resources */,
+				DAB3E4061C72500000F2C649 /* sudoku_grid_invalid_values.plist in Resources */,
 				DA3AC2881C6BDD83006FA76D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

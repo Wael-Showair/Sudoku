@@ -28,7 +28,7 @@
 
 @interface SudokuSolution : NSObject
 @property (weak,nonatomic) id<SudokuSolutionDelegate> delegate;
--(void) updateSudokuCell:(SudokuCell*)cell inMacroGrid:(MacroGrid*)macroGrid withValue:(NSUInteger)value;
+//-(void) updateSudokuCell:(SudokuCell*)cell inMacroGrid:(MacroGrid*)macroGrid withValue:(NSUInteger)value;
 
 /* TODO: It is more professional if this methods can take pointer to pointer and return nil. */
 -(MacroGrid*) solveSudokuGrid: (MacroGrid*) grid;

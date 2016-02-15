@@ -75,4 +75,19 @@
   }
 }
 
+-(void) testParseGridWithInvalidValuesFromPropertyListFile{
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid_invalid_values"];
+  XCTAssertNil(grid);
+}
+
+-(void) testParseGridFromPropertyListFileNil{
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:nil];
+  XCTAssertNil(grid);
+}
+
+-(void) testParseGridFromPropertyListFileNonExistant{
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid_non_existant"];
+  XCTAssertNil(grid);
+}
+
 @end
