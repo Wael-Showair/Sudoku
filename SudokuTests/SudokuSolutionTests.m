@@ -9,12 +9,17 @@
 #import <XCTest/XCTest.h>
 #import "MicroGrid.h"
 #import "SudokuSolution.h"
+#import "SudokuParser.h"
 
 @interface SudokuSolutionTests : XCTestCase <SudokuSolutionDelegate>
-@property(strong, nonatomic) MacroGrid* grid;
-@property(strong,nonatomic) SudokuSolution* solution;
+
+@property (strong, nonatomic) MacroGrid* grid;
+@property (strong,nonatomic) SudokuSolution* solution;
+@property (strong,nonatomic) SudokuParser* parser;
+
 @property XCTestExpectation* expectation;
 @property NSUInteger expectedValue;
+
 @end
 
 @implementation SudokuSolutionTests
@@ -48,6 +53,8 @@
   self.grid = [[MacroGrid alloc] init];
   self.solution = [[SudokuSolution alloc] init];
   self.solution.delegate = self;
+  
+  self.parser = [[SudokuParser alloc] init];
 }
 
 - (void)tearDown {
@@ -55,6 +62,18 @@
   [super tearDown];
 }
 
+-(void) testAssignValueToSudokuCellSuccess{
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid"];
+
+  /* Get cell at row 1, column 1*/
+  RowColPair pair = makeRowColPair(0, 0);
+  SudokuCell* cell = [grid getSudokuCellAtRowColumn:pair];
+  BOOL sucess = [self.solution assignValue:4 toSudokuCell:cell inMacroGrid:grid];
+  
+  XCTAssertTrue(sucess);
+}
+
+#if 0
 - (void)testUpdateSudokuCellInMacroGridWithValueValid{
   self.expectation = [self expectationWithDescription:@"update cell"];
   
@@ -88,5 +107,6 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
 }
+#endif
 
 @end

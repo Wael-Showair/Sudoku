@@ -70,6 +70,10 @@
         [cellsOfMicroGrids addObject:cell];
       }//else
     }// Loop through micro grid (which is represented by NSArray)
+    
+    if (NO == canParseInputGrid) {
+      break;
+    }
   } //Loop through Dictionary keys
   
   /* If there is any error detected in the input micro grids, return nil. */

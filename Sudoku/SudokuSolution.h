@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "SudokuCell.h"
 #import "MacroGrid.h"
 
@@ -28,4 +29,8 @@
 @interface SudokuSolution : NSObject
 @property (weak,nonatomic) id<SudokuSolutionDelegate> delegate;
 -(void) updateSudokuCell:(SudokuCell*)cell inMacroGrid:(MacroGrid*)macroGrid withValue:(NSUInteger)value;
+
+/* TODO: It is more professional if this methods can take pointer to pointer and return nil. */
+-(MacroGrid*) solveSudokuGrid: (MacroGrid*) grid;
+-(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid;
 @end

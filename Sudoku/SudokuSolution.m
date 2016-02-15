@@ -5,7 +5,7 @@
 //  Created by Wael Showair on 2016-02-13.
 //  Copyright © 2016 Algonquin College. All rights reserved.
 //
-
+#import <Foundation/Foundation.h>
 #import "SudokuSolution.h"
 
 
@@ -42,4 +42,104 @@
   }
 
 }
+
+-(MacroGrid*)solveSudokuGrid:(MacroGrid *)grid{
+  
+  
+  return nil;
+}
+
+/* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
+ * of the possible values for a cell.Then assign value(d) in a cell can be defined as
+ * "eliminate all other possible values from the cell except the required number d".
+ */
+-(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{
+
+  /* Since a value would be assigned to a cell, this means that the value does not belong to 
+   * the impossible solution set.
+   */
+  NSMutableIndexSet* impossibleSolutionSet = [[NSMutableIndexSet alloc] initWithIndexSet:cell.potentialSolutionSet ];
+  [impossibleSolutionSet removeIndex:value];
+  
+  /* Iterate over every value(d) in the impossbile solution set to eliminate that value(d) from the
+   * potential solution set of the given cell.
+   */
+  [impossibleSolutionSet enumerateIndexesUsingBlock:^(NSUInteger impossibleValue, BOOL* shouldStop){
+    [self eliminateValue:impossibleValue fromSudokuCell:cell inMacroGrid:grid];
+    *shouldStop = NO;
+  }];
+  return YES;
+}
+
+-(BOOL) eliminateValue: (NSUInteger) value fromSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{
+
+  NSArray<SudokuCell*>* peers;
+  NSArray<SudokuCell*>* superSet;
+  NSUInteger lastPotentialValueOfCell;
+  SudokuCell* targetCell;
+  NSMutableIndexSet* setOfCellsIndexes;
+  
+  if (NO == [cell.potentialSolutionSet containsIndex:value]) {
+    return YES; /* value has been already eliminated. */
+  }
+  
+  /* Eliminate the value from the potential solution set. */
+  [cell.potentialSolutionSet removeIndex:value];
+  
+  switch (cell.potentialSolutionSet.count) {
+    case 0:
+      /* Contradication: You have just removed the last value from the potential solution set.*/
+      return NO;
+      break;
+
+    case 1:
+      /* If the cell contains only one value(v) in its potential solution set, then remove this
+       * value(v) from the peers of the given cell.
+       */
+      lastPotentialValueOfCell = [cell.potentialSolutionSet firstIndex];
+      cell.value = lastPotentialValueOfCell;
+      peers = [grid peersOfSudokuCell:cell];
+      for (SudokuCell* peerCell in peers) {
+        return [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
+      }
+      break;
+      
+    default:
+      /* Do nothting. */
+      break;
+  }
+  
+  /* If a super set (row/column/micro_grid) is having only one possible cell for a value, then assign
+   * the value to that cell.
+   */
+  superSet = [grid superSetOfSudokuCell:cell];
+  setOfCellsIndexes = [[NSMutableIndexSet alloc] init];
+  [superSet enumerateObjectsUsingBlock:^(SudokuCell* cellInSuperSet, NSUInteger cellIndex, BOOL* shouldStop){
+    if ([cellInSuperSet.potentialSolutionSet containsIndex:value]) {
+      [setOfCellsIndexes addIndex:cellIndex];
+      *shouldStop = NO;
+    }
+  }];
+
+  
+  switch (setOfCellsIndexes.count) {
+    case 0:
+      /* Contradiction: There is no cell that could have this value. */
+      return NO;
+      break;
+
+    case 1:
+      /* Once cell can only have the value(d), so assign the value(d) to the cell. */
+      targetCell = [superSet objectAtIndex:[setOfCellsIndexes firstIndex]];
+      return [self assignValue:value toSudokuCell:targetCell inMacroGrid:grid];
+      break;
+      
+    default:
+      /* Do nothing. */
+      break;
+  }
+  
+  return YES;
+}
+
 @end

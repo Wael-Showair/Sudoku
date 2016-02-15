@@ -54,8 +54,24 @@
   XCTAssertNotNil(grid);
   XCTAssertEqual(81, [grid numOfCells]);
   
+  NSRange expectedFullRange = NSMakeRange(1, 9);
+  NSIndexSet* expectedSetOfValuesForFullRange = [NSIndexSet indexSetWithIndexesInRange:expectedFullRange];
+  
   for (int i=0; i<81; i++) {
-    XCTAssertEqual(expectedResults[i], cellsOfMicroGrids[i].value);
+    SudokuCell* cell = cellsOfMicroGrids[i];
+    XCTAssertEqual(expectedResults[i], cell.value);
+    
+    /* In case the cell is empty, make sure it has all numbers in the potential solution set.*/
+    if (0 == expectedResults[i]) {
+      XCTAssertEqual(9, cell.potentialSolutionSet.count);
+      XCTAssertTrue([expectedSetOfValuesForFullRange isEqualToIndexSet:cell.potentialSolutionSet]);
+    }else{
+      /* In case the cell is not empty, make sure it has only single possible value which
+       * equals to the cell value.
+       */
+      NSIndexSet* expectedSetValue = [NSIndexSet indexSetWithIndex:cell.value];
+      XCTAssertTrue([expectedSetValue isEqualToIndexSet:cell.potentialSolutionSet]);
+    }
   }
 }
 

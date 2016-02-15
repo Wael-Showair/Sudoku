@@ -117,6 +117,9 @@
   }
   
 }
+- (IBAction)onTapSolve:(id)sender {
+  [self.solution solveSudokuGrid: self.dataSource.grid];
+}
 
 - (IBAction)onTapSave:(id)sender {
 }
