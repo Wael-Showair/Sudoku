@@ -118,7 +118,8 @@
   
 }
 - (IBAction)onTapSolve:(id)sender {
-  [self.solution solveSudokuGrid: self.dataSource.grid];
+  MacroGrid* grid = self.dataSource.grid;
+  [self.solution solveSudokuGrid: &grid];
 }
 
 - (IBAction)onTapSave:(id)sender {

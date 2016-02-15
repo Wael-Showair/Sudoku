@@ -80,9 +80,9 @@
   };
   
   MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid"];
-  MacroGrid* solvedGrid =  [self.solution solveSudokuGrid:grid];
+  [self.solution solveSudokuGrid:&grid];
   
-  NSArray<SudokuCell*>* cellsOfSolvedGrid = [solvedGrid getFlattenedMicroGridsCellsArray];
+  NSArray<SudokuCell*>* cellsOfSolvedGrid = [grid getFlattenedMicroGridsCellsArray];
   for (int i=0; i< 81; i++) {
     XCTAssertEqual(expectedGrid[i], cellsOfSolvedGrid[i].value);
   }

@@ -171,11 +171,11 @@
 		DA3AC2961C6BDD83006FA76D /* SudokuTests */ = {
 			isa = PBXGroup;
 			children = (
-				DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */,
-				DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */,
 				DA3AC2971C6BDD83006FA76D /* SudokuCellTests.m */,
-				DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */,
+				DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */,
+				DA7DF9151C6EBFF80041A1D1 /* MacroGridTests.m */,
 				DADDCE111C70FB0C007D9C13 /* SudokuParserTests.m */,
+				DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
 				DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */,
 			);

@@ -12,10 +12,6 @@
 
 #define NUM_OF_CELLS_PER_ROW        9
 
-@interface SudokuDataSource ()
-@property (strong,nonatomic,readwrite) MacroGrid* grid;
-@end
-
 @implementation SudokuDataSource
 
 -(instancetype)init{

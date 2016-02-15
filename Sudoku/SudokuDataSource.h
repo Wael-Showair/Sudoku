@@ -12,7 +12,7 @@
 #import "MacroGrid.h"
 
 @interface SudokuDataSource : NSObject <UICollectionViewDataSource>
-@property (strong, nonatomic, readonly)MacroGrid* grid;
+@property (strong, nonatomic)MacroGrid* grid;
 
 -(NSString*) getValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath;
 -(void)      setValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath WithValue:(NSString*) value;

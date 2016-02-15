@@ -43,8 +43,11 @@
 //
 //}
 
--(MacroGrid*)solveSudokuGrid:(MacroGrid *)grid{
+-(void)solveSudokuGrid:(MacroGrid **)gridPtr{
 
+  /* Get the macro grid from the input grid pointer. */
+  MacroGrid* grid = * gridPtr;
+  
   /* Create an internal macro grid to start solving the given sudoku grid.
    * Note that this grid initially has no cells' values and every cell has all full range from 1->9
    * in the cells' potential solution sets.
@@ -73,10 +76,11 @@
   }];
     
   if (NO == canSolveGrid) {
-    return nil;
+    return ;
   }
   
-  return solvedGrid;
+  /* Set solved grid to the input pointer of the grid pointer. */
+  *gridPtr = solvedGrid;
 }
 
 /* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
