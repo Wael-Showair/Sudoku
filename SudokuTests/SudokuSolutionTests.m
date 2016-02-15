@@ -73,40 +73,27 @@
   XCTAssertTrue(sucess);
 }
 
-#if 0
-- (void)testUpdateSudokuCellInMacroGridWithValueValid{
-  self.expectation = [self expectationWithDescription:@"update cell"];
+-(void)testSolveSudokuGridSuccess{
+  int expectedGrid []=
+  {
+    4,8,3,9,6,7,2,5,1, //micro_grid_0
+    9,2,1,3,4,5,8,7,6, //micro_grid_1
+    6,5,7,8,2,1,4,9,3, //micro_grid_2
+    5,4,8,7,2,9,1,3,6, //micro_grid_3
+    1,3,2,5,6,4,7,9,8, //micro_grid_4
+    9,7,6,1,3,8,2,4,5, //micro_grid_5
+    3,7,2,8,1,4,6,9,5, //micro_grid_6
+    6,8,9,2,5,3,4,1,7, //micro_grid_7
+    5,1,4,7,6,9,3,8,2  //micro_grid_8
+  };
   
-  /* Get Sudoku cell at row 7, column 7 whose value = 73 */
-  SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(6, 6)];
-  self.expectedValue = 8;
-  [self.solution updateSudokuCell:cell inMacroGrid:self.grid withValue:8];
-
-  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid"];
+  MacroGrid* solvedGrid =  [self.solution solveSudokuGrid:grid];
+  
+  NSArray<SudokuCell*>* cellsOfSolvedGrid = [solvedGrid getFlattenedMicroGridsCellsArray];
+  for (int i=0; i< 81; i++) {
+    XCTAssertEqual(expectedGrid[i], cellsOfSolvedGrid[i].value);
+  }
 }
-
--(void) testUpdateTwoSudokuCellsInSameRowFail{
-  
-  self.expectation = [self expectationWithDescription:@"update cell"];
-  
-  /* Get Sudoku cell at row 2, column 8 whose value = 23 */
-  SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(1, 7)];
-  
-  self.expectedValue = 9;
-  [self.solution updateSudokuCell:cell inMacroGrid:self.grid withValue:9];
-  [self waitForExpectationsWithTimeout:1.0 handler:nil];
-  
-  [NSThread sleepForTimeInterval: 1.0];
-  /* Get another cell in the same row, it is located at row 2, column 4 whose value is 13
-   * then update it to the conflict value that was assigned to the previous cell.
-   */
-  cell = [self.grid getSudokuCellAtRowColumn:makeRowColPair(1, 3)];
-  self.expectedValue = 9;
-  self.expectation = [self expectationWithDescription:@"update 2nd cell"];
-  [self.solution updateSudokuCell:cell inMacroGrid:self.grid withValue:9];
-  [self waitForExpectationsWithTimeout:1.0 handler:nil];
-  
-}
-#endif
 
 @end

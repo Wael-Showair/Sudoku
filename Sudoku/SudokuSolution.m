@@ -44,9 +44,39 @@
 }
 
 -(MacroGrid*)solveSudokuGrid:(MacroGrid *)grid{
+
+  /* Create an internal macro grid to start solving the given sudoku grid.
+   * Note that this grid initially has no cells' values and every cell has all full range from 1->9
+   * in the cells' potential solution sets.
+   */
+  MacroGrid* solvedGrid = [[MacroGrid alloc] init];
+  NSArray<SudokuCell*>* cellsOfSolvedGrid= [solvedGrid getFlattenedMicroGridsCellsArray];
   
+  NSArray<SudokuCell*>* cellsOfSourceGrid= [grid getFlattenedMicroGridsCellsArray];
   
-  return nil;
+  __block BOOL canSolveGrid = YES;
+  
+  /* Iterate over the source grid cells. */
+  [cellsOfSourceGrid enumerateObjectsUsingBlock:^(SudokuCell* sourceCell, NSUInteger index, BOOL* shouldStop){
+    /* If value of the cell belongs to a valid potential range of values (1->9), Apply the constraint
+     * propagation algorithm over the destination grid.
+     */
+    if (YES == NSLocationInRange(sourceCell.value, sourceCell.range)) {
+      SudokuCell* destinationCell = [cellsOfSolvedGrid objectAtIndex:index];
+      BOOL success = [self assignValue:sourceCell.value toSudokuCell:destinationCell inMacroGrid:solvedGrid];
+      if (NO == success) {
+        canSolveGrid = NO;
+        *shouldStop = YES;
+      }
+    }
+    
+  }];
+    
+  if (NO == canSolveGrid) {
+    return nil;
+  }
+  
+  return solvedGrid;
 }
 
 /* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
@@ -89,6 +119,8 @@
   switch (cell.potentialSolutionSet.count) {
     case 0:
       /* Contradication: You have just removed the last value from the potential solution set.*/
+      [cell.potentialSolutionSet addIndex:value];
+      NSAssert(value == cell.value, @"Can't Eliminate the last value from the potential solution set");
       return NO;
       break;
 
@@ -100,7 +132,8 @@
       cell.value = lastPotentialValueOfCell;
       peers = [grid peersOfSudokuCell:cell];
       for (SudokuCell* peerCell in peers) {
-        return [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
+        
+        [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
       }
       break;
       
@@ -125,6 +158,7 @@
   switch (setOfCellsIndexes.count) {
     case 0:
       /* Contradiction: There is no cell that could have this value. */
+      NSAssert(NO, @"Value can't be assigned to any cell");
       return NO;
       break;
 

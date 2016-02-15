@@ -48,9 +48,9 @@ static int count = 1;
   for (int i=0; i< NUM_OF_CELLS_PER_MICRO_GRID; i++) {
     
 #if UNIT_TESTING
-    SudokuCell* cell = [[SudokuCell alloc] initWithValue:count];
-    count ++;
-#else
+//    SudokuCell* cell = [[SudokuCell alloc] initWithValue:count];
+//    count ++;
+//#else
     SudokuCell* cell = [[SudokuCell alloc] init];
 #endif
     

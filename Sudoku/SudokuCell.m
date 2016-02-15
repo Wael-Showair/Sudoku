@@ -34,22 +34,22 @@
   if (!NSLocationInRange(value, self.range)) {
 
     
-#if UNIT_TESTING
+//#if UNIT_TESTING
     /* During unit testing, there is no need to override the value that is out of range.*/
     
-    /* Since initial value for testing environment is not invalied value, instead it is 1->81.
+    /* Since initial value for testing environment isn't always vald value, instead it is 1->81.
      * Potential solution set must include only the given value so that setting cell value
      * would pass successfully.
      */
-    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndex:value];
-#else
+//    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
+//#else
     /* During normal running, set the out of range value to invalid value. */
     value = INVALID_VALUE;
     
     /* Set the potential solution set of the cell to all possible values. */
     self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
     
-#endif
+//#endif
     
   }else{
     /* Set the potential solution set of the cell to include only the given value. */

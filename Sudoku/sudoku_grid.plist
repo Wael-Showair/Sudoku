@@ -7,33 +7,33 @@
 		<integer>0</integer>
 		<integer>0</integer>
 		<integer>3</integer>
-		<integer>0</integer>
-		<integer>2</integer>
-		<integer>0</integer>
-		<integer>6</integer>
+		<integer>9</integer>
 		<integer>0</integer>
 		<integer>0</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>1</integer>
 	</array>
 	<key>micro_grid_2 </key>
 	<array>
-		<integer>9</integer>
 		<integer>0</integer>
+		<integer>2</integer>
 		<integer>0</integer>
 		<integer>3</integer>
 		<integer>0</integer>
 		<integer>5</integer>
-		<integer>0</integer>
-		<integer>0</integer>
-		<integer>1</integer>
-	</array>
-	<key>micro_grid_3</key>
-	<array>
-		<integer>0</integer>
-		<integer>0</integer>
-		<integer>1</integer>
 		<integer>8</integer>
 		<integer>0</integer>
 		<integer>6</integer>
+	</array>
+	<key>micro_grid_3</key>
+	<array>
+		<integer>6</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>1</integer>
 		<integer>4</integer>
 		<integer>0</integer>
 		<integer>0</integer>
@@ -43,31 +43,31 @@
 		<integer>0</integer>
 		<integer>0</integer>
 		<integer>8</integer>
-		<integer>1</integer>
-		<integer>0</integer>
-		<integer>2</integer>
-		<integer>9</integer>
-		<integer>0</integer>
-		<integer>0</integer>
-	</array>
-	<key>micro_grid_5</key>
-	<array>
 		<integer>7</integer>
 		<integer>0</integer>
 		<integer>0</integer>
 		<integer>0</integer>
 		<integer>0</integer>
+		<integer>6</integer>
+	</array>
+	<key>micro_grid_5</key>
+	<array>
+		<integer>1</integer>
+		<integer>0</integer>
+		<integer>2</integer>
 		<integer>0</integer>
 		<integer>0</integer>
+		<integer>0</integer>
+		<integer>7</integer>
 		<integer>0</integer>
 		<integer>8</integer>
 	</array>
 	<key>micro_grid_6</key>
 	<array>
+		<integer>9</integer>
 		<integer>0</integer>
 		<integer>0</integer>
-		<integer>6</integer>
-		<integer>7</integer>
+		<integer>0</integer>
 		<integer>0</integer>
 		<integer>8</integer>
 		<integer>2</integer>
@@ -79,33 +79,33 @@
 		<integer>0</integer>
 		<integer>0</integer>
 		<integer>2</integer>
-		<integer>6</integer>
-		<integer>0</integer>
-		<integer>9</integer>
-		<integer>5</integer>
-		<integer>0</integer>
-		<integer>0</integer>
-	</array>
-	<key>micro_grid_8</key>
-	<array>
 		<integer>8</integer>
 		<integer>0</integer>
 		<integer>0</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>5</integer>
+	</array>
+	<key>micro_grid_8</key>
+	<array>
+		<integer>6</integer>
+		<integer>0</integer>
+		<integer>9</integer>
 		<integer>2</integer>
 		<integer>0</integer>
 		<integer>3</integer>
 		<integer>0</integer>
+		<integer>1</integer>
 		<integer>0</integer>
-		<integer>9</integer>
 	</array>
 	<key>micro_grid_9</key>
 	<array>
-		<integer>0</integer>
-		<integer>0</integer>
 		<integer>5</integer>
 		<integer>0</integer>
-		<integer>1</integer>
 		<integer>0</integer>
+		<integer>0</integer>
+		<integer>0</integer>
+		<integer>9</integer>
 		<integer>3</integer>
 		<integer>0</integer>
 		<integer>0</integer>

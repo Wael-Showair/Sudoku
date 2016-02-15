@@ -73,7 +73,10 @@
     [self.cells addObjectsFromArray:macroRow];
     i += ((2 == n%3)? 21:3);
   }
-  
+
+#if UNIT_TESTING
+  [MicroGrid resetCount];
+#endif
   return self;
 }
 
