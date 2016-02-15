@@ -20,13 +20,6 @@
   [super setUp];
   // Put setup code here. This method is called before the invocation of each test method in the class.
   
-  /* Since the launces before running the test, and it already must have initialize the MacroGrid which
-   * in turn calls intialize micro grid 9 times. Hence the starting value of the cells accumulate
-   * over the previous value (which is multiples of 81). So need to reset the static counter
-   * in the micro grid such that any test starts running after the the app launch still starts
-   * from 1.
-   */
-  [MicroGrid resetCount];
   
   self.grid = [[MicroGrid alloc] init];
 }
@@ -34,10 +27,6 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-  
-    /* Reset the static counter to 1 so that cells values of the next test, start from 1.
-     * The count is static variable that is not destroyed by the end of the init method scope. */
-    [MicroGrid resetCount];
 }
 
 - (void)testInitMicroGrid {
@@ -50,26 +39,35 @@
   NSArray<SudokuCell*>* cellsInRow = [self.grid getRowAtIndex:0];
   XCTAssertNotNil(cellsInRow);
   XCTAssertEqual(3, cellsInRow.count);
+  
+  int expectedResults1 []= {0,1,2};
   for (NSUInteger i=0; i<cellsInRow.count; i++) {
-    XCTAssertEqual(i+1, cellsInRow[i].value);
+    XCTAssertEqual(0, cellsInRow[i].value);
+    NSUInteger indexOfCellInRow = [self.grid indexOfSudokuCell:cellsInRow[i]];
+    XCTAssertEqual(expectedResults1[i], indexOfCellInRow);
   }
   
   /* Get second row */
   cellsInRow = [self.grid getRowAtIndex:1];
   XCTAssertNotNil(cellsInRow);
   XCTAssertEqual(3, cellsInRow.count);
+  int expectedResults2 []= {3,4,5};
   for (NSUInteger i=0; i<cellsInRow.count; i++) {
-    XCTAssertEqual(i+4, cellsInRow[i].value);
+    XCTAssertEqual(0, cellsInRow[i].value);
+    NSUInteger indexOfCellInRow = [self.grid indexOfSudokuCell:cellsInRow[i]];
+    XCTAssertEqual(expectedResults2[i], indexOfCellInRow);
   }
-  
+
   /* Get thrird row */
   cellsInRow = [self.grid getRowAtIndex:2];
   XCTAssertNotNil(cellsInRow);
   XCTAssertEqual(3, cellsInRow.count);
+  int expectedResults3 []= {6,7,8};
   for (NSUInteger i=0; i<cellsInRow.count; i++) {
-    XCTAssertEqual(i+7, cellsInRow[i].value);
+    XCTAssertEqual(0, cellsInRow[i].value);
+    NSUInteger indexOfCellInRow = [self.grid indexOfSudokuCell:cellsInRow[i]];
+    XCTAssertEqual(expectedResults3[i], indexOfCellInRow);
   }
-  
 }
 
 -(void) testGetRowInMicroGridWithInvalidIndex{
@@ -78,30 +76,39 @@
 }
 
 -(void) testGetColumnInMicroGrid{
+  
   /* Get firt column. */
   NSArray<SudokuCell*>* cellsInColumn = [self.grid getColumnAtIndex:0];
   XCTAssertNotNil(cellsInColumn);
   XCTAssertEqual(3, cellsInColumn.count);
-  for (int i=0, j=1; i< 3; i++, j+=3) {
-    XCTAssertEqual(j, cellsInColumn[i].value);
+  int expectedResults1 []= {0,3,6};
+  for (int j=0; j< 3;j++) {
+    XCTAssertEqual(0, cellsInColumn[j].value);
+    NSUInteger indexOfCellInColumn = [self.grid indexOfSudokuCell:cellsInColumn[j]];
+    XCTAssertEqual(expectedResults1[j], indexOfCellInColumn);
   }
   
   /* Get second column. */
   cellsInColumn = [self.grid getColumnAtIndex:1];
   XCTAssertNotNil(cellsInColumn);
   XCTAssertEqual(3, cellsInColumn.count);
-  for (int i=0, j=2; i< 3; i++, j+=3) {
-    XCTAssertEqual(j, cellsInColumn[i].value);
+  int expectedResults2 []= {1,4,7};
+  for (int j=0; j< 3;j++) {
+    XCTAssertEqual(0, cellsInColumn[j].value);
+    NSUInteger indexOfCellInColumn = [self.grid indexOfSudokuCell:cellsInColumn[j]];
+    XCTAssertEqual(expectedResults2[j], indexOfCellInColumn);
   }
-
+  
   /* Get thrird column. */
   cellsInColumn = [self.grid getColumnAtIndex:2];
   XCTAssertNotNil(cellsInColumn);
   XCTAssertEqual(3, cellsInColumn.count);
-  for (int i=0, j=3; i< 3; i++, j+=3) {
-    XCTAssertEqual(j, cellsInColumn[i].value);
+  int expectedResults3 []= {2,5,8};
+  for (int j=0; j< 3;j++) {
+    XCTAssertEqual(0, cellsInColumn[j].value);
+    NSUInteger indexOfCellInColumn = [self.grid indexOfSudokuCell:cellsInColumn[j]];
+    XCTAssertEqual(expectedResults3[j], indexOfCellInColumn);
   }
-
 }
 
 -(void) testGetColumnInMicroGridWithInvalidIndex{
@@ -115,7 +122,10 @@
   SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
 
   XCTAssertNotNil(cell);
-  XCTAssertEqual(8, cell.value);
+  XCTAssertEqual(0, cell.value);
+  
+  NSUInteger cellIndex = [self.grid indexOfSudokuCell:cell];
+  XCTAssertEqual(7, cellIndex);
 }
 
 -(void) testGetSudokuCellAtInvalidIndex{
@@ -124,5 +134,15 @@
   XCTAssertNil(cell);
 }
 
+-(void) testIndexOfSudokuCellNil{
+  NSUInteger cellIndex = [self.grid indexOfSudokuCell:nil];
+  XCTAssertEqual(NSNotFound, cellIndex);
+}
+
+-(void) testIndexOfSudokuCellWithValueOutOfRange{
+  SudokuCell* cell = [[SudokuCell alloc] initWithValue:88];
+  NSUInteger cellIndex = [self.grid indexOfSudokuCell:cell];
+  XCTAssertEqual(NSNotFound, cellIndex);
+}
 
 @end

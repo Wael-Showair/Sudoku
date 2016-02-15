@@ -26,30 +26,13 @@
 -(instancetype) initWithValue: (NSUInteger)value{
   self = [super init];
   
-  /* Create a range of numbers from 1 to 9 */
-  self.range = NSMakeRange(1, 9);
-
-  
   /* If the given value is out of range, set value to invalid value */
-  if (!NSLocationInRange(value, self.range)) {
-
-    
-//#if UNIT_TESTING
-    /* During unit testing, there is no need to override the value that is out of range.*/
-    
-    /* Since initial value for testing environment isn't always vald value, instead it is 1->81.
-     * Potential solution set must include only the given value so that setting cell value
-     * would pass successfully.
-     */
-//    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
-//#else
+  if (!NSLocationInRange(value, [SudokuCell fullRange])) {
     /* During normal running, set the out of range value to invalid value. */
     value = INVALID_VALUE;
     
     /* Set the potential solution set of the cell to all possible values. */
-    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
-    
-//#endif
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:[SudokuCell fullRange]];
     
   }else{
     /* Set the potential solution set of the cell to include only the given value. */
@@ -65,7 +48,7 @@
   if (INVALID_VALUE == value) {
     
     /* Set the potential solution set of the cell */
-    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:self.range];
+    self.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexesInRange:[SudokuCell fullRange]];
 
   } else{
     
@@ -80,6 +63,10 @@
   _value = value;
 }
 
++(NSRange)fullRange{
+  /* Create a range of numbers from 1 to 9 */
+  return NSMakeRange(1, 9);
+}
 #pragma Comparison
 
 /* source: http://nshipster.com/equality/ */
@@ -128,7 +115,7 @@
 
 -(void)eliminateNumberFromSolutionSet:(NSUInteger)number{
   
-  if(!NSLocationInRange(number, self.range) ||
+  if(!NSLocationInRange(number, [SudokuCell fullRange]) ||
      ![self.potentialSolutionSet containsIndex:number]){
     return;
   }

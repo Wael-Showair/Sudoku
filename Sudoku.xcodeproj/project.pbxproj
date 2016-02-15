@@ -25,6 +25,7 @@
 		DA7F7E241C6CFBDD009908D8 /* MicroGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E231C6CFBDD009908D8 /* MicroGrid.m */; };
 		DA7F7E271C6D3C4E009908D8 /* SudokuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */; };
 		DA7F7E291C6D84C0009908D8 /* MicroGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */; };
+		DAB3E4051C72496700F2C649 /* sudoku_grid_invalid_values.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */; };
 		DADDCE0E1C70F1C6007D9C13 /* SudokuParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DADDCE0D1C70F1C6007D9C13 /* SudokuParser.m */; };
 		DADDCE101C70F21E007D9C13 /* sudoku_grid.plist in Resources */ = {isa = PBXBuildFile; fileRef = DADDCE0F1C70F21E007D9C13 /* sudoku_grid.plist */; };
 		DADDCE121C70FB0C007D9C13 /* SudokuParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DADDCE111C70FB0C007D9C13 /* SudokuParserTests.m */; };
@@ -83,6 +84,7 @@
 		DA7F7E251C6D3C4E009908D8 /* SudokuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SudokuCell.h; path = Sudoku/SudokuCell.h; sourceTree = "<group>"; };
 		DA7F7E261C6D3C4E009908D8 /* SudokuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SudokuCell.m; path = Sudoku/SudokuCell.m; sourceTree = "<group>"; };
 		DA7F7E281C6D84C0009908D8 /* MicroGridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MicroGridTests.m; sourceTree = "<group>"; };
+		DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sudoku_grid_invalid_values.plist; sourceTree = "<group>"; };
 		DADDCE0C1C70F1C6007D9C13 /* SudokuParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SudokuParser.h; sourceTree = "<group>"; };
 		DADDCE0D1C70F1C6007D9C13 /* SudokuParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SudokuParser.m; sourceTree = "<group>"; };
 		DADDCE0F1C70F21E007D9C13 /* sudoku_grid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sudoku_grid.plist; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */,
 				DADDCE111C70FB0C007D9C13 /* SudokuParserTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
+				DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */,
 			);
 			path = SudokuTests;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAB3E4051C72496700F2C649 /* sudoku_grid_invalid_values.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

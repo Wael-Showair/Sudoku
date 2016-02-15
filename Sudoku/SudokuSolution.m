@@ -15,7 +15,7 @@
 
   /* 1. Check that given value belongs to the potential solution set of the cell. */
   if (NO == [cell.potentialSolutionSet containsIndex:value] ||
-      NO ==  NSLocationInRange(value, cell.range) ||
+      NO ==  NSLocationInRange(value, [SudokuCell fullRange]) ||
       nil == cell ||
       nil == grid) {
     
@@ -61,7 +61,7 @@
     /* If value of the cell belongs to a valid potential range of values (1->9), Apply the constraint
      * propagation algorithm over the destination grid.
      */
-    if (YES == NSLocationInRange(sourceCell.value, sourceCell.range)) {
+    if (YES == NSLocationInRange(sourceCell.value, [SudokuCell fullRange])) {
       SudokuCell* destinationCell = [cellsOfSolvedGrid objectAtIndex:index];
       BOOL success = [self assignValue:sourceCell.value toSudokuCell:destinationCell inMacroGrid:solvedGrid];
       if (NO == success) {

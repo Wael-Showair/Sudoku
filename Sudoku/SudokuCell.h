@@ -25,7 +25,7 @@
  */
 @property (strong,nonatomic) NSMutableIndexSet* potentialSolutionSet;
 
-@property (nonatomic) NSRange range;
++(NSRange) fullRange;
 
 -(instancetype) initWithValue: (NSUInteger)value;
 

@@ -73,10 +73,6 @@
     [self.cells addObjectsFromArray:macroRow];
     i += ((2 == n%3)? 21:3);
   }
-
-#if UNIT_TESTING
-  [MicroGrid resetCount];
-#endif
   return self;
 }
 
@@ -245,11 +241,10 @@
   return self.cells.count;
 }
 
-#if UNIT_TESTING
 -(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray{
   NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, NUM_OF_CELLS_IN_MACRO_GRID)];
   return [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
 }
-#endif
+
 
 @end

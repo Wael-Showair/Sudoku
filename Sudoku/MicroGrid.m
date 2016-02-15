@@ -14,15 +14,6 @@
 #define NUM_OF_CELLS_PER_COL          3
 #define ONE_CELL                      1
 
-#if UNIT_TESTING
-
-/* This variable is only used to initialize all cells of the 9 micro grids with distinct values
- * to be checked on testInitMacroGrid method. It must be static such that it is not destoroyed
- * outside the scope of init method.
- */
-static int count = 1;
-
-#endif
 
 @interface MicroGrid ()
 
@@ -47,12 +38,7 @@ static int count = 1;
   /* Create cells of the micro grid. */
   for (int i=0; i< NUM_OF_CELLS_PER_MICRO_GRID; i++) {
     
-#if UNIT_TESTING
-//    SudokuCell* cell = [[SudokuCell alloc] initWithValue:count];
-//    count ++;
-//#else
     SudokuCell* cell = [[SudokuCell alloc] init];
-#endif
     
     [arrayOfSudokuCells addObject:cell];
   }
@@ -76,6 +62,10 @@ static int count = 1;
   return self;
 }
 
++(NSRange)fullRange{
+  /* range should be 0->10 */
+  return NSMakeRange(0, NUM_OF_CELLS_PER_MICRO_GRID+1);
+}
 
 -(NSUInteger) numOfCells{
   return self.cells.count;
@@ -158,9 +148,16 @@ static int count = 1;
 }
 
 #if UNIT_TESTING
-
-+(void) resetCount{
-  count = 1;
+- (NSUInteger) indexOfSudokuCell: (SudokuCell*) cell{
+  if (nil == cell) {
+    return NSNotFound;
+  }
+  
+  if (NO == NSLocationInRange(cell.value,[MicroGrid fullRange] )) {
+    return NSNotFound;
+  }
+  
+  return [self.cells indexOfObject:cell];
 }
 
 #endif

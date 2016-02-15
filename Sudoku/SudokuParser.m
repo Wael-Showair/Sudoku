@@ -46,6 +46,9 @@
   /* Get path of the property list file.*/
   NSString* pathOfPListFile = [[NSBundle mainBundle] pathForResource:plistFileName ofType:PROPERTY_LIST_FILE_EXTENSION];
   
+  if (nil == pathOfPListFile) {
+    return nil;
+  }
   /* Load the dictionary from the property list file. */
   NSDictionary* inputMacroGrid = [NSDictionary dictionaryWithContentsOfFile:pathOfPListFile];
   NSArray* dictionaryKeys = inputMacroGrid.allKeys;

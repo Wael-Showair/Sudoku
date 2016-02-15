@@ -42,14 +42,6 @@
   [super setUp];
   // Put setup code here. This method is called before the invocation of each test method in the class.
   
-  /* Since the launces before running the test, and it already must have initialize the MacroGrid which
-   * in turn calls intialize micro grid 9 times. Hence the starting value of the cells accumulate
-   * over the previous value (which is multiples of 81). So need to reset the static counter
-   * in the micro grid such that any test starts running after the the app launch still starts
-   * from 1.
-   */
-  [MicroGrid resetCount];
-  
   self.grid = [[MacroGrid alloc] init];
   self.solution = [[SudokuSolution alloc] init];
   self.solution.delegate = self;

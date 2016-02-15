@@ -34,18 +34,18 @@
   XCTAssertTrue(NSEqualRanges(expectedRange, self.parser.acceptableRange));
 }
 
--(void) testParseGridFromPListSuccess{
+-(void) testParseGridFromPropertyListFileSuccess{
   int expectedResults[] =
   {
-    0,0,3,0,2,0,6,0,0, //micro_grid_0
-    9,0,0,3,0,5,0,0,1, //micro_grid_1
-    0,0,1,8,0,6,4,0,0, //micro_grid_2
-    0,0,8,1,0,2,9,0,0, //micro_grid_3
-    7,0,0,0,0,0,0,0,8, //micro_grid_4
-    0,0,6,7,0,8,2,0,0, //micro_grid_5
-    0,0,2,6,0,9,5,0,0, //micro_grid_6
-    8,0,0,2,0,3,0,0,9, //micro_grid_7
-    0,0,5,0,1,0,3,0,0  //micro_grid_8
+    0, 0, 3, 9, 0, 0, 0, 0, 1, //micro_grid_0
+    0, 2, 0, 3, 0, 5, 8, 0, 6, //micro_grid_1
+    6, 0, 0, 0, 0, 1, 4, 0, 0, //micro_grid_2
+    0, 0, 8, 7, 0, 0, 0, 0, 6, //micro_grid_3
+    1, 0, 2, 0, 0, 0, 7, 0, 8, //micro_grid_4
+    9, 0, 0, 0, 0, 8, 2, 0, 0, //micro_grid_5
+    0, 0, 2, 8, 0, 0, 0, 0, 5, //micro_grid_6
+    6, 0, 9, 2, 0, 3, 0, 1, 0, //micro_grid_7
+    5, 0, 0, 0, 0, 9, 3, 0, 0, //micro_grid_8
   };
   
   MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid"];

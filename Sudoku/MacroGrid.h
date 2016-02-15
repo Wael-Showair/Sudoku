@@ -40,6 +40,7 @@
 -(NSArray<SudokuCell*>*) getColumnAtIndex: (NSUInteger) index;
 
 -(SudokuCell*) getSudokuCellAtRowColumn:(RowColPair) pair;
+-(NSArray<SudokuCell*>*) getMicroGridForSudokuCell: (SudokuCell*) cell;
 
 /* TODO: Create a parent class since these are the methods that are different from MicroGrid Class.
  *        I am not even sure even I am gonna call them for future uses or not? Since I can
@@ -62,8 +63,7 @@
  */
 -(NSArray<SudokuCell*>*) peersOfSudokuCell: (SudokuCell*) cell;
 
-#if UNIT_TESTING
 -(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray;
-#endif
+
 
 @end

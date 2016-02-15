@@ -29,7 +29,7 @@
   SudokuCell* cell = [[SudokuCell alloc] init];
   XCTAssertNotNil(cell);
   XCTAssertEqual(0, cell.value);
-  XCTAssertTrue(NSEqualRanges(cell.range, NSMakeRange(1, 9)));
+  XCTAssertTrue(NSEqualRanges([SudokuCell fullRange], NSMakeRange(1, 9)));
   XCTAssertTrue([cell.potentialSolutionSet containsIndexesInRange:NSMakeRange(1, 9)]);
 }
 
@@ -37,8 +37,10 @@
   SudokuCell* cell = [[SudokuCell alloc] initWithValue:5];
   XCTAssertNotNil(cell);
   XCTAssertEqual(5, cell.value);
-  //XCTAssertTrue(NSEqualRanges(cell.range, NSMakeRange(1, 9)));
-  //XCTAssertNil(cell.potentialSolutionSet);
+  XCTAssertTrue(NSEqualRanges([SudokuCell fullRange], NSMakeRange(1, 9)));
+  XCTAssertNotNil(cell.potentialSolutionSet);
+  NSIndexSet* expectedPotentialSolutionSet = [NSIndexSet indexSetWithIndex:5];
+  XCTAssertTrue([expectedPotentialSolutionSet isEqualToIndexSet:cell.potentialSolutionSet]);
 }
 
 - (void)testInitSudokuCellWithInvalidValue {
@@ -47,9 +49,9 @@
   
   /* Typically in actual game, I will set the value to INVALID_VALUE but for the sake of having
    * different cellls with different initial values I have to skip this check right now. */
-//  XCTAssertEqual(0, cell.value);
-//  XCTAssertTrue(NSEqualRanges(cell.range, NSMakeRange(1, 9)));
-//  XCTAssertTrue([cell.potentialSolutionSet containsIndexesInRange:NSMakeRange(1, 9)]);
+  XCTAssertEqual(0, cell.value);
+  XCTAssertTrue(NSEqualRanges([SudokuCell fullRange], NSMakeRange(1, 9)));
+  XCTAssertTrue([cell.potentialSolutionSet containsIndexesInRange:NSMakeRange(1, 9)]);
 
 }
 
@@ -84,6 +86,5 @@
   
   XCTAssertFalse([cell1 isEqualToSudokuCell:nil]);
 }
-
 
 @end

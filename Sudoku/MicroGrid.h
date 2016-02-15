@@ -24,6 +24,8 @@
  */
 @interface MicroGrid : NSObject
 
++(NSRange) fullRange;
+
 /* Typically, this method will be called from the parser so there is no need to check on values
  * of the cells again since the parse has already did this check for us.
  */
@@ -44,6 +46,6 @@
 /* TODO: Methods to check whether a number can be placed at specific row/colum. */
 
 #if UNIT_TESTING
-+(void) resetCount;
+- (NSUInteger) indexOfSudokuCell: (SudokuCell*) cell;
 #endif
 @end
