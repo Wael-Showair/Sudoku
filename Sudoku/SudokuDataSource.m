@@ -9,7 +9,9 @@
 #import "SudokuDataSource.h"
 #import "LabelCell.h"
 #import "MacroGrid.h"
+#import "SudokuParser.h"
 
+#define FILE_NAME                   @"sudoku_grid"
 #define NUM_OF_CELLS_PER_ROW        9
 
 @implementation SudokuDataSource
@@ -17,6 +19,10 @@
 -(instancetype)init{
   self = [super init];
   self.grid = [[MacroGrid alloc] init];
+  
+  SudokuParser* parser = [[SudokuParser alloc] init];
+  self.grid = [parser parseGridFromPropertyListFile:FILE_NAME];
+  
   return self;
 }
 

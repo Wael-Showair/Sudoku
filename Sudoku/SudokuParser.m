@@ -8,7 +8,6 @@
 
 #import "SudokuParser.h"
 
-#define PROPERTY_LIST_FILE_NAME      @"sudoku_grid"
 #define PROPERTY_LIST_FILE_EXTENSION @"plist"
 #define MIN_VALUE_ACCEPTED            0
 #define LENGTH_OF_ACCEPTED_VALUES     10
