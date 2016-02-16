@@ -12,11 +12,11 @@
 #define SETUP_GAME_BTN_TITLE    @"Setup Game"
 #define DONE_BTN_TITLE          @"Done"
 #define EMPTY_STRING            @""
-#define QLIK_LOGO_COLOR         [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:1]
-#define QLIK_COLOR_TRANSPARENT  [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:0.1]
+#define GREEN_COLOR             [UIColor colorWithRed:0.376 green:0.655 blue:0.161 alpha:1] /*#60a729*/
+#define GREEN_COLOR_TRANSPARENT [UIColor colorWithRed:0.376 green:0.655 blue:0.161 alpha:0.1] /*#60a729*/
 #define RED_COLOR               [UIColor redColor]
 #define NO_COLOR                [UIColor clearColor]
-#define GREY_COLOR              [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1]
+#define GREY_COLOR              [UIColor colorWithRed:0.431 green:0.431 blue:0.431 alpha:0.2] /*#6e6e6e*/
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
@@ -237,7 +237,7 @@
   /* Get the exact cell view that was selected by user. */
   LabelCell* cell = (LabelCell*)[self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
   
-  cell.backgroundColor = QLIK_COLOR_TRANSPARENT;
+  cell.backgroundColor = GREEN_COLOR_TRANSPARENT;
 }
 
 -(void) applyVisualEffectForInitialCell: (LabelCell*) cell{
