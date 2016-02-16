@@ -49,7 +49,7 @@
   };
   
   MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid"];
-  NSArray<SudokuCell*>* cellsOfMicroGrids = [grid getFlattenedMicroGridsCellsArray];
+  NSArray<SudokuCell*>* cellsOfMicroGrids = [grid getFlattenedCells:MacroGridFlattingTypeMicroGrids];
   
   XCTAssertNotNil(grid);
   XCTAssertEqual(81, [grid numOfCells]);

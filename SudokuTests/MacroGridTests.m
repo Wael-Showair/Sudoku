@@ -281,7 +281,7 @@
     60,61,62,69,70,71,78,79,80  //micro_grid_8
   };
   
-  NSArray<SudokuCell*>* cellsOfMicroGrid = [self.grid getFlattenedMicroGridsCellsArray];
+  NSArray<SudokuCell*>* cellsOfMicroGrid = [self.grid getFlattenedCells:MacroGridFlattingTypeMicroGrids];
   
   XCTAssertNotNil(cellsOfMicroGrid);
   XCTAssertEqual(81, cellsOfMicroGrid.count);
@@ -295,6 +295,32 @@
     XCTAssertEqual(expectedResults[i], indexOfCellInMacroGrid);
 
   }
+}
+
+-(void) testGetFlattenedGridCells{
+  
+  NSArray<SudokuCell*>* cellsOfMacroGrid = [self.grid getFlattenedCells:MacroGridFlattingTypeCells];
+  
+  XCTAssertNotNil(cellsOfMacroGrid);
+  XCTAssertEqual(81, cellsOfMacroGrid.count);
+  
+  for (int index=0; index< 81; index++) {
+    SudokuCell* cell = cellsOfMacroGrid[index];
+    XCTAssertEqual(0, cell.value);
+    
+    NSUInteger indexOfCellInMacroGrid = [self.grid indexOfSudokuCell:cell];
+    
+    XCTAssertEqual(index, indexOfCellInMacroGrid);
+    
+  }
+}
+
+-(void) testGetFlattenedCellsInvalidFlattingType{
+  
+  /* Defined types for flatting cells are either micro grids (value =0) or macro cells (value=1)
+   * value 2 is undefined. the method should throws an exception.
+   */
+  XCTAssertThrows([self.grid getFlattenedCells:2]);
 }
 
 @end

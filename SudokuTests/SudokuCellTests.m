@@ -67,24 +67,29 @@
   XCTAssertTrue([cell.potentialSolutionSet containsIndexesInRange:NSMakeRange(1, 9)]);
 }
 
-- (void)testcompareToSudokuCellSuccess {
+- (void)testIsEqualToSudokuCellSuccess {
   SudokuCell* cell1 = [[SudokuCell alloc] initWithValue:7];
   SudokuCell* cell2 = [[SudokuCell alloc] initWithValue:7];
   
   XCTAssertTrue([cell1 isEqualToSudokuCell:cell2]);
 }
 
-- (void)testcompareToSudokuCellFail {
+- (void)testIsEqualToSudokuCellFail {
   SudokuCell* cell1 = [[SudokuCell alloc] initWithValue:7];
   SudokuCell* cell2 = [[SudokuCell alloc] initWithValue:9];
   
   XCTAssertFalse([cell1 isEqualToSudokuCell:cell2]);
 }
 
-- (void)testcompareToSudokuCellNil {
+- (void)testIsEqualToSudokuCellNil {
   SudokuCell* cell1 = [[SudokuCell alloc] initWithValue:7];
   
   XCTAssertFalse([cell1 isEqualToSudokuCell:nil]);
 }
 
+-(void) testIsEqualSuccess{
+  SudokuCell* cell1 = [[SudokuCell alloc] initWithValue:7];
+  BOOL result = [cell1 isEqual:cell1];
+  XCTAssertTrue(result);
+}
 @end

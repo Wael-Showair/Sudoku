@@ -11,9 +11,12 @@
 
 #define SETUP_GAME_BTN_TITLE    @"Setup Game"
 #define DONE_BTN_TITLE          @"Done"
+#define EMPTY_STRING            @""
 #define QLIK_LOGO_COLOR         [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:1]
+#define QLIK_COLOR_TRANSPARENT  [UIColor colorWithRed:0.38 green:0.651 blue:0.157 alpha:0.1]
 #define RED_COLOR               [UIColor redColor]
 #define NO_COLOR                [UIColor clearColor]
+#define GREY_COLOR              [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1]
 
 @interface SudokuViewController ()
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
@@ -44,20 +47,24 @@
 }
 
 #pragma Collection View Delegate
+
 -(void)collectionView:(UICollectionView *)collectionView
       willDisplayCell:(UICollectionViewCell *)cell
    forItemAtIndexPath:(NSIndexPath *)indexPath{
 
   if ([CELL_IDENTIFIER isEqualToString:[cell reuseIdentifier]]) {
-    LabelCell* myCell = (LabelCell*) cell;
-    myCell.textLabel.text = [self.dataSource getValueOfSudokuCellAtIndexPath:indexPath];
+    LabelCell* labelCell = (LabelCell*) cell;
+    labelCell.textLabel.text = [self.dataSource getValueOfSudokuCellAtIndexPath:indexPath];
+    if (NO == [labelCell.textLabel.text isEqualToString:EMPTY_STRING]) {
+      [self applyVisualEffectForInitialCell:labelCell];
+    }
   }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
   
   /* Display feedback visual effect for the selected cell. */
-  [self displayVisualEffectForSelectedCellAtIndexPath:indexPath];
+  [self applyVisualEffectForSolvedCellAtIndexPath:indexPath];
   
   /* update last selected index path. */
   self.lastSelectedIndexPath = indexPath;
@@ -78,6 +85,7 @@
 }
 
 #pragma Collection View Flow Layout
+
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
   CGFloat cellWidth  = self.sudokuCollectionView.bounds.size.width/NUM_OF_MACRO_CELLS;
@@ -142,6 +150,73 @@
 
 #pragma Solution Delegate
 
+- (void)solver:(SudokuSolution *)solver didFailToSolveSudokuGrid:(MacroGrid *)grid{
+  
+}
+
+-(void)solver:(SudokuSolution *)solver didSolveSudokuGrid:(MacroGrid *)grid withUpdatedIndexes:(NSIndexSet *)indexes{
+
+  /* assigne the solved grid cells to the data source. */
+  self.dataSource.grid = grid;
+
+  /* Get indexe paths for the given indexes. */
+  NSArray<NSIndexPath*>* indexPaths = [self constructIndexPathsFromIndexes:indexes];
+  
+  /* Reload the cells of the collection view for the upated cells. */
+  [self reloadCollectionViewCellsAtIndexPaths:indexPaths];
+  
+}
+
+//- (void)didFinishUpdateValueOfSudokuCell:(SudokuCell *)cell{
+//  
+//  [self reloadCollectionViewCell];
+//  
+//  /* Make sure to keep the same visual effect for the reloaded selected cell.*/
+//  [self displayVisualEffectForSelectedCellAtIndexPath:self.lastSelectedIndexPath];
+//}
+//
+//-(void)didFailToInsertValueOfSudokuCell:(SudokuCell *)cell{
+//
+//  [self reloadCollectionViewCell];
+//  
+//  /* Get reference to the last selected cell. */
+//  UICollectionViewCell* selectedCell = [self.sudokuCollectionView cellForItemAtIndexPath:self.lastSelectedIndexPath];
+//  
+//  /* Highlight its borders and shadow color to red. */
+//  selectedCell.layer.shadowColor = RED_COLOR.CGColor;
+//  selectedCell.layer.borderColor = RED_COLOR.CGColor;
+//  
+//  /* Set the bakcgroundColor to transparent red color. */
+//  selectedCell.backgroundColor = [RED_COLOR colorWithAlphaComponent:0.3];
+//}
+
+#pragma internal methods
+
+-(NSArray<NSIndexPath*>*)constructIndexPathsFromIndexes: (NSIndexSet*)indexes{
+  NSMutableArray<NSIndexPath*>* indexPaths = [NSMutableArray arrayWithCapacity:indexes.count];
+  [indexes enumerateIndexesUsingBlock:^(NSUInteger indexOfUpdatedCell, BOOL* shouldStop){
+    [indexPaths addObject:[NSIndexPath indexPathForItem:indexOfUpdatedCell inSection:0]];
+    *shouldStop = NO;
+  }];
+  
+  return indexPaths;
+}
+
+- (void) reloadCollectionViewCellsAtIndexPaths:(NSArray<NSIndexPath*>*) indexPaths{
+  
+  if (nil == indexPaths) {
+    return;
+  }
+  
+  /* Reload the cell of the collection view at the given indexPath. */
+  [self.sudokuCollectionView reloadItemsAtIndexPaths:indexPaths];
+  
+  /* For every updated cell (solved by the algorithm), change its appearance.*/
+  for (NSIndexPath* indexPath in indexPaths) {
+    [self applyVisualEffectForSolvedCellAtIndexPath:indexPath];
+  }
+}
+
 - (void) reloadCollectionViewCell{
   /* Reload the cell of the collection view at the given indexPath. */
   [self.sudokuCollectionView reloadItemsAtIndexPaths:@[self.lastSelectedIndexPath]];
@@ -157,43 +232,16 @@
   
 }
 
-- (void)didFinishUpdateValueOfSudokuCell:(SudokuCell *)cell{
-  
-  [self reloadCollectionViewCell];
-  
-  /* Make sure to keep the same visual effect for the reloaded selected cell.*/
-  [self displayVisualEffectForSelectedCellAtIndexPath:self.lastSelectedIndexPath];
-}
-
--(void)didFailToInsertValueOfSudokuCell:(SudokuCell *)cell{
-
-  [self reloadCollectionViewCell];
-  
-  /* Get reference to the last selected cell. */
-  UICollectionViewCell* selectedCell = [self.sudokuCollectionView cellForItemAtIndexPath:self.lastSelectedIndexPath];
-  
-  /* Highlight its borders and shadow color to red. */
-  selectedCell.layer.shadowColor = RED_COLOR.CGColor;
-  selectedCell.layer.borderColor = RED_COLOR.CGColor;
-  
-  /* Set the bakcgroundColor to transparent red color. */
-  selectedCell.backgroundColor = [RED_COLOR colorWithAlphaComponent:0.3];
-}
-
-#pragma internal methods
-- (void) displayVisualEffectForSelectedCellAtIndexPath: (NSIndexPath*) indexPath{
+- (void) applyVisualEffectForSolvedCellAtIndexPath: (NSIndexPath*) indexPath{
   
   /* Get the exact cell view that was selected by user. */
-  UICollectionViewCell* cell = [self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
+  LabelCell* cell = (LabelCell*)[self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
   
-  /* Change border color and width of for the cell. */
-  cell.layer.borderColor = QLIK_LOGO_COLOR.CGColor;
-  cell.layer.borderWidth = 1.5;
-  
-  /* Add inner drop shadow to the cell. */
-  cell.layer.shadowColor = QLIK_LOGO_COLOR.CGColor;
-  cell.layer.shadowOpacity = 0.8;
-  
-  cell.backgroundColor = NO_COLOR;
+  cell.backgroundColor = QLIK_COLOR_TRANSPARENT;
+}
+
+-(void) applyVisualEffectForInitialCell: (LabelCell*) cell{
+  cell.backgroundColor = GREY_COLOR;
+
 }
 @end

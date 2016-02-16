@@ -241,10 +241,24 @@
   return self.cells.count;
 }
 
--(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray{
-  NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, NUM_OF_CELLS_IN_MACRO_GRID)];
-  return [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
-}
+-(NSArray<SudokuCell*>*) getFlattenedCells: (MacroGridFlattingType)type{
 
+  NSIndexSet* setOfIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, NUM_OF_CELLS_IN_MACRO_GRID)];
+  
+  NSArray<SudokuCell*>* cells;
+  switch (type) {
+    case MacroGridFlattingTypeMicroGrids:
+      cells = [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
+      break;
+     case MacroGridFlattingTypeCells:
+      cells = [self.cells objectsAtIndexes:setOfIndexes];
+      break;
+    default:
+      NSAssert(NO, @"Requesting unsupported flatting type %d", type);
+      break;
+  }
+  
+  return cells;
+}
 
 @end

@@ -16,16 +16,7 @@
  *    That's why I will be using a delegate for the sake of handling error case.
  * 2. when ther user asks to solve the sudoku game.
  */
-
-/* This custom protocol is to inform the delegate object of the Constraint Propagation object
- * that it has failed to update the value for the given Sudoku cell.
- */
-@protocol SudokuSolutionDelegate
-@optional
--(void) didFailToInsertValueOfSudokuCell: (SudokuCell*) cell;
--(void) didFinishUpdateValueOfSudokuCell: (SudokuCell*) cell;
-@end
-
+@protocol SudokuSolutionDelegate;
 @interface SudokuSolution : NSObject
 @property (weak,nonatomic) id<SudokuSolutionDelegate> delegate;
 //-(void) updateSudokuCell:(SudokuCell*)cell inMacroGrid:(MacroGrid*)macroGrid withValue:(NSUInteger)value;
@@ -33,4 +24,13 @@
 /* It is more professional if this methods can take pointer to pointer and return nil. */
 -(void) solveSudokuGrid: (MacroGrid**) grid;
 -(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid;
+@end
+
+/* This custom protocol is to inform the delegate object of the Constraint Propagation object
+ * that it has failed to update the value for the given Sudoku cell.
+ */
+@protocol SudokuSolutionDelegate <NSObject>
+@optional
+-(void) solver: (SudokuSolution*) solver didFailToSolveSudokuGrid: (MacroGrid*) grid;
+-(void) solver: (SudokuSolution*) solver didSolveSudokuGrid: (MacroGrid*) grid withUpdatedIndexes: (NSIndexSet*) indexes;
 @end

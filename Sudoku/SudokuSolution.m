@@ -8,43 +8,17 @@
 #import <Foundation/Foundation.h>
 #import "SudokuSolution.h"
 
-
 @implementation SudokuSolution
-
-//-(void)updateSudokuCell:(SudokuCell *)cell inMacroGrid:(MacroGrid *)grid withValue:(NSUInteger)value{
-//
-//  /* 1. Check that given value belongs to the potential solution set of the cell. */
-//  if (NO == [cell.potentialSolutionSet containsIndex:value] ||
-//      NO ==  NSLocationInRange(value, [SudokuCell fullRange]) ||
-//      nil == cell ||
-//      nil == grid) {
-//    
-//    cell.value = value;
-//    [self.delegate didFailToInsertValueOfSudokuCell:cell];
-//  }else{
-//    
-//    /* 2. Eliminate the value from the peers of the cell. */
-//    NSArray<SudokuCell*>* peers = [grid peersOfSudokuCell:cell];
-//    
-//    if (nil != peers) {
-//      
-//      for (SudokuCell* peerCell in peers) {
-//        [peerCell.potentialSolutionSet removeIndex:value];
-//      }
-//      
-//      /* 3. Update the value of the cell. */
-//       cell.value = value;
-//      
-//      /* inform the delegate objects so that they can proper actions. */
-//      [self.delegate didFinishUpdateValueOfSudokuCell:cell];
-//
-//    }
-//  }
-//
-//}
 
 -(void)solveSudokuGrid:(MacroGrid **)gridPtr{
 
+  /* This set represents the indexes (with respect to Macro cells not Micro Grids i.e. the indexes
+   * are per each macro row not per micro Grids) that have been solved using the Solution algorithm.
+   * This field is useful when reloading the collection view cells after the solution
+   * is finished so that the cells of the collection view are highlighted accordingly.
+   */
+  NSMutableIndexSet* indexexSetOfSolvedCells = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 81)];
+  
   /* Get the macro grid from the input grid pointer. */
   MacroGrid* grid = * gridPtr;
   
@@ -53,9 +27,9 @@
    * in the cells' potential solution sets.
    */
   MacroGrid* solvedGrid = [[MacroGrid alloc] init];
-  NSArray<SudokuCell*>* cellsOfSolvedGrid= [solvedGrid getFlattenedMicroGridsCellsArray];
+  NSArray<SudokuCell*>* cellsOfSolvedGrid= [solvedGrid getFlattenedCells:MacroGridFlattingTypeCells];
   
-  NSArray<SudokuCell*>* cellsOfSourceGrid= [grid getFlattenedMicroGridsCellsArray];
+  NSArray<SudokuCell*>* cellsOfSourceGrid= [grid getFlattenedCells:MacroGridFlattingTypeCells];
   
   __block BOOL canSolveGrid = YES;
   
@@ -65,6 +39,10 @@
      * propagation algorithm over the destination grid.
      */
     if (YES == NSLocationInRange(sourceCell.value, [SudokuCell fullRange])) {
+
+      /* Remove the cell since it is has been already solved before applying the solution. */
+      [indexexSetOfSolvedCells removeIndex:index];
+      
       SudokuCell* destinationCell = [cellsOfSolvedGrid objectAtIndex:index];
       BOOL success = [self assignValue:sourceCell.value toSudokuCell:destinationCell inMacroGrid:solvedGrid];
       if (NO == success) {
@@ -76,11 +54,20 @@
   }];
     
   if (NO == canSolveGrid) {
-    return ;
+    [self.delegate solver:self didFailToSolveSudokuGrid:*gridPtr];
   }
   
   /* Set solved grid to the input pointer of the grid pointer. */
   *gridPtr = solvedGrid;
+  
+  /* Make sure that the delegate is not nil and it has implemented the optional method
+   * didFinishSolvingSudokuGrid.
+   */
+  if ((nil != self.delegate) &&
+      (YES == [self.delegate respondsToSelector:@selector(solver:didSolveSudokuGrid:withUpdatedIndexes:) ])) {
+    [self.delegate solver:self didSolveSudokuGrid:*gridPtr withUpdatedIndexes:indexexSetOfSolvedCells];
+  }
+  
 }
 
 /* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
@@ -89,6 +76,7 @@
  */
 -(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{
 
+  __block BOOL result = YES;
   /* Since a value would be assigned to a cell, this means that the value does not belong to 
    * the impossible solution set.
    */
@@ -99,10 +87,14 @@
    * potential solution set of the given cell.
    */
   [impossibleSolutionSet enumerateIndexesUsingBlock:^(NSUInteger impossibleValue, BOOL* shouldStop){
-    [self eliminateValue:impossibleValue fromSudokuCell:cell inMacroGrid:grid];
+    result = [self eliminateValue:impossibleValue fromSudokuCell:cell inMacroGrid:grid];
+    if (NO == result) {
+      *shouldStop = YES;
+    }
     *shouldStop = NO;
   }];
-  return YES;
+  
+  return result;
 }
 
 -(BOOL) eliminateValue: (NSUInteger) value fromSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{

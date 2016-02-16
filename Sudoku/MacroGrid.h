@@ -10,6 +10,11 @@
 #import "SudokuCell.h"
 #import "RowColPair.h"
 
+typedef enum _MacroGridFlattingType{
+  MacroGridFlattingTypeMicroGrids = 0,
+  MacroGridFlattingTypeCells = 1
+}MacroGridFlattingType;
+
 /* This class wraps a 9 micro grid in Sudoku game but with one matrix of size 9x9. 
  * Typically, there is only 1 macro grids in Sudoku game. 
  *
@@ -63,7 +68,6 @@
  */
 -(NSArray<SudokuCell*>*) peersOfSudokuCell: (SudokuCell*) cell;
 
--(NSArray<SudokuCell*>*) getFlattenedMicroGridsCellsArray;
-
+-(NSArray<SudokuCell*>*) getFlattenedCells: (MacroGridFlattingType)type;
 
 @end
