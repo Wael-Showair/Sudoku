@@ -177,25 +177,27 @@
   RowColPair pair = makeRowColPair(4, 8);
   
   /* Rows, then columns then Micro grid. */
-  int expectedResults [21] = {
-    36,37,38,39,40,41,42,43,44, //row
-    8,17,26,35,53,62,71,80, //column without index 44
-    33,34,51,52 //rest of micro grid without indexes 42,43,44,35,53
+  int expectedResults [3][9] = {
+    {36,37,38,39,40,41,42,43,44}, //row
+    {8,17,26,35,44,53,62,71,80}, //column
+    {33,34,35,42,43,44,51,52,53} //rest of micro grid without indexes 42,43,44,35,53
   };
   
   /* Get the cell from the macro grid. */
   SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
   
   /* Get the super set of the cell. */
-  NSArray<SudokuCell*>* superSetCells = [self.grid superSetOfSudokuCell:cell];
+  NSArray* superSetCells = [self.grid superSetOfSudokuCell:cell];
   
   /* Make sure that the length of the super set is always 21 */
-  XCTAssertEqual(21, superSetCells.count);
+  XCTAssertEqual(3, superSetCells.count);
   
-  for (int i=0; i<21; i++) {
-    XCTAssertEqual(0, superSetCells[i].value);
-    NSUInteger cellIndex = [self.grid indexOfSudokuCell:superSetCells[i]];
-    XCTAssertEqual(expectedResults[i], cellIndex);
+  for (int i=0; i<3; i++) {
+    for (int j=0; j<9; j++) {
+      XCTAssertEqual(0, ((SudokuCell*)(superSetCells[i][j])).value);
+      NSUInteger cellIndex = [self.grid indexOfSudokuCell:superSetCells[i][j]];
+      XCTAssertEqual(expectedResults[i][j], cellIndex);
+    }
   }
 }
 
@@ -227,29 +229,33 @@
     8,17,26,35,53,62,71,80, //column without index 44
     33,34,51,52 //rest of micro grid without indexes 42,43,44,35,53
   };
-  
+  NSMutableIndexSet* expectedIndexes = [[NSMutableIndexSet alloc] init];
+  for (int i=0; i<21; i++) {
+    [expectedIndexes addIndex:expectedResults[i]];
+  }
   
   /* Get the cell from the macro grid. */
   SudokuCell* cell = [self.grid getSudokuCellAtRowColumn:pair];
   
   /* Get the super set of the cell. */
-  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
+  NSSet<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
   
   /* Make sure that the length of the super set is always 21 */
   XCTAssertEqual(20, peers.count);
-  
-  for (int i=0; i<20; i++) {
-    XCTAssertEqual(0, peers[i].value);
-    NSUInteger cellIndex = [self.grid indexOfSudokuCell:peers[i]];
-    XCTAssertEqual(expectedResults[i], cellIndex);
+
+  for (SudokuCell* peerCell in peers) {
+    XCTAssertEqual(0, peerCell.value);
+    NSUInteger cellIndex = [self.grid indexOfSudokuCell:peerCell];
+    XCTAssertTrue([expectedIndexes containsIndex:cellIndex]);
   }
+  
 }
 
 -(void) testPeersOfValidSudokuCellNotInMacroGrid{
   SudokuCell* cell = [[SudokuCell alloc] init];
   
   /* Get the super set of the cell. */
-  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
+  NSSet<SudokuCell*>* peers = [self.grid peersOfSudokuCell:cell];
   
   XCTAssertNil(peers);
 }
@@ -257,7 +263,7 @@
 -(void) testPeersOfInvalidSudokuCell{
   
   /* Get the super set of the cell. */
-  NSArray<SudokuCell*>* peers = [self.grid peersOfSudokuCell:nil];
+  NSSet<SudokuCell*>* peers = [self.grid peersOfSudokuCell:nil];
   
   XCTAssertNil(peers);
 }

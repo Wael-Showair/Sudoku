@@ -66,7 +66,7 @@ typedef enum _MacroGridFlattingType{
 /* Get the peers of the given sudoku cell. The peers set does not include the given cell. Typically
  * the peers set must be 8+8+4 = 20 elements.
  */
--(NSArray<SudokuCell*>*) peersOfSudokuCell: (SudokuCell*) cell;
+-(NSSet<SudokuCell*>*) peersOfSudokuCell: (SudokuCell*) cell;
 
 -(NSArray<SudokuCell*>*) getFlattenedCells: (MacroGridFlattingType)type;
 

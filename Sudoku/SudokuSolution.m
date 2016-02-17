@@ -107,9 +107,7 @@
   
   NSArray<SudokuCell*>* cellsOfGrid = [possibleSolvedGrid getFlattenedCells:MacroGridFlattingTypeCells];
   
-  SudokuCell* tempCell = [cellsOfGrid objectAtIndex:45];
-  NSLog(@"tempCell Value = %ld", tempCell.value);
-  NSLog(@"tempCell Potential Values: %@ ",tempCell.potentialSolutionSet);
+
   /* Loop through all the cells of the grid, make sure that they all have one possible value.
    * If yes, then this grid is a valid solution.
    * if not, save how many possible values are there for the corresponding cell.
@@ -148,7 +146,9 @@
   /* 2.2 Minimum count must be in the first object if the sorted array. */
   NSNumber* minPotentialValuesCounts =[sortedArray firstObject];
   /* 2.3 Get index of the cell that we will try to set its value with one of its potential values.*/
-  NSUInteger requiredCellIndex = [potentialValuesCounts indexOfObject:minPotentialValuesCounts];
+  NSUInteger tempIndex = [potentialValuesCounts indexOfObject:minPotentialValuesCounts];
+  NSUInteger requiredCellIndex = ((NSNumber*) [indexes objectAtIndex:tempIndex]).intValue;
+  
   /* 2.4 Get the required cell on which we will be operating.*/
   SudokuCell* requiredCell = [cellsOfGrid objectAtIndex:requiredCellIndex];
   
@@ -199,7 +199,7 @@
 
 -(BOOL) eliminateValue: (NSUInteger) value fromSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{ //eliminate
 
-  NSArray<SudokuCell*>* peers;
+  NSSet<SudokuCell*>* peers;
   NSArray<SudokuCell*>* superSet;
   NSUInteger lastPotentialValueOfCell;
   SudokuCell* targetCell;
@@ -218,7 +218,6 @@
       [cell.potentialSolutionSet addIndex:value];
       NSAssert(value == cell.value, @"Can't Eliminate the last value from the potential solution set");
       return NO;
-      break;
 
     case 1:
       /* If the cell contains only one value(v) in its potential solution set, then remove this
@@ -230,6 +229,7 @@
       for (SudokuCell* peerCell in peers) {
         
         [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
+
       }
       break;
       
@@ -238,36 +238,46 @@
       break;
   }
   
-  /* If a super set (row/column/micro_grid) is having only one possible cell for a value, then assign
-   * the value to that cell.
+  /* After propagation of value elimination across multiple cells. There might be a possibility that
+   * the eliminated value can be set to only one remaining cell. So if a super set (row/column/micro_grid)
+   * is having only one possible cell for that value, then assign it to the cell.
    */
   superSet = [grid superSetOfSudokuCell:cell];
-  setOfCellsIndexes = [[NSMutableIndexSet alloc] init];
-  [superSet enumerateObjectsUsingBlock:^(SudokuCell* cellInSuperSet, NSUInteger cellIndex, BOOL* shouldStop){
-    if ([cellInSuperSet.potentialSolutionSet containsIndex:value]) {
-      [setOfCellsIndexes addIndex:cellIndex];
+
+  /* Since Super Set consists of double array, loop through each sub array (sub set of the super set).*/
+  for (NSArray<SudokuCell*>* subSet in superSet) {
+
+    /* For every sub set, initialize new set index for the cells that still might have the eliminated
+     * value (d) as a potential value. */
+    setOfCellsIndexes = [[NSMutableIndexSet alloc] init];
+    
+    /* Loop throught the cells of the subset (which is technically an array). */
+    [subSet enumerateObjectsUsingBlock:^(SudokuCell* cellInSubSet, NSUInteger cellIndex, BOOL* shouldStop){
+      if ([cellInSubSet.potentialSolutionSet containsIndex:value]) {
+        [setOfCellsIndexes addIndex:cellIndex];
+      }
       *shouldStop = NO;
-    }
-  }];
+    }];
+    
+    
+    switch (setOfCellsIndexes.count) {
+      case 0:
+        /* Contradiction: There is no cell that could have this value. */
+        NSAssert(NO, @"Value can't be assigned to any cell");
+        return NO;
+        
+      case 1:
+        /* Once cell can only have the value(d), so assign the value(d) to the cell. */
+        targetCell = [subSet objectAtIndex:[setOfCellsIndexes firstIndex]];
+        return [self assignValue:value toSudokuCell:targetCell inMacroGrid:grid];
+        
+      default:
+        /* Do nothing. */
+        break;
+    }//switch
 
+  }//for loop
   
-  switch (setOfCellsIndexes.count) {
-    case 0:
-      /* Contradiction: There is no cell that could have this value. */
-      NSAssert(NO, @"Value can't be assigned to any cell");
-      return NO;
-      break;
-
-    case 1:
-      /* Once cell can only have the value(d), so assign the value(d) to the cell. */
-      targetCell = [superSet objectAtIndex:[setOfCellsIndexes firstIndex]];
-      return [self assignValue:value toSudokuCell:targetCell inMacroGrid:grid];
-      break;
-      
-    default:
-      /* Do nothing. */
-      break;
-  }
   
   return YES;
 }

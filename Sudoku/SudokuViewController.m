@@ -33,7 +33,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-    SudokuCell* cell = [[SudokuCell alloc] init];
   
   /* Set the data source of the collection view. */
   SudokuDataSource* dataSource = [[SudokuDataSource alloc] init];

@@ -190,27 +190,33 @@
     NSArray* cellsOfColumn    = [self getColumnAtIndex:pair.column];
     NSArray* cellsOfMicroGrid = [self getMicroGridForSudokuCell:cell];
     
-    /* Construct a set of all obtained cells. */
-    
-    /* TODO: What about returning NSSet for each of the previous getters methods. */
-    NSMutableOrderedSet* superSet = [NSMutableOrderedSet orderedSetWithArray:cellsOfRow];
-    [superSet addObjectsFromArray:cellsOfColumn];
-    [superSet addObjectsFromArray:cellsOfMicroGrid];
-    return superSet.array;
+    return [NSArray arrayWithObjects:cellsOfRow,cellsOfColumn,cellsOfMicroGrid, nil];
   }else{
     return nil;
   }
 }
 
--(NSArray<SudokuCell *> *)peersOfSudokuCell:(SudokuCell *)cell{
+-(NSSet<SudokuCell *> *)peersOfSudokuCell:(SudokuCell *)cell{
 
-  /* Get the super set of the cell, then remove the cell from its super set. */
-  NSArray* superSet = [self superSetOfSudokuCell:cell];
-  if(nil != superSet){
-    NSMutableArray* peers = [NSMutableArray arrayWithArray:superSet];
+  /* Get index of the sudoku cell in the macro grid. */
+  NSUInteger index = [self indexOfSudokuCell:cell];
+  
+  if (NUM_OF_CELLS_IN_MACRO_GRID > index) {
+    /* Convert the index into row/column pair structure.*/
+    RowColPair pair = convertIndexToPair(index);
+    
+    NSArray* cellsOfRow       = [self getRowAtIndex:pair.row];
+    NSArray* cellsOfColumn    = [self getColumnAtIndex:pair.column];
+    NSArray* cellsOfMicroGrid = [self getMicroGridForSudokuCell:cell];
+
+    NSMutableSet* peers = [NSMutableSet setWithArray:cellsOfRow ];
+    [peers addObjectsFromArray:cellsOfColumn];
+    [peers addObjectsFromArray:cellsOfMicroGrid];
     [peers removeObject:cell];
     
     return peers;
+
+  
   }else{
     return nil;
   }
