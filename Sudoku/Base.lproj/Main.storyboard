@@ -57,23 +57,12 @@
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-Ro-nqF">
                                         <rect key="frame" x="0.0" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Clear"/>
-                                        <connections>
-                                            <action selector="onTapClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pQi-2t-icU"/>
-                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-qx-s26">
                                         <rect key="frame" x="85" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Solve"/>
                                         <connections>
-                                            <action selector="onTapSave:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1jl-dl-Tx0"/>
                                             <action selector="onTapSolve:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hcz-FG-rew"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXo-4C-nRZ">
-                                        <rect key="frame" x="170" y="0.0" width="85" height="30"/>
-                                        <state key="normal" title="Setup Game"/>
-                                        <connections>
-                                            <action selector="onTapSetupGameDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GPz-RG-w04"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -85,73 +74,46 @@
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="1"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jb6-AE-zix"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgD-ji-aWh">
                                         <rect key="frame" x="30" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="2"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="up2-Ht-U1A"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-im-rXx">
                                         <rect key="frame" x="60" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="3"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IY7-7F-YKe"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2o-Qf-4Qm">
                                         <rect key="frame" x="90" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="4"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9pL-wk-dKB"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Peh-wm-d1m">
                                         <rect key="frame" x="120" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="5"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="53G-TY-brf"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VS4-pm-5ZL">
                                         <rect key="frame" x="150" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="6"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z6J-MK-4rL"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBL-4y-slb">
                                         <rect key="frame" x="180" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="7"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHa-tt-gVG"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-5F-34L">
                                         <rect key="frame" x="210" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="8"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fMl-U5-fts"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-fW-IQB">
                                         <rect key="frame" x="240" y="0.0" width="30" height="45"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="9"/>
-                                        <connections>
-                                            <action selector="onTapNuemricBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dfc-vT-KgQ"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -202,7 +164,6 @@
                     <navigationItem key="navigationItem" id="hbK-P8-zhp"/>
                     <connections>
                         <outlet property="clearBtn" destination="ys5-Ro-nqF" id="tDF-xI-9Ue"/>
-                        <outlet property="setupGameDoneBtn" destination="WXo-4C-nRZ" id="QSB-HW-bIZ"/>
                         <outlet property="solveBtn" destination="bvK-qx-s26" id="Ft7-3N-Zky"/>
                         <outlet property="sudokuCollectionView" destination="EpJ-g4-ClV" id="xxM-Gl-qLE"/>
                     </connections>

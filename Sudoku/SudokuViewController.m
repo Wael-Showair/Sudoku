@@ -22,9 +22,8 @@
 @property (weak, nonatomic) IBOutlet SudokuBoard *sudokuCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *clearBtn;
 @property (weak, nonatomic) IBOutlet UIButton *solveBtn;
-@property (weak, nonatomic) IBOutlet UIButton *setupGameDoneBtn;
+
 @property (strong,nonatomic) SudokuDataSource* dataSource;
-@property (strong, nonatomic) NSIndexPath* lastSelectedIndexPath;
 @property (strong, nonatomic) SudokuSolution* solution;
 @end
 
@@ -62,29 +61,6 @@
   }
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-  
-  /* Display feedback visual effect for the selected cell. */
-  [self applyVisualEffectForSolvedCellAtIndexPath:indexPath];
-  
-  /* update last selected index path. */
-  self.lastSelectedIndexPath = indexPath;
-}
-
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
-  
-  /* Get the exact cell view that was selected by user. */
-  UICollectionViewCell* cell = [self.sudokuCollectionView cellForItemAtIndexPath:indexPath];
-  
-  /* Reset border width to zero so it should be removed and the content of the cell already
-   * consists of UIBezier path, that is why default thin black border around every cell still
-   * exists even after reseting the border here to zero. */
-  cell.layer.borderWidth = 0;
-  
-  /* Hide the drop shadow of the deselected cell.*/
-  cell.layer.shadowOpacity = 0;
-}
-
 #pragma Collection View Flow Layout
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -97,56 +73,9 @@
 
 #pragma actions
 
-- (IBAction)onTapSetupGameDone:(UIButton*)setupGameDoneBtn {
-
-  if ([setupGameDoneBtn.titleLabel.text isEqualToString:SETUP_GAME_BTN_TITLE]) {
-    
-    /* Set the mode of the grid to new game creation */
-    self.sudokuCollectionView.shouldSetupNewGame = YES;
-    
-    /* Change the title of the button*/
-    [self.setupGameDoneBtn setTitle:DONE_BTN_TITLE forState:UIControlStateNormal] ;
-    
-    /* Disbale other buttons in the stack view. */
-    self.clearBtn.enabled = NO;
-    self.solveBtn.enabled = NO;
-    
-  }else{
-    
-    /* Set the mode of the grid to play mode */
-    self.sudokuCollectionView.shouldSetupNewGame = NO;
-    
-    /* Change the title of the button*/
-    [self.setupGameDoneBtn setTitle:SETUP_GAME_BTN_TITLE forState:UIControlStateNormal];
-    
-    /* Disbale other buttons in the stack view. */
-    self.clearBtn.enabled = YES;
-    self.solveBtn.enabled = YES;
-    
-  }
-  
-}
 - (IBAction)onTapSolve:(id)sender {
   MacroGrid* grid = self.dataSource.grid;
   [self.solution solveSudokuGrid: &grid];
-}
-
-- (IBAction)onTapSave:(id)sender {
-}
-
-- (IBAction)onTapClear:(id)sender {
-}
-
--(IBAction)onTapNuemricBtn:(UIButton*)numericBtn{
-  
-  SudokuCell* cell = [self.dataSource sudokuCellAtIndexPath:self.lastSelectedIndexPath];
-  
-  if (nil == cell) {
-    return;
-  }
-  
-  //[self.solution updateSudokuCell:cell inMacroGrid:self.dataSource.grid withValue:numericBtn.titleLabel.text.integerValue];
-
 }
 
 #pragma Solution Delegate
@@ -167,29 +96,6 @@
   [self reloadCollectionViewCellsAtIndexPaths:indexPaths];
   
 }
-
-//- (void)didFinishUpdateValueOfSudokuCell:(SudokuCell *)cell{
-//  
-//  [self reloadCollectionViewCell];
-//  
-//  /* Make sure to keep the same visual effect for the reloaded selected cell.*/
-//  [self displayVisualEffectForSelectedCellAtIndexPath:self.lastSelectedIndexPath];
-//}
-//
-//-(void)didFailToInsertValueOfSudokuCell:(SudokuCell *)cell{
-//
-//  [self reloadCollectionViewCell];
-//  
-//  /* Get reference to the last selected cell. */
-//  UICollectionViewCell* selectedCell = [self.sudokuCollectionView cellForItemAtIndexPath:self.lastSelectedIndexPath];
-//  
-//  /* Highlight its borders and shadow color to red. */
-//  selectedCell.layer.shadowColor = RED_COLOR.CGColor;
-//  selectedCell.layer.borderColor = RED_COLOR.CGColor;
-//  
-//  /* Set the bakcgroundColor to transparent red color. */
-//  selectedCell.backgroundColor = [RED_COLOR colorWithAlphaComponent:0.3];
-//}
 
 #pragma internal methods
 
@@ -216,21 +122,6 @@
   for (NSIndexPath* indexPath in indexPaths) {
     [self applyVisualEffectForSolvedCellAtIndexPath:indexPath];
   }
-}
-
-- (void) reloadCollectionViewCell{
-  /* Reload the cell of the collection view at the given indexPath. */
-  [self.sudokuCollectionView reloadItemsAtIndexPaths:@[self.lastSelectedIndexPath]];
-  
-  /* After reloading the collection view cell, it seems that the collection view is not longer
-   * saving that the cell was selected.
-   * As per Apple documentation, the following method does not cause any selection-related delegate
-   * methods to be called.
-   */
-  [self.sudokuCollectionView selectItemAtIndexPath:self.lastSelectedIndexPath
-                                          animated:NO
-                                    scrollPosition:UICollectionViewScrollPositionNone];
-  
 }
 
 - (void) applyVisualEffectForSolvedCellAtIndexPath: (NSIndexPath*) indexPath{

@@ -32,9 +32,9 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testSolveButton {
+  [[[XCUIApplication alloc] init].buttons[@"Solve"] tap];
+  /* TODO* Check that that indexes of the empty collection views have been changed to green background.*/
 }
 
 @end
