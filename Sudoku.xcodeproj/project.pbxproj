@@ -32,6 +32,8 @@
 		DADDCE121C70FB0C007D9C13 /* SudokuParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DADDCE111C70FB0C007D9C13 /* SudokuParserTests.m */; };
 		DAF4AB091C6F917600FFA28F /* SudokuSolution.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF4AB081C6F917600FFA28F /* SudokuSolution.m */; };
 		DAF4AB0B1C6F9E1600FFA28F /* SudokuSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */; };
+		DAFD44D11C73D5590087503F /* sudoku_grid_hard.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAFD44D01C73D5590087503F /* sudoku_grid_hard.plist */; };
+		DAFD44D21C73DD150087503F /* sudoku_grid_hard.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAFD44D01C73D5590087503F /* sudoku_grid_hard.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,7 @@
 		DAF4AB071C6F917600FFA28F /* SudokuSolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SudokuSolution.h; sourceTree = "<group>"; };
 		DAF4AB081C6F917600FFA28F /* SudokuSolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SudokuSolution.m; sourceTree = "<group>"; };
 		DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SudokuSolutionTests.m; sourceTree = "<group>"; };
+		DAFD44D01C73D5590087503F /* sudoku_grid_hard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sudoku_grid_hard.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,7 @@
 				DAF4AB0A1C6F9E1600FFA28F /* SudokuSolutionTests.m */,
 				DA3AC2991C6BDD83006FA76D /* Info.plist */,
 				DAB3E4041C72496700F2C649 /* sudoku_grid_invalid_values.plist */,
+				DAFD44D01C73D5590087503F /* sudoku_grid_hard.plist */,
 			);
 			path = SudokuTests;
 			sourceTree = "<group>";
@@ -347,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA3AC28D1C6BDD83006FA76D /* LaunchScreen.storyboard in Resources */,
+				DAFD44D21C73DD150087503F /* sudoku_grid_hard.plist in Resources */,
 				DA3AC28A1C6BDD83006FA76D /* Assets.xcassets in Resources */,
 				DA3AC2BF1C6C12B4006FA76D /* LabelCell.xib in Resources */,
 				DADDCE101C70F21E007D9C13 /* sudoku_grid.plist in Resources */,
@@ -359,6 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAFD44D11C73D5590087503F /* sudoku_grid_hard.plist in Resources */,
 				DAB3E4051C72496700F2C649 /* sudoku_grid_invalid_values.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,6 +544,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Sudoku/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -550,6 +557,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Sudoku/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -661,6 +669,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Sudoku/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.showair.wael.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

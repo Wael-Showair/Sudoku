@@ -43,7 +43,7 @@
 
 -(void)solver:(SudokuSolution *)solver didSolveSudokuGrid:(MacroGrid *)grid withUpdatedIndexes:(NSIndexSet *)indexes{
 
-  NSArray<SudokuCell*>* cellsOfSolvedGrid = [grid getFlattenedCells:MacroGridFlattingTypeMicroGrids];
+  NSArray<SudokuCell*>* cellsOfSolvedGrid = [grid getFlattenedCells:MacroGridFlattingTypeCells];
 
   /* Verify cells of micro grids.*/
   for (int i=0; i< 81; i++) {
@@ -134,6 +134,35 @@
   [self.solution solveSudokuGrid:&grid];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+-(void) testSolveHardSudokuGridSuccess{
+  /* 1. Determine what are the expected cells in the solved grid. */
+  self.expectedSolvedCellsValues =
+  @[
+    @4, @1, @7,     @3, @6, @9,     @8, @2, @5,
+    @6, @3, @2,     @1, @5, @8,     @9, @4, @7,
+    @9, @5, @8,     @7, @2, @4,     @3, @1, @6,
+    @8, @2, @5,     @4, @3, @7,     @1, @6, @9,
+    @7, @9, @1,     @5, @8, @6,     @4, @3, @2,
+    @3, @4, @6,     @9, @1, @2,     @7, @5, @8,
+    @2, @8, @9,     @6, @4, @3,     @5, @7, @1,
+    @5, @7, @3,     @2, @9, @1,     @6, @8, @4,
+    @1, @6, @4,     @8, @7, @5,     @2, @9, @3
+    ];
+  
+  /* 2. Determine what are the expected cells that would be updated by the sudoku solver.*/
+  self.expectedSetOfIndexes = nil;
+  
+  /* 3. Determine what is the expectation object for this test. */
+  self.expectation = [self expectationWithDescription:@"Solve Hard Sudoku Grid"];
+  
+  MacroGrid* grid = [self.parser parseGridFromPropertyListFile:@"sudoku_grid_hard"];
+
+  [self.solution solveSudokuGrid:&grid];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+
 }
 
 @end

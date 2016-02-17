@@ -8,9 +8,44 @@
 #import <Foundation/Foundation.h>
 #import "SudokuSolution.h"
 
+#define LENGTH_OF_SINGLE_POSSIBLE_VALUE         1
+
+@interface SudokuSolution ()
+@property(strong, nonatomic) MacroGrid* internalGrid;
+@end
 @implementation SudokuSolution
 
--(void)solveSudokuGrid:(MacroGrid **)gridPtr{
+-(instancetype)init{
+  self = [super init];
+  self.internalGrid = [[MacroGrid alloc] init];
+  return self;
+}
+
+-(void)solveSudokuGrid:(MacroGrid **)gridPtr{//solve
+
+  MacroGrid* grid = *gridPtr;
+  
+  MacroGrid* possibleSolvedGrid = [self tryToSolveSudokuGrid:grid]; //parse
+  MacroGrid* solvedGrid = [self searchPossibleSolutionsForSukoduGrid:possibleSolvedGrid]; //call search once
+  
+  if (nil == solvedGrid) {
+    [self.delegate solver:self didFailToSolveSudokuGrid:*gridPtr];
+  }
+  
+  /* Set solved grid to the input pointer of the grid pointer. */
+  *gridPtr = solvedGrid;
+  
+  /* Make sure that the delegate is not nil and it has implemented the optional method
+   * didFinishSolvingSudokuGrid.
+   */
+  if ((nil != self.delegate) &&
+      (YES == [self.delegate respondsToSelector:@selector(solver:didSolveSudokuGrid:withUpdatedIndexes:) ])) {
+    [self.delegate solver:self didSolveSudokuGrid:*gridPtr withUpdatedIndexes:nil];
+  }
+
+}
+
+-(MacroGrid*)tryToSolveSudokuGrid:(MacroGrid *)grid{ //parse grid.
 
   /* This set represents the indexes (with respect to Macro cells not Micro Grids i.e. the indexes
    * are per each macro row not per micro Grids) that have been solved using the Solution algorithm.
@@ -18,9 +53,6 @@
    * is finished so that the cells of the collection view are highlighted accordingly.
    */
   NSMutableIndexSet* indexexSetOfSolvedCells = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 81)];
-  
-  /* Get the macro grid from the input grid pointer. */
-  MacroGrid* grid = * gridPtr;
   
   /* Create an internal macro grid to start solving the given sudoku grid.
    * Note that this grid initially has no cells' values and every cell has all full range from 1->9
@@ -52,29 +84,97 @@
     }
     
   }];
-    
-  if (NO == canSolveGrid) {
-    [self.delegate solver:self didFailToSolveSudokuGrid:*gridPtr];
-  }
   
-  /* Set solved grid to the input pointer of the grid pointer. */
-  *gridPtr = solvedGrid;
+  return (YES == canSolveGrid)? solvedGrid: nil;
+}
+
+-(MacroGrid*) searchPossibleSolutionsForSukoduGrid: (MacroGrid*) possibleSolvedGrid{ //search
   
-  /* Make sure that the delegate is not nil and it has implemented the optional method
-   * didFinishSolvingSudokuGrid.
+  /* Have we found any contradition while trying to solve the grid? OR
+   * Have we found out that a possible value can't be assigned to any cell in the grid.
    */
-  if ((nil != self.delegate) &&
-      (YES == [self.delegate respondsToSelector:@selector(solver:didSolveSudokuGrid:withUpdatedIndexes:) ])) {
-    [self.delegate solver:self didSolveSudokuGrid:*gridPtr withUpdatedIndexes:indexexSetOfSolvedCells];
+  if (nil == possibleSolvedGrid) {
+    return nil;
   }
   
+  /* 1. All cells in the possible solved grid, have only one and only one possible value. If yes,
+   * then this is a valid solution for the grid. End the algorithm.
+   */
+  
+  /*Following two vairables are just created in case the all the grid cells don't have one possible value for each.*/
+  NSMutableArray* potentialValuesCounts = [[NSMutableArray alloc] init];
+  NSMutableArray* indexes = [[NSMutableArray alloc] init];
+  
+  NSArray<SudokuCell*>* cellsOfGrid = [possibleSolvedGrid getFlattenedCells:MacroGridFlattingTypeCells];
+  
+  SudokuCell* tempCell = [cellsOfGrid objectAtIndex:45];
+  NSLog(@"tempCell Value = %ld", tempCell.value);
+  NSLog(@"tempCell Potential Values: %@ ",tempCell.potentialSolutionSet);
+  /* Loop through all the cells of the grid, make sure that they all have one possible value.
+   * If yes, then this grid is a valid solution.
+   * if not, save how many possible values are there for the corresponding cell.
+   */
+  __block BOOL allCellsHaveOnePotentialValue = YES;
+  [cellsOfGrid enumerateObjectsUsingBlock:^(SudokuCell* cell, NSUInteger cellIndex, BOOL* shouldStop){
+    
+    if (LENGTH_OF_SINGLE_POSSIBLE_VALUE != cell.potentialSolutionSet.count) {
+      
+      /* Indicate that the gird is no a possible solution. */
+      allCellsHaveOnePotentialValue = NO;
+      
+      /* Save how many potential values are there for the cell. */
+      [potentialValuesCounts addObject:@(cell.potentialSolutionSet.count)];
+      
+      /* Save index of the cell for to be able to loop throught those cells only. */
+      [indexes addObject:@(cellIndex)];
+      
+      /* Continute looping. */
+      *shouldStop = NO;
+    }
+  }];
+  
+  /* If each cell in the grid has only one potential value, then return it. */
+  if (YES == allCellsHaveOnePotentialValue) {
+    return possibleSolvedGrid;
+  }
+  
+  /* 2. At this point, there are some cells having more than possible values. Get the cell which has
+   * the minmum number of possibilites.
+   */
+  
+  /* 2.1 Sort possible values counts in ascending order. Note that The new array contains references
+   * to the receiving array’s elements, not copies of them.*/
+  NSArray* sortedArray = [potentialValuesCounts sortedArrayUsingSelector:@selector(compare:)];
+  /* 2.2 Minimum count must be in the first object if the sorted array. */
+  NSNumber* minPotentialValuesCounts =[sortedArray firstObject];
+  /* 2.3 Get index of the cell that we will try to set its value with one of its potential values.*/
+  NSUInteger requiredCellIndex = [potentialValuesCounts indexOfObject:minPotentialValuesCounts];
+  /* 2.4 Get the required cell on which we will be operating.*/
+  SudokuCell* requiredCell = [cellsOfGrid objectAtIndex:requiredCellIndex];
+  
+  /* 2.5 Now pick any value from the possible values for the cell then assign to the cell. Finally
+   * If you managed to assign the value, check if the whole grid has been solved or not (This is done
+   * by recursively, searching possible solution method).
+   */
+  [requiredCell.potentialSolutionSet enumerateIndexesUsingBlock:^(NSUInteger possibleValue, BOOL* shouldStop){
+
+    /* Create a new copy of the current grid. */
+    self.internalGrid = [[MacroGrid alloc] initWithMicroGrids:[possibleSolvedGrid getFlattenedCells:MacroGridFlattingTypeMicroGrids]];
+
+    BOOL result = [self assignValue:possibleValue toSudokuCell:requiredCell inMacroGrid:self.internalGrid];
+    if (YES == result) {
+      *shouldStop = YES;
+    }
+    
+  }];
+  return [self searchPossibleSolutionsForSukoduGrid:self.internalGrid];
 }
 
 /* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
  * of the possible values for a cell.Then assign value(d) in a cell can be defined as
  * "eliminate all other possible values from the cell except the required number d".
  */
--(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{
+-(BOOL) assignValue: (NSUInteger) value toSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{//assign
 
   __block BOOL result = YES;
   /* Since a value would be assigned to a cell, this means that the value does not belong to 
@@ -97,7 +197,7 @@
   return result;
 }
 
--(BOOL) eliminateValue: (NSUInteger) value fromSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{
+-(BOOL) eliminateValue: (NSUInteger) value fromSudokuCell: (SudokuCell*) cell inMacroGrid: (MacroGrid*) grid{ //eliminate
 
   NSArray<SudokuCell*>* peers;
   NSArray<SudokuCell*>* superSet;
