@@ -11,7 +11,7 @@
 #define INVALID_VALUE     0
 
 /* This is the smallest unit in Sudoku game.*/
-@interface SudokuCell : NSObject
+@interface SudokuCell : NSObject <NSCopying>
 
 /* This is the final value of the cell. */
 @property (nonatomic) NSUInteger value;

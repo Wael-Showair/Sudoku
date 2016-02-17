@@ -34,6 +34,7 @@ typedef enum _MacroGridFlattingType{
 @interface MacroGrid : NSObject
 
 -(instancetype) initWithMicroGrids: (NSArray<SudokuCell*>*) cellsOfMicroGrids;
+-(MacroGrid*) copyMacroGrid;
 -(NSUInteger) numOfCells;
 
 /* Retrieve row from macro grid. This wil be using so much during the runtime to eliminate numbers
@@ -70,4 +71,5 @@ typedef enum _MacroGridFlattingType{
 
 -(NSArray<SudokuCell*>*) getFlattenedCells: (MacroGridFlattingType)type;
 
+-(void) display;
 @end

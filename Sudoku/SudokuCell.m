@@ -43,6 +43,12 @@
   return self;
 }
 
+-(id)copyWithZone:(NSZone *)zone{
+  SudokuCell* cell = [[[self class] alloc] initWithValue:_value];
+  cell.potentialSolutionSet = [[NSMutableIndexSet alloc] initWithIndexSet:_potentialSolutionSet];
+  return cell;
+}
+
 -(void) setValue:(NSUInteger)value{
   
   if (INVALID_VALUE == value) {

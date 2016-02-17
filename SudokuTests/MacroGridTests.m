@@ -329,4 +329,36 @@
   XCTAssertThrows([self.grid getFlattenedCells:2]);
 }
 
+-(void) testDeepCopyGrid{
+  /* Change some cell in the gird, just to verify that their contents don't change after taking copy of them.*/
+  NSArray<SudokuCell*>* sourceCells = [self.grid getFlattenedCells:MacroGridFlattingTypeCells];
+  [sourceCells enumerateObjectsUsingBlock:^(SudokuCell* srcCell, NSUInteger index, BOOL* shouldStop){
+    srcCell.potentialSolutionSet = [NSMutableIndexSet indexSetWithIndex:index%9];
+    srcCell.value = index%9;
+  }];
+  
+  MacroGrid* copyOfGrid = [self.grid copyMacroGrid];
+  XCTAssertNotEqual(copyOfGrid, self.grid);
+  
+
+  NSArray<SudokuCell*>* destinationCells = [copyOfGrid getFlattenedCells:MacroGridFlattingTypeCells];
+  
+  [sourceCells enumerateObjectsUsingBlock:^(SudokuCell* srcCell, NSUInteger index, BOOL* shouldStop){
+    
+    SudokuCell* destCell = [destinationCells objectAtIndex:index];
+    XCTAssertNotEqual(srcCell, destCell);//Different memory addresses since this is deep copy not shallow copy.
+    XCTAssertEqual(srcCell.value, destCell.value); //Content should be the same.
+    
+    XCTAssertNotEqual(srcCell.potentialSolutionSet, destCell.potentialSolutionSet); //Different memoty addresses.
+    XCTAssertEqual(srcCell.potentialSolutionSet.count, destCell.potentialSolutionSet.count); //should have same contents.
+    XCTAssertEqual([srcCell.potentialSolutionSet firstIndex], [destCell.potentialSolutionSet firstIndex]);
+    
+  }];
+  
+
+}
+
+-(void) testDisplay{
+  [self.grid display];
+}
 @end

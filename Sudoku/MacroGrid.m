@@ -76,6 +76,13 @@
   return self;
 }
 
+-(MacroGrid*) copyMacroGrid{
+  NSArray<SudokuCell*>* microGridsFlattenedCells = [self getFlattenedCells:MacroGridFlattingTypeMicroGrids];
+  NSMutableArray<SudokuCell*>* copyOfMicroGridsCells = [[NSMutableArray alloc] initWithArray:microGridsFlattenedCells copyItems:YES];
+  
+  return [[MacroGrid alloc] initWithMicroGrids:copyOfMicroGridsCells];
+}
+
 -(NSArray<SudokuCell *> *)getRowForCellAtIndex:(NSUInteger)index{
   if (NUM_OF_CELLS_IN_MACRO_GRID > index) {
     
@@ -267,4 +274,25 @@
   return cells;
 }
 
+- (void)display{
+  __block NSString* output =  @"\n---------------------\n";
+  [self.cells enumerateObjectsUsingBlock:^(SudokuCell* cell, NSUInteger index, BOOL* stop){
+
+    if((0 == index%27) && (0 != index)){
+      output = [output stringByAppendingString:@"---------------------\n"];
+    }
+    
+    output = [output stringByAppendingString:[NSString stringWithFormat:@"%ld ", cell.value]];
+    
+    if (0 == ((index+1)%3)) {
+      output = [output stringByAppendingString:@"|"];
+    }
+    if((0 == ((index+1) % NUM_OF_CELLS_PER_ROW)) && (0 != index)){
+      output = [output stringByAppendingString:@"\n"];
+    }
+    
+  }];
+  output = [output stringByAppendingString: @"---------------------\n\n"];
+  NSLog(@"%@", output);
+}
 @end

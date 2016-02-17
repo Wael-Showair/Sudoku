@@ -11,13 +11,15 @@
 #define LENGTH_OF_SINGLE_POSSIBLE_VALUE         1
 
 @interface SudokuSolution ()
-@property(strong, nonatomic) MacroGrid* internalGrid;
+//@property(strong, nonatomic) MacroGrid* internalGrid;
+@property(strong,nonatomic) NSMutableArray* tempArray;
 @end
 @implementation SudokuSolution
 
 -(instancetype)init{
   self = [super init];
-  self.internalGrid = [[MacroGrid alloc] init];
+  //self.internalGrid = [[MacroGrid alloc] init];
+  self.tempArray = [[NSMutableArray alloc] init];
   return self;
 }
 
@@ -26,11 +28,14 @@
   MacroGrid* grid = *gridPtr;
   
   MacroGrid* possibleSolvedGrid = [self tryToSolveSudokuGrid:grid]; //parse
+  
   MacroGrid* solvedGrid = [self searchPossibleSolutionsForSukoduGrid:possibleSolvedGrid]; //call search once
   
   if (nil == solvedGrid) {
     [self.delegate solver:self didFailToSolveSudokuGrid:*gridPtr];
   }
+  
+  [solvedGrid display];
   
   /* Set solved grid to the input pointer of the grid pointer. */
   *gridPtr = solvedGrid;
@@ -89,9 +94,9 @@
 }
 
 -(MacroGrid*) searchPossibleSolutionsForSukoduGrid: (MacroGrid*) possibleSolvedGrid{ //search
-  
+  __block MacroGrid* copyOfGrid;
   /* Have we found any contradition while trying to solve the grid? OR
-   * Have we found out that a possible value can't be assigned to any cell in the grid.
+   * Have we found out that a possible value can't be assigned to any cell in the grid?
    */
   if (nil == possibleSolvedGrid) {
     return nil;
@@ -101,7 +106,9 @@
    * then this is a valid solution for the grid. End the algorithm.
    */
   
-  /*Following two vairables are just created in case the all the grid cells don't have one possible value for each.*/
+  /*The following two vairables are just created in case the all the grid cells don't have one 
+   * possible value for each.
+   */
   NSMutableArray* potentialValuesCounts = [[NSMutableArray alloc] init];
   NSMutableArray* indexes = [[NSMutableArray alloc] init];
   
@@ -125,10 +132,11 @@
       
       /* Save index of the cell for to be able to loop throught those cells only. */
       [indexes addObject:@(cellIndex)];
-      
-      /* Continute looping. */
-      *shouldStop = NO;
     }
+    
+    /* Continute looping. */
+    *shouldStop = NO;
+    
   }];
   
   /* If each cell in the grid has only one potential value, then return it. */
@@ -143,7 +151,7 @@
   /* 2.1 Sort possible values counts in ascending order. Note that The new array contains references
    * to the receiving array’s elements, not copies of them.*/
   NSArray* sortedArray = [potentialValuesCounts sortedArrayUsingSelector:@selector(compare:)];
-  /* 2.2 Minimum count must be in the first object if the sorted array. */
+  /* 2.2 Minimum count must be in the first object of the sorted array. */
   NSNumber* minPotentialValuesCounts =[sortedArray firstObject];
   /* 2.3 Get index of the cell that we will try to set its value with one of its potential values.*/
   NSUInteger tempIndex = [potentialValuesCounts indexOfObject:minPotentialValuesCounts];
@@ -151,6 +159,9 @@
   
   /* 2.4 Get the required cell on which we will be operating.*/
   SudokuCell* requiredCell = [cellsOfGrid objectAtIndex:requiredCellIndex];
+  RowColPair pair =  convertIndexToPair(requiredCellIndex);
+  __block SudokuCell* copyOfRequiredCell;
+  __block MacroGrid* tempGrid;
   
   /* 2.5 Now pick any value from the possible values for the cell then assign to the cell. Finally
    * If you managed to assign the value, check if the whole grid has been solved or not (This is done
@@ -159,15 +170,25 @@
   [requiredCell.potentialSolutionSet enumerateIndexesUsingBlock:^(NSUInteger possibleValue, BOOL* shouldStop){
 
     /* Create a new copy of the current grid. */
-    self.internalGrid = [[MacroGrid alloc] initWithMicroGrids:[possibleSolvedGrid getFlattenedCells:MacroGridFlattingTypeMicroGrids]];
-
-    BOOL result = [self assignValue:possibleValue toSudokuCell:requiredCell inMacroGrid:self.internalGrid];
-    if (YES == result) {
-      *shouldStop = YES;
+    copyOfGrid = [possibleSolvedGrid copyMacroGrid];
+    NSLog(@"*************************** Before assignment value = %ld at cellIndex=%ld ****************************\n",possibleValue,requiredCellIndex);
+    [copyOfGrid display];
+    copyOfRequiredCell  = [copyOfGrid getSudokuCellAtRowColumn:pair];
+    BOOL assignmentResult = [self assignValue:possibleValue toSudokuCell:copyOfRequiredCell inMacroGrid:copyOfGrid];
+    tempGrid = [self searchPossibleSolutionsForSukoduGrid:copyOfGrid];
+    NSLog(@"*************************** After assignment ****************************\n");
+    [tempGrid display];
+    if(YES == assignmentResult){
+      if (nil != tempGrid){
+        *shouldStop = YES;
+      }
+    }else{
+      /* Continute looping. */
+      *shouldStop = NO;
     }
     
   }];
-  return [self searchPossibleSolutionsForSukoduGrid:self.internalGrid];
+  return tempGrid;
 }
 
 /* It turns out that the fundamental operation is not assigning a value, but rather eliminating one 
@@ -204,6 +225,7 @@
   NSUInteger lastPotentialValueOfCell;
   SudokuCell* targetCell;
   NSMutableIndexSet* setOfCellsIndexes;
+  NSMutableIndexSet* setOfEliminationResults;
   
   if (NO == [cell.potentialSolutionSet containsIndex:value]) {
     return YES; /* value has been already eliminated. */
@@ -215,8 +237,6 @@
   switch (cell.potentialSolutionSet.count) {
     case 0:
       /* Contradication: You have just removed the last value from the potential solution set.*/
-      [cell.potentialSolutionSet addIndex:value];
-      NSAssert(value == cell.value, @"Can't Eliminate the last value from the potential solution set");
       return NO;
 
     case 1:
@@ -226,11 +246,27 @@
       lastPotentialValueOfCell = [cell.potentialSolutionSet firstIndex];
       cell.value = lastPotentialValueOfCell;
       peers = [grid peersOfSudokuCell:cell];
-      for (SudokuCell* peerCell in peers) {
-        
-        [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
 
+      setOfEliminationResults = [[NSMutableIndexSet alloc] init];
+      for (SudokuCell* peerCell in peers) {
+        BOOL result  = [self eliminateValue:lastPotentialValueOfCell fromSudokuCell:peerCell inMacroGrid:grid];
+        [setOfEliminationResults addIndex:result];
       }
+
+      /* if elimination of the value has been done correctly without any errors, then the length
+       * of the set index must be 1. Otherwise, it will be 2 since the set will hold two different
+       * value (0 for failure and 1 for success).
+       */
+      switch (setOfEliminationResults.count) {
+        case 0:
+          NSAssert(NO, @"Elimination counts can't be zero");
+        case 1: // case elimination of a value, went success for all cells.
+          /* Do nothing and continue executing the method. */
+          break;
+        default:
+          return NO;
+      }//switch
+      
       break;
       
     default:
@@ -263,7 +299,6 @@
     switch (setOfCellsIndexes.count) {
       case 0:
         /* Contradiction: There is no cell that could have this value. */
-        NSAssert(NO, @"Value can't be assigned to any cell");
         return NO;
         
       case 1:
