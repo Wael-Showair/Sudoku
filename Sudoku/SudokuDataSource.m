@@ -11,7 +11,7 @@
 #import "MacroGrid.h"
 #import "SudokuParser.h"
 
-#define FILE_NAME                   @"sudoku_grid"
+#define FILE_NAME                   @"sudoku_grid_hard"
 #define NUM_OF_CELLS_PER_ROW        9
 
 @implementation SudokuDataSource
@@ -52,12 +52,6 @@
     /* Display the value as string in the grid. */
     return [NSString stringWithFormat:@"%ld",sudokuCell.value];
   }
-}
-
--(void)setValueOfSudokuCellAtIndexPath:(NSIndexPath *)indexPath WithValue: (NSString*) value{
-  
-  SudokuCell* sudokuCell = [self sudokuCellAtIndexPath:indexPath];
-  sudokuCell.value = value.intValue;
 }
 
 -(SudokuCell*) sudokuCellAtIndexPath: (NSIndexPath*) indexPath{

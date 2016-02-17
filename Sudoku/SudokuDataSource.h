@@ -15,7 +15,6 @@
 @property (strong, nonatomic)MacroGrid* grid;
 
 -(NSString*) getValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath;
--(void)      setValueOfSudokuCellAtIndexPath: (NSIndexPath*) indexPath WithValue:(NSString*) value;
 
 -(SudokuCell*) sudokuCellAtIndexPath: (NSIndexPath*) indexPath;
 

@@ -11,15 +11,14 @@
 #define LENGTH_OF_SINGLE_POSSIBLE_VALUE         1
 
 @interface SudokuSolution ()
-//@property(strong, nonatomic) MacroGrid* internalGrid;
-@property(strong,nonatomic) NSMutableArray* tempArray;
+@property(strong,nonatomic) NSMutableIndexSet* indexexSetOfSolvedCells;
 @end
+
 @implementation SudokuSolution
 
 -(instancetype)init{
   self = [super init];
-  //self.internalGrid = [[MacroGrid alloc] init];
-  self.tempArray = [[NSMutableArray alloc] init];
+
   return self;
 }
 
@@ -34,8 +33,10 @@
   if (nil == solvedGrid) {
     [self.delegate solver:self didFailToSolveSudokuGrid:*gridPtr];
   }
-  
+
+#if DEBUG_SOLVED_GRIDS
   [solvedGrid display];
+#endif
   
   /* Set solved grid to the input pointer of the grid pointer. */
   *gridPtr = solvedGrid;
@@ -45,19 +46,14 @@
    */
   if ((nil != self.delegate) &&
       (YES == [self.delegate respondsToSelector:@selector(solver:didSolveSudokuGrid:withUpdatedIndexes:) ])) {
-    [self.delegate solver:self didSolveSudokuGrid:*gridPtr withUpdatedIndexes:nil];
+    [self.delegate solver:self didSolveSudokuGrid:*gridPtr withUpdatedIndexes:self.indexexSetOfSolvedCells];
   }
 
 }
 
 -(MacroGrid*)tryToSolveSudokuGrid:(MacroGrid *)grid{ //parse grid.
 
-  /* This set represents the indexes (with respect to Macro cells not Micro Grids i.e. the indexes
-   * are per each macro row not per micro Grids) that have been solved using the Solution algorithm.
-   * This field is useful when reloading the collection view cells after the solution
-   * is finished so that the cells of the collection view are highlighted accordingly.
-   */
-  NSMutableIndexSet* indexexSetOfSolvedCells = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 81)];
+  self.indexexSetOfSolvedCells = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 81)];
   
   /* Create an internal macro grid to start solving the given sudoku grid.
    * Note that this grid initially has no cells' values and every cell has all full range from 1->9
@@ -78,7 +74,7 @@
     if (YES == NSLocationInRange(sourceCell.value, [SudokuCell fullRange])) {
 
       /* Remove the cell since it is has been already solved before applying the solution. */
-      [indexexSetOfSolvedCells removeIndex:index];
+      [self.indexexSetOfSolvedCells removeIndex:index];
       
       SudokuCell* destinationCell = [cellsOfSolvedGrid objectAtIndex:index];
       BOOL success = [self assignValue:sourceCell.value toSudokuCell:destinationCell inMacroGrid:solvedGrid];
@@ -171,13 +167,21 @@
 
     /* Create a new copy of the current grid. */
     copyOfGrid = [possibleSolvedGrid copyMacroGrid];
+
+#if DEBUG_SOLVED_GRIDS
     NSLog(@"*************************** Before assignment value = %ld at cellIndex=%ld ****************************\n",possibleValue,requiredCellIndex);
     [copyOfGrid display];
+#endif
+    
     copyOfRequiredCell  = [copyOfGrid getSudokuCellAtRowColumn:pair];
     BOOL assignmentResult = [self assignValue:possibleValue toSudokuCell:copyOfRequiredCell inMacroGrid:copyOfGrid];
     tempGrid = [self searchPossibleSolutionsForSukoduGrid:copyOfGrid];
+
+#if DEBUG_SOLVED_GRIDS
     NSLog(@"*************************** After assignment ****************************\n");
     [tempGrid display];
+#endif
+    
     if(YES == assignmentResult){
       if (nil != tempGrid){
         *shouldStop = YES;
