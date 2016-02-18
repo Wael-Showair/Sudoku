@@ -34,6 +34,7 @@ typedef enum _MacroGridFlattingType{
 @interface MacroGrid : NSObject
 
 -(instancetype) initWithMicroGrids: (NSArray<SudokuCell*>*) cellsOfMicroGrids;
+-(instancetype) initWithRowsOfCells: (NSArray<SudokuCell*>*) cells;
 -(MacroGrid*) copyMacroGrid;
 -(NSUInteger) numOfCells;
 

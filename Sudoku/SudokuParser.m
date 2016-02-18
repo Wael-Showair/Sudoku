@@ -40,7 +40,7 @@
   __block BOOL canParseInputGrid = YES;
   
   /* Create an array to hold cells of the micro grid in it.*/
-  NSMutableArray<SudokuCell*>* cellsOfMicroGrids = [[NSMutableArray alloc] initWithCapacity:NUM_OF_CELLS_IN_MACRO_GRID];
+  NSMutableArray<SudokuCell*>* cellsOfGrids = [[NSMutableArray alloc] initWithCapacity:NUM_OF_CELLS_IN_MACRO_GRID];
   
 #if UNIT_TESTING
   /* An NSBundle object represents a location in the file system that groups code and resources that
@@ -84,7 +84,7 @@
       }else{
         
         SudokuCell* cell = [[SudokuCell alloc] initWithValue:number.intValue];
-        [cellsOfMicroGrids addObject:cell];
+        [cellsOfGrids addObject:cell];
       }//else
     }// Loop through micro grid (which is represented by NSArray)
     
@@ -98,8 +98,19 @@
     return nil;
   }
 
-  /* Create the macro grid with the given input cells. */
-  return [[MacroGrid alloc] initWithMicroGrids:cellsOfMicroGrids];
+  /* Create the macro grid with the given input cells based on the parsed key. It might be
+   * micro_grid_x or row_x*/
+  NSString* firstKey = [dictionaryKeys objectAtIndex:0];
+  MacroGrid* parsedGrid;
+  if (YES == [firstKey containsString:@"micro_grid"]) {
+    parsedGrid = [[MacroGrid alloc] initWithMicroGrids:cellsOfGrids];
+  }else if(YES == [firstKey containsString:@"row"]){
+    parsedGrid = [[MacroGrid alloc] initWithRowsOfCells:cellsOfGrids];
+  }else{
+    parsedGrid =  nil;
+  }
+  
+  return parsedGrid;
 }
 
 @end

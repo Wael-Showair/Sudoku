@@ -65,6 +65,32 @@
   XCTAssertNil(grid);
 }
 
+-(void) testInitMacroGridWithRows{
+  NSArray<SudokuCell*>* cellsOfGrid1 = [self.grid getFlattenedCells:MacroGridFlattingTypeCells];
+  NSArray<SudokuCell*>* cellsOfFirstMicroGrids = [self.grid getFlattenedCells:MacroGridFlattingTypeMicroGrids];
+  
+  
+  MacroGrid* grid2 = [[MacroGrid alloc] initWithRowsOfCells:cellsOfGrid1];
+  NSArray<SudokuCell*>* cellsOfSecondMicroGrids = [grid2 getFlattenedCells:MacroGridFlattingTypeMicroGrids];
+  
+  XCTAssertEqual(cellsOfFirstMicroGrids.count , cellsOfSecondMicroGrids.count);
+}
+
+-(void) testInitMacroGridWithRowsNil{
+  MacroGrid* grid = [[MacroGrid alloc] initWithRowsOfCells:nil];
+  XCTAssertNil(grid);
+
+}
+
+-(void) testInitMacroGridWithIncorrectCountOfCells{
+  SudokuCell* cell = [[SudokuCell alloc] init];
+  /* Length of the Array must be 81 but I send it with only one object to achieve the test target.*/
+  NSArray<SudokuCell*>* cellsOfMicroGrid = [NSArray arrayWithObject:cell];
+  
+  MacroGrid* grid = [[MacroGrid alloc]initWithRowsOfCells:cellsOfMicroGrid];
+  XCTAssertNil(grid);
+}
+
 -(void) testGetSudokuCellAtRowColumn{
   /* Get element at 5th row , 4th column*/
   RowColPair pair = makeRowColPair(4, 3);

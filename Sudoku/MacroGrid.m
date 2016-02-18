@@ -71,6 +71,38 @@
     
     NSArray* macroRow = [self.cellsOfMicroGrids objectsAtIndexes:setOfIndexes];
     [self.cells addObjectsFromArray:macroRow];
+    
+    if(6==i || 33==i){
+      i+= 21;
+    }else{
+      i+=3;
+    }
+  }
+  return self;
+}
+
+-(instancetype) initWithRowsOfCells: (NSArray<SudokuCell*>*) cells{
+  
+  if (nil == cells) {
+    return nil;
+  }
+  
+  if (NUM_OF_CELLS_IN_MACRO_GRID != cells.count) {
+    return nil;
+  }
+
+  /* initialize rows of the macro grid. */
+  self.cells = [[NSMutableOrderedSet alloc] initWithArray:cells];
+  self.cellsOfMicroGrids = [[NSMutableOrderedSet alloc] init];
+  
+  /* Reorder the cells to construct cells of micro grids. */
+  for (int n=0, i=0; n<NUM_OF_MICRO_GRIDS; n++) {
+    NSMutableIndexSet* setOfIndexes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(i, 3)];
+    [setOfIndexes addIndexesInRange:NSMakeRange(i+9, 3)];
+    [setOfIndexes addIndexesInRange:NSMakeRange(i+18, 3)];
+    
+    NSArray* microGridFlattened = [self.cells objectsAtIndexes:setOfIndexes];
+    [self.cellsOfMicroGrids addObjectsFromArray:microGridFlattened];
     i += ((2 == n%3)? 21:3);
   }
   return self;
@@ -282,7 +314,7 @@
       output = [output stringByAppendingString:@"---------------------\n"];
     }
     
-    output = [output stringByAppendingString:[NSString stringWithFormat:@"%ld ", cell.value]];
+    output = [output stringByAppendingString:[NSString stringWithFormat:@"%ld ", (unsigned long)cell.value]];
     
     if (0 == ((index+1)%3)) {
       output = [output stringByAppendingString:@"|"];
