@@ -4,7 +4,7 @@ This is a fun iOS application to solve Sudoku grids programmatically.
 
 ### 1. Summary ###
 
-* The app targets only iOS (9.0+) platform for iPhone and iPad devices. All credits go to **Peter Norvig** for the derivation of the algorithm used to solve the Sudoku grids . You can find detailed information about his algorithm in [this link][1]
+* The app targets only iOS (9.0+) platform for iPhone and iPad devices. All credits go to **Peter Norvig** for the derivation of the algorithm used to solve the Sudoku grids . You can find detailed information about his algorithm in [this link][1].Also you can find an overview about the software architecture of the app in the Keynote file [sudoku.key][2]
 
 ### 2. Technical Details ###
 
@@ -43,11 +43,12 @@ Afterwards, It is straight forward. Just build and run the corresponding Xcode S
 
 ### 4. Contact Me ###
 
-* For further questions or discussion, [email me](mailto:showair.wael@gmail.com) or check my[ personal website][2] 
+* For further questions or discussion, [email me](mailto:showair.wael@gmail.com) or check my[ personal website][3] 
 
 
 
 
 
 [1]:http://norvig.com/sudoku.html
-[2]:http://waelshowair.com
+[2]:https://github.com/Wael-Showair/sudoku/blob/master/sudoku.key
+[3]:http://waelshowair.com
