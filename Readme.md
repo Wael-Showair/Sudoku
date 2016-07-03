@@ -39,7 +39,8 @@ There are two ways for the user to add input to the Sudoku grid:
 
 Note: In either cases, an unresolved square is represeted by zero and users should not change the names of the keys.
 
-Afterwards, It is straight forward. Just build and run the corresponding Xcode Scheme.
+Afterwards, It is straight forward. Just build and run the corresponding Xcode Scheme then press "Solve" button.
+The bottom bar that contains the numeric buttons is just for display, there is no related action with these buttons.
 
 ### 4. Contact Me ###
 
